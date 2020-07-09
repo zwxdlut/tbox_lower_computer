@@ -1,0 +1,3 @@
+FILTER_SDKs_SHOW_LATEST_VERSIONS=false
+com.freescale.s32ds.cross.sdk.support.attachedSDKs=S32K144_SDK_3.0.0_PATH|Debug|Release|Debug_RAM
+eclipse.preferences.version=1
