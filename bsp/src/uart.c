@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1];                /* Tx mutex*/
+extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; // Tx mutex
 #endif
 
-extern uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE];       /**< Ring queue */
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1];                    /**< Ring queue head */
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1];                    /**< Ring queue tail */
+extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // Ring queue
+extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; // Ring queue head
+extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; // Ring queue tail
 
 /*******************************************************************************
  * Local Function prototypes
@@ -30,10 +30,10 @@ uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t 
 
 	uint16_t i = 0;
 
-	/* Rx queue is not empty */
-	while(g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
+	// Rx queue is not empty
+	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
 	{
-		/* Pop rx queue */
+		// Pop rx queue
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
 		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_BUFFER_SIZE;
 	}
@@ -48,28 +48,36 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
-	/* Receive 0xAA */
+	// Receive 0xAA
 	size = 1;
-	if(size != uart_receive(_index, _buf, size) ||  (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
-		return 0;
 
-	/* Receive 0x55 */
+	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
+	{
+		return 0;
+	}
+
+	// Receive 0x55
 	size = 1;
 	out_size = 0;
-	while(out_size < size)
+
+	while (out_size < size)
 	{
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
 #endif
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
-	if((HEADER_FLAG & 0xFF) != _buf[0])
-		return 0;
 
-	/* Receive data length */
+	if ((HEADER_FLAG & 0xFF) != _buf[0])
+	{
+		return 0;
+	}
+
+	// Receive data length
 	size = HEADER_SIZE - 2;
 	out_size = 0;
-	while(out_size < size)
+
+	while (out_size < size)
 	{
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
@@ -77,11 +85,12 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
 
-	/* Receive data */
+	// Receive data
 	memcpy(&size, _buf, HEADER_SIZE - 2);
 	size = _size > size ? size : _size;
 	out_size = 0;
-	while(out_size < size)
+
+	while (out_size < size)
 	{
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
@@ -101,6 +110,7 @@ uint16_t uart_transmit_with_header(const uint8_t _index, const uint8_t *const _b
 #if defined USING_OS_FREERTOS
 	xSemaphoreTakeRecursive( g_uart_tx_mutex[_index], portMAX_DELAY);
 #endif
+
 #if defined (HEADER_FLAG) && defined (HEADER_SIZE)
 	uint8_t	header[HEADER_SIZE];
 	header[0] = HEADER_FLAG >> 8;
@@ -109,7 +119,9 @@ uint16_t uart_transmit_with_header(const uint8_t _index, const uint8_t *const _b
 	header[3] = _size >> 8;
 	size = uart_transmit(_index, header, HEADER_SIZE);
 #endif
+
 	size += uart_transmit(_index, _buf, _size);
+
 #if defined USING_OS_FREERTOS
 	xSemaphoreGiveRecursive( g_uart_tx_mutex[_index] );
 #endif
@@ -133,17 +145,23 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t *_buf, con
 #if defined USING_OS_FREERTOS
 	static SemaphoreHandle_t g_debug_mutex;
 	static bool init = false;
-	if(!init)
+	if (!init)
 	{
 		g_debug_mutex = xSemaphoreCreateMutex();
 		init = true;
 	}
 	xSemaphoreTake( g_debug_mutex, portMAX_DELAY);
 #endif
+
 	printf("%s(0x%X,%d): ", _prefix, (unsigned int)_id, _size);
+
 	for (uint16_t i = 0; i < _size; i++)
+	{
 		printf("%02X ", _buf[i]);
+	}
+
 	printf("\n");
+
 #if defined USING_OS_FREERTOS
 	xSemaphoreGive( g_debug_mutex );
 #endif
@@ -170,9 +188,12 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 #if defined UDEBUG
 	uint16_t  size = 0;
 
-	while(size < limit)
+	while (size < limit)
+	{
 		size += uart_receive(UART1_INDEX, bytes + size, limit - size);
+	}
 #endif
+
 	return kUARTNoError;
 }
 
@@ -189,7 +210,7 @@ int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
 	static bool init = false;
 
-	if(!init)
+	if (!init)
 	{
 		uart_init(UART1_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 		init = true;
@@ -223,7 +244,7 @@ int fputc(int ch, FILE *f)
 {
 	static bool init = false;
 
-	if(!init)
+	if (!init)
 	{
 		uart_init(UART1_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 		init = true;
@@ -235,7 +256,7 @@ int fputc(int ch, FILE *f)
 }
 #endif
 #endif
-/** @} */ /* Retarget printf. */
+/** @} */ // Retarget printf.
 
 /*******************************************************************************
  * Local Functions

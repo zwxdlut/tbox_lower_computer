@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* Tx mutex*/
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // Tx mutex
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE];       /**< Ring queue */
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0};           /**< Ring queue head */
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0};           /**< Ring queue tail */
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // Ring queue
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // Ring queue head
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // Ring queue tail
 
 typedef struct
 {
@@ -25,7 +25,7 @@ typedef struct
 	uint8_t      tx_pin_;
 	port_mux_t   gpio_af_;
 	IRQn_Type    irqs_[1];
-}comm_config_t;
+} comm_config_t;
 
 static comm_config_t g_comm_config[UART1_INDEX + 1] =
 {
@@ -52,6 +52,7 @@ static uint8_t g_handle[UART1_INDEX + 1] =
 #else
 	0xFF,
 #endif
+
 #if defined INST_LPUART1
 	INST_LPUART1
 #else
@@ -66,6 +67,7 @@ static lpuart_user_config_t *g_config[UART1_INDEX + 1] =
 #else
 	NULL,
 #endif
+
 #if defined INST_LPUART1
 	&lpuart1_InitConfig0
 #else
@@ -80,6 +82,7 @@ static lpuart_state_t *g_state[UART1_INDEX + 1] =
 #else
 	NULL,
 #endif
+
 #if defined INST_LPUART1
 	&lpuart1_State
 #else
@@ -87,7 +90,7 @@ static lpuart_state_t *g_state[UART1_INDEX + 1] =
 #endif
 };
 
-static uint8_t  g_rx_byte[UART1_INDEX + 1];  /**< Rx byte */
+static uint8_t  g_rx_byte[UART1_INDEX + 1]; // Rx byte
 
 /*******************************************************************************
  * Local Function prototypes
@@ -109,12 +112,12 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 
-	/* GPIO initialization */
+	// GPIO initialization
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetPullSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, PORT_INTERNAL_PULL_UP_ENABLED);
 
-	/* UART initialization */
+	// UART initialization
 	g_config[_index]->baudRate        = _baudrate;
 	g_config[_index]->bitCountPerChar = (lpuart_bit_count_per_char_t)_data_bits;
 	g_config[_index]->stopBitCount    = (lpuart_stop_bit_count_t)_stop_bits;
@@ -124,11 +127,11 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 #if defined USING_OS_FREERTOS
 	/* The interrupt calls an interrupt safe API function - so its priority must
 	   be equal to or lower than configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_) && NotAvail_IRQn != g_comm_config[_index].irqs_[i]; i++)
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_) && NotAvail_IRQn != g_comm_config[_index].irqs_[i]; i++)
 		INT_SYS_SetPriority( g_comm_config[_index].irqs_[i], configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
 #endif
 
-    /* Trigger receiving */
+    // Trigger receiving
 	LPUART_DRV_ReceiveData( g_handle[_index], g_rx_byte + _index, 1);
 
 	return 0;
@@ -141,6 +144,7 @@ int32_t uart_deinit(const uint8_t _index)
 	LPUART_DRV_Deinit(g_handle[_index]);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, PORT_PIN_DISABLED);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, PORT_PIN_DISABLED);
+
 #if defined USING_OS_FREERTOS
 	vSemaphoreDelete(g_uart_tx_mutex[_index]);
 #endif
@@ -155,19 +159,24 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
 	uint16_t size = 0;
 
 #if defined USING_OS_FREERTOS
-	xSemaphoreTakeRecursive( g_uart_tx_mutex[_index], portMAX_DELAY);
+	xSemaphoreTakeRecursive(g_uart_tx_mutex[_index], portMAX_DELAY);
 #endif
-	if(STATUS_SUCCESS == LPUART_DRV_SendData(g_handle[_index], _buf, _size))
+
+	if (STATUS_SUCCESS == LPUART_DRV_SendData(g_handle[_index], _buf, _size))
 	{
 		status_t status = STATUS_SUCCESS;
 		uint32_t bytes = 0;
 
-		while(STATUS_BUSY == (status = LPUART_DRV_GetTransmitStatus(g_handle[_index], &bytes))){}
-		if(STATUS_SUCCESS == status)
+		while (STATUS_BUSY == (status = LPUART_DRV_GetTransmitStatus(g_handle[_index], &bytes))) {}
+
+		if (STATUS_SUCCESS == status)
+		{
 			size = _size - bytes;
+		}	
 	}
+	
 #if defined USING_OS_FREERTOS
-	xSemaphoreGiveRecursive( g_uart_tx_mutex[_index] );
+	xSemaphoreGiveRecursive(g_uart_tx_mutex[_index]);
 #endif
 
 	return size;
@@ -177,10 +186,10 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
  * Local Functions
  ******************************************************************************/
 /**
- * @brief UART IRQ handler.
+ * UART IRQ handler.
  *
- * @param [in] _state     Driver state.
- * @param [in] _event     Event type.
+ * @param [in] _state Driver state.
+ * @param [in] _event Event type.
  * @param [in] _user_data Callback parameter.
  */
 static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data)
@@ -191,18 +200,18 @@ static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data
 
     if (UART_EVENT_RX_FULL == _event)
     {
-		/* Rx queue is not full */
-		if(g_uart_rx_queue_head[index] != (g_uart_rx_queue_tail[index] + 1) % UART_BUFFER_SIZE)
+		// Rx queue is not full
+		if (g_uart_rx_queue_head[index] != (g_uart_rx_queue_tail[index] + 1) % UART_BUFFER_SIZE)
 		{
-			/* Push rx queue */
+			// Push rx queue
 			g_uart_rx_queue[index][g_uart_rx_queue_tail[index]] = g_rx_byte[index];
 			g_uart_rx_queue_tail[index] = (g_uart_rx_queue_tail[index] + 1) % UART_BUFFER_SIZE;
 		}
 
-		/* Update rx buffer and trigger next receive */
+		// Update rx buffer and trigger next receive
 		LPUART_DRV_SetRxBuffer(g_handle[index], g_rx_byte + index, 1);
     }
 
-    /* Trigger receiving*/
+    // Trigger receiving
     LPUART_DRV_ReceiveData( g_handle[index], g_rx_byte + index, 1);
 }

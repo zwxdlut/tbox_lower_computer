@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* Tx mutex*/
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // Tx mutex
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE];       /**< Ring queue */
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0};           /**< Ring queue head */
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0};           /**< Ring queue tail */
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // Ring queue
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // Ring queue head
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // Ring queue tail
 
 typedef struct
 {
@@ -24,7 +24,7 @@ typedef struct
 	uint16_t     rx_pin_;
 	uint16_t     tx_pin_;
 	IRQn_Type    irqs_[1];
-}comm_config_t;
+} comm_config_t;
 
 static comm_config_t g_comm_config[UART1_INDEX + 1] =
 {
@@ -60,7 +60,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef  NVIC_InitStructure;
 
-	/* Rx ring queue initialization */
+	// Rx ring queue initialization
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 	
@@ -68,7 +68,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 	
-	/* GPIO initialization */
+	// GPIO initialization
 	UART_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.GPIO_Pin   = g_comm_config[_index].rx_pin_;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -78,7 +78,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
 	GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	/* UART initialization */
+	// UART initialization
 	UART_CLK_ENABLE(_index);
 	USART_InitStructure.USART_BaudRate            = _baudrate;
 	USART_InitStructure.USART_WordLength          = _data_bits;
@@ -91,12 +91,13 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_Cmd(g_handle[_index], ENABLE);
 	USART_ClearFlag(g_handle[_index], USART_FLAG_TC);
 	
-	/* NVIC initialization */
+	// NVIC initialization
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		NVIC_InitStructure.NVIC_IRQChannel = g_comm_config[_index].irqs_[i];
 		NVIC_Init(&NVIC_InitStructure);
@@ -114,11 +115,13 @@ int32_t uart_deinit(const uint8_t _index)
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
 	NVIC_Init(&NVIC_InitStructure);
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		NVIC_InitStructure.NVIC_IRQChannel = g_comm_config[_index].irqs_[i];
 		NVIC_Init(&NVIC_InitStructure);
 	}
+
 	USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
 	USART_ClearFlag(g_handle[_index], USART_FLAG_TC);
 	USART_Cmd(g_handle[_index], DISABLE);
@@ -127,6 +130,7 @@ int32_t uart_deinit(const uint8_t _index)
 	UART_CLK_DISABLE(_index);
 	UART_FORCE_RESET(_index);
 	UART_RELEASE_RESET(_index);
+
 #if defined USING_OS_FREERTOS
 	vSemaphoreDelete(g_uart_tx_mutex[_index]);
 #endif
@@ -141,12 +145,15 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
 #if defined USING_OS_FREERTOS
 	xSemaphoreTakeRecursive( g_uart_tx_mutex[_index], portMAX_DELAY);
 #endif
-	while(USART_GetFlagStatus(g_handle[_index], USART_FLAG_TC) == RESET){}
-    for(uint16_t i = 0; i < _size; i++)        
+
+	while (USART_GetFlagStatus(g_handle[_index], USART_FLAG_TC) == RESET) {}
+
+    for (uint16_t i = 0; i < _size; i++)        
     {           
 		USART_SendData(g_handle[_index], _buf[i]); 
-		while(USART_GetFlagStatus(g_handle[_index], USART_FLAG_TC) == RESET){}
+		while (USART_GetFlagStatus(g_handle[_index], USART_FLAG_TC) == RESET) {}
     }
+
 #if defined USING_OS_FREERTOS
 	xSemaphoreGiveRecursive( g_uart_tx_mutex[_index] );
 #endif
@@ -159,7 +166,7 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
  * @{
  */
 /**
- * @brief UART0 IRQ handler.
+ * UART0 IRQ handler.
  */
 void UART0_IRQ_HANDLER(void)
 {	
@@ -167,32 +174,33 @@ void UART0_IRQ_HANDLER(void)
 }
 
 /**
- * @brief UART1 IRQ handler.
+ * UART1 IRQ handler.
  */
 void UART1_IRQ_HANDLER(void)
 {
 	uart_irq_handler(UART1_INDEX);
 }
-/** @} */ /* IRQ handlers. */
+/** @} */ // IRQ handlers.
 
 /*******************************************************************************
  * Local Functions
  ******************************************************************************/
 /**
- * @brief UART IRQ handler.
+ * UART IRQ handler.
  *
  * @param [in] _index UART index.
  */
 void uart_irq_handler(const uint8_t _index)
 {
-	/* RXNE */
-	if(RESET != USART_GetITStatus(g_handle[_index], USART_IT_RXNE))
+	// RXNE
+	if (RESET != USART_GetITStatus(g_handle[_index], USART_IT_RXNE))
 	{		
 		USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
-		/* Rx queue is not full */
-		if(g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE)
+
+		// Rx queue is not full
+		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE)
 		{
-			/* Push rx queue */
+			// Push rx queue
 			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
 			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE;
 		}		

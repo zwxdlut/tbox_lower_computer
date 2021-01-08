@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /**< Rx/Tx Mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; // Rx/Tx Mutex
 #endif
 
 typedef struct
@@ -21,7 +21,7 @@ typedef struct
 	uint16_t     sda_pin_;
 	uint8_t      gpio_af_;
 	IRQn_Type    irqs_[2];
-}comm_config_t;
+} comm_config_t;
 
 static comm_config_t g_comm_config[I2C0_INDEX + 1] =
 {
@@ -65,7 +65,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 	
-	/* GPIO initialization */
+	// GPIO initialization
 	I2C_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].scl_pin_ | g_comm_config[_index].sda_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_OD;
@@ -74,14 +74,14 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
 	HAL_GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	/* I2C initialization */
+	// I2C initialization
 	I2C_CLK_ENABLE(_index);
 	g_handle[_index].Init.ClockSpeed     = _baudrate;
 	g_handle[_index].Init.AddressingMode = _is_10bit_addr ? I2C_ADDRESSINGMODE_10BIT : I2C_ADDRESSINGMODE_7BIT;
 	HAL_I2C_Init(&g_handle[_index]);
 	
-	/* NVIC initialization */
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+	// NVIC initialization
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);
 		HAL_NVIC_EnableIRQ(g_comm_config[_index].irqs_[i]);
@@ -94,13 +94,17 @@ int32_t i2c_master_deinit(const uint8_t _index)
 {
 	assert(I2C0_INDEX >= _index);
 
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+	{
 		HAL_NVIC_DisableIRQ(g_comm_config[_index].irqs_[i]);
+	}
+
 	HAL_I2C_DeInit(&g_handle[_index]);
 	I2C_CLK_DISABLE(_index);
 	I2C_FORCE_RESET(_index);
 	I2C_RELEASE_RESET(_index);
 	HAL_GPIO_DeInit(g_comm_config[_index].gpio_, g_comm_config[_index].scl_pin_ | g_comm_config[_index].sda_pin_);
+
 #if defined USING_OS_FREERTOS
 	vSemaphoreDelete(g_i2c_mutex[_index]);
 #endif
@@ -112,9 +116,12 @@ int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 
-	if(HAL_OK != HAL_I2C_Master_Receive_IT(&g_handle[_index], _addr << 1, _buf, _size))
+	if (HAL_OK != HAL_I2C_Master_Receive_IT(&g_handle[_index], _addr << 1, _buf, _size))
+	{
 		return -1;
-	while(HAL_I2C_STATE_READY != HAL_I2C_GetState(&g_handle[_index])){}
+	}
+
+	while (HAL_I2C_STATE_READY != HAL_I2C_GetState(&g_handle[_index])) {}
 
 	return 0;
 }
@@ -123,9 +130,12 @@ int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const ui
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 
-	if(HAL_OK != HAL_I2C_Master_Transmit_IT(&g_handle[_index], _addr << 1, (uint8_t*)_buf, _size))
+	if (HAL_OK != HAL_I2C_Master_Transmit_IT(&g_handle[_index], _addr << 1, (uint8_t*)_buf, _size))
+	{
 		return -1;
-	while(HAL_I2C_STATE_READY != HAL_I2C_GetState(&g_handle[_index])){}
+	}
+
+	while (HAL_I2C_STATE_READY != HAL_I2C_GetState(&g_handle[_index])) {}
 	HAL_Delay(10);
 	
 	return 0;
@@ -136,7 +146,7 @@ int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const ui
  * @{
  */
 /**
- * @brief I2C0 event IRQ handler.
+ * I2C0 event IRQ handler.
  */
 void I2C0_EV_IRQ_HANDLER(void)
 {
@@ -144,13 +154,13 @@ void I2C0_EV_IRQ_HANDLER(void)
 }
 
 /**
- * @brief I2C0 error IRQ handler.
+ * I2C0 error IRQ handler.
  */
 void I2C0_ER_IRQ_HANDLER(void)
 {
 	HAL_I2C_ER_IRQHandler(&g_handle[I2C0_INDEX]);
 }
-/** @} */ /* IRQ handlers. */
+/** @} */ // IRQ handlers.
 
 /******************************************************************************
  * Local Functions

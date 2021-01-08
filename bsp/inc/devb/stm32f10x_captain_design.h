@@ -33,7 +33,7 @@ extern "C" {
 #define LED2_GPIO_CLK_DISABLE()                 RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, DISABLE)
 #define LED_ON          					    Bit_RESET
 #define LED_OFF         					    Bit_SET
-/** @} */ /* LEDs configuration. */
+/** @} */ // LEDs configuration.
 
 /**
  * @name Button configuration.
@@ -48,7 +48,7 @@ extern "C" {
 #define BTN_IRQ_HANDLER                         EXTI15_10_IRQHandler
 #define BTN_GPIO_CLK_ENABLE()                   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)
 #define BTN_GPIO_CLK_DISABLE()                  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)
-/** @} */ /* Button configuration. */
+/** @} */ // Button configuration.
 
 /**
  * @name UART configuration.
@@ -66,19 +66,19 @@ extern "C" {
 #define UART1_INST     		                    USART3
 #define UART1_IRQ     		                    USART3_IRQn
 #define UART1_IRQ_HANDLER                       USART3_IRQHandler
-#define UART_GPIO_CLK_ENABLE(INDEX)             do { if(0 == (INDEX)) {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);} else\
-                                                                      {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);}} while(0)
-#define UART_GPIO_CLK_DISABLE(INDEX)            do { if(0 == (INDEX)) {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE);} else\
-                                                                      {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE);}} while(0)
-#define UART_CLK_ENABLE(INDEX)                  do { if(0 == (INDEX)) {RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);} else\
-                                                                      {RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE);}} while(0)
-#define UART_CLK_DISABLE(INDEX)                 do { if(0 == (INDEX)) {RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, DISABLE);} else\
-                                                                      {RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, DISABLE);}} while(0)
-#define UART_FORCE_RESET(INDEX)                 do { if(0 == (INDEX)) {RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, ENABLE);} else\
-                                                                      {RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, ENABLE);}} while(0)
-#define UART_RELEASE_RESET(INDEX)               do { if(0 == (INDEX)) {RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE);} else\
-                                                                      {RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, DISABLE);}} while(0)
-/** @} */ /* UART configuration. */
+#define UART_GPIO_CLK_ENABLE(INDEX)             do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); }} while (0)
+#define UART_GPIO_CLK_DISABLE(INDEX)            do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE); }} while (0)
+#define UART_CLK_ENABLE(INDEX)                  do { if (0 == (INDEX)) { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE); }} while (0)
+#define UART_CLK_DISABLE(INDEX)                 do { if (0 == (INDEX)) { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, DISABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, DISABLE); }} while (0)
+#define UART_FORCE_RESET(INDEX)                 do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, ENABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, ENABLE); }} while (0)
+#define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, DISABLE); }} while (0)
+/** @} */ // UART configuration.
 
 /** 
  * @name CAN configuration.
@@ -96,20 +96,20 @@ extern "C" {
 #define CAN1_INST     		                    CAN2
 #define CAN1_RX_IRQ                             CAN2_RX0_IRQn
 #define CAN1_RX_IRQ_HANDLER                     CAN2_RX0_IRQHandler
-#define CAN_GPIO_CLK_ENABLE(INDEX)              do { if(0 == (INDEX)) {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);} else\
-                                                                      {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);}} while(0)
-#define CAN_GPIO_CLK_DISABLE(INDEX)             do { if(0 == (INDEX)) {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)();} else\
-                                                                      {RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)();}} while(0)
-#define CAN_CLK_ENABLE(INDEX)                   do { if(0 == (INDEX)) {RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE);} else\
-                                                                      {RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1 | RCC_APB1Periph_CAN2, ENABLE);}} while(0)
-#define CAN_CLK_DISABLE(INDEX)                  do { if(0 == (INDEX)) {RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, DISABLE);} else\
-                                                                      {RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1 | RCC_APB1Periph_CAN2, DISABLE);}} while(0)
-#define CAN_FORCE_RESET(INDEX)                  do { if(0 == (INDEX)) {RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, ENABLE);} else\
-                                                                      {RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, ENABLE);}} while(0)
-#define CAN_RELEASE_RESET(INDEX)                do { if(0 == (INDEX)) {RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, DISABLE);} else\
-                                                                      {RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, DISABLE);}} while(0)
-#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< Slave CAN start filter bank number */
-/** @} */ /* CAN configuration. */
+#define CAN_GPIO_CLK_ENABLE(INDEX)              do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); }} while (0)
+#define CAN_GPIO_CLK_DISABLE(INDEX)             do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)(); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)(); }} while (0)
+#define CAN_CLK_ENABLE(INDEX)                   do { if (0 == (INDEX)) { RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, ENABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1 | RCC_APB1Periph_CAN2, ENABLE); }} while (0)
+#define CAN_CLK_DISABLE(INDEX)                  do { if (0 == (INDEX)) { RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1, DISABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_CAN1 | RCC_APB1Periph_CAN2, DISABLE); }} while (0)
+#define CAN_FORCE_RESET(INDEX)                  do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, ENABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, ENABLE); }} while (0)
+#define CAN_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, DISABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, DISABLE); }} while (0)
+#define CAN_SLAVE_START_FILTER_BANK_NUM         21 ///< Slave CAN start filter bank number
+/** @} */ // CAN configuration.
 
 /** 
  * @name I2C configuration.
@@ -120,10 +120,10 @@ extern "C" {
 #define I2C0_EV_IRQ_HANDLER                     I2C1_EV_IRQHandler
 #define I2C0_ER_IRQ                             I2C1_ER_IRQn
 #define I2C0_ER_IRQ_HANDLER                     I2C1_ER_IRQHandler
-/** @} */ /* End of I2C configuration. */
+/** @} */ // I2C configuration.
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __STM32F10x_CAPTAIN_DESIGN_H__ */
+#endif // __STM32F10x_CAPTAIN_DESIGN_H__

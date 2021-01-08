@@ -22,7 +22,7 @@ static void wdog_irq_handler(void);
 int32_t sys_init(void)
 {
     /* Initialize and configure clocks:
-	   - Setup system clocks, dividers
+	   - Setup system clocks, dividers.
        - see clock manager component for more details */
     CLOCK_SYS_Init(g_clockManConfigsArr, CLOCK_MANAGER_CONFIG_CNT,
             g_clockManCallbacksArr, CLOCK_MANAGER_CALLBACK_CNT);
@@ -33,7 +33,7 @@ int32_t sys_init(void)
 
 void gpio_init(void)
 {
-	/* LEDs initialization */
+	// LEDs initialization
 	PINS_DRV_SetMuxModeSel(LED0_PORT, LED0_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(LED0_GPIO, LED0_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED0_GPIO, LED0_PIN, LED_OFF);
@@ -44,7 +44,7 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(LED2_GPIO, LED2_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 
-	/* Button initialization */
+	// Button initialization
 	PINS_DRV_SetMuxModeSel(BTN_PORT, BTN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(BTN_GPIO, BTN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(BTN_PORT, BTN_PIN, PORT_INT_RISING_EDGE);
@@ -56,8 +56,9 @@ void gpio_init(void)
        be equal to or lower than configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
     INT_SYS_SetPriority( BTN_IRQ, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY );
 #endif
+
 #if defined MX_TB
-	/* Upper computer initialization */
+	// Upper computer initialization
 	PINS_DRV_SetMuxModeSel(UC_POWER_PORT, UC_POWER_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(UC_POWER_GPIO, UC_POWER_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_POWER_GPIO, UC_POWER_PIN, 0);
@@ -68,12 +69,13 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, 0);
 
-    /* Ignition initialization */
+    // Ignition initialization
 	PINS_DRV_SetMuxModeSel(IGN_PORT, IGN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(IGN_GPIO, IGN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(IGN_PORT, IGN_PIN, PORT_INT_FALLING_EDGE);
     INT_SYS_InstallHandler(IGN_IRQ, &pin_irq_handler, NULL);
     INT_SYS_EnableIRQ(IGN_IRQ);
+
 #if defined USING_OS_FREERTOS
     /* The interrupt calls an interrupt safe API function - so its priority must
        be equal to or lower than configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
@@ -93,6 +95,7 @@ void gpio_deinit(void)
 	PINS_DRV_SetMuxModeSel(UC_WAKEUP_PORT, UC_WAKEUP_PIN, PORT_PIN_DISABLED);
 	PINS_DRV_SetMuxModeSel(IGN_PORT, IGN_PIN, PORT_PIN_DISABLED);
 #endif
+
 	INT_SYS_DisableIRQ(BTN_IRQ);
 	PINS_DRV_ClearPortIntFlagCmd(BTN_PORT);
 	PINS_DRV_ClearPinIntFlagCmd(BTN_PORT, BTN_PIN);
@@ -140,7 +143,7 @@ void pwr_mode_trans(const uint8_t _mode)
 	     *  Transition from RUN to VLPR
 	     *
 	     *                              */
-	    if(0b01 == SMC->PMSTAT)
+	    if (0b01 == SMC->PMSTAT)
 	    {
 	        __asm("DSB");
 	        __asm("ISB");
@@ -166,16 +169,18 @@ void pwr_mode_trans(const uint8_t _mode)
 int32_t wdog_enable(void)
 {
 #if defined EXTWDOG
-	/* Initialize EWM */
+	// Initialize EWM
 	EWM_DRV_Init(EXTWDOG, &extWdog_Config0);
 #endif
+
 #if defined INST_WATCHDOG
-	/* Initialize WDOG */
+	// Initialize WDOG
     WDOG_DRV_Init(INST_WATCHDOG, &watchdog_Config0);
 #endif
-	/* Install IRQ handler */
+
+	// Install IRQ handler
 	INT_SYS_InstallHandler(WDOG_EWM_IRQn, wdog_irq_handler, (isr_t *)0);
-    /* Enable IRQ */
+    // Enable IRQ
     INT_SYS_EnableIRQ(WDOG_EWM_IRQn);
 
     return 0;
@@ -186,6 +191,7 @@ int32_t wdog_refresh(void)
 #if defined EXTWDOG
 	EWM_DRV_Refresh(EXTWDOG);
 #endif
+
 #if defined INST_WATCHDOG
 	WDOG_DRV_Trigger(INST_WATCHDOG);
 #endif
@@ -195,8 +201,9 @@ int32_t wdog_refresh(void)
 
 int32_t wwdog_disable(void)
 {
-	/* Disable IRQ */
+	// Disable IRQ
 	INT_SYS_DisableIRQ(WDOG_EWM_IRQn);
+	
 #if defined INST_WATCHDOG
 	WDOG_DRV_Deinit(INST_WATCHDOG);
 #endif
@@ -208,12 +215,13 @@ int32_t wwdog_disable(void)
  * Local Functions
  ******************************************************************************/
 /**
- * @brief Pin IRQ handler.
+ * Pin IRQ handler.
  */
 static void pin_irq_handler(void)
 {
     uint32_t pins = PINS_DRV_GetPortIntFlag(BTN_PORT) & ((1 << BTN_PIN));
-    if(pins != 0)
+
+    if (pins != 0)
     {
         switch (pins)
         {
@@ -225,9 +233,11 @@ static void pin_irq_handler(void)
                 break;
         }
     }
+
 #if defined MX_TB
     pins = PINS_DRV_GetPortIntFlag(IGN_PORT) & ((1 << IGN_PIN));
-    if(pins != 0)
+
+    if (pins != 0)
     {
         switch (pins)
         {
@@ -243,7 +253,7 @@ static void pin_irq_handler(void)
 }
 
 /**
- * @brief Watch dog IRQ handler.
+ * Watch dog IRQ handler.
  */
 static void wdog_irq_handler(void)
 {

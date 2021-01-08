@@ -36,7 +36,7 @@ void gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	/* LEDs initialization */
+	// LEDs initialization
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin   = LED0_PIN;
 	GPIO_InitStructure.Mode  = GPIO_MODE_OUTPUT_PP;
@@ -52,7 +52,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	/* Button initialization */
+	// Button initialization
 	BTN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = BTN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -61,7 +61,7 @@ void gpio_init(void)
 	HAL_NVIC_SetPriority(BTN_IRQ, 0, 0);
     HAL_NVIC_EnableIRQ(BTN_IRQ);
 	
-	/* Upper computer initialization */
+	// Upper computer initialization
 	UC_POWER_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = UC_POWER_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -77,7 +77,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(UC_RESET_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_RESET_GPIO, UC_RESET_PIN, GPIO_PIN_RESET);
 	
-    /* Ignition initialization */
+    // Ignition initialization
 	IGN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = IGN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -133,6 +133,7 @@ void pwr_mode_trans(const uint8_t _mode)
 	/* Suspend Tick increment to prevent wakeup by Systick interrupt
 	   Otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
 	HAL_SuspendTick();
+
 	switch(_mode)
 	{
 	case PWR_MODE_SLEEP:
@@ -143,20 +144,22 @@ void pwr_mode_trans(const uint8_t _mode)
 	default:
 		break;
 	}
+
 	sys_clk_config();
-	/* Resume Tick interrupt if disabled prior to sleep mode entry */
+	// Resume Tick interrupt if disabled prior to sleep mode entry
 	HAL_ResumeTick();
 	__HAL_RCC_PWR_CLK_DISABLE();
 }
 
 int32_t wdog_enable(void)
 {
-#if 0 /* Individual watch dog */
+#if 0 // Individual watch dog
 	g_wdog_handle.Instance       = IWDG;
 	g_wdog_handle.Init.Prescaler = IWDOG_PRV;
 	g_wdog_handle.Init.Reload    = IWDOG_RLV;
 	HAL_IWDG_Init(&g_wdog_handle);
 #endif
+
 	__HAL_RCC_WWDG_CLK_ENABLE();
 	g_wdog_handle.Instance       = WWDG;
 	g_wdog_handle.Init.Prescaler = WWDOG_PRV;
@@ -172,9 +175,10 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 /* Individual watch dog */
+#if 0 // Individual watch dog
 	HAL_IWDG_Refresh(&g_wdog_handle);
 #endif
+
 	HAL_WWDG_Refresh(&g_wdog_handle);
 	
 	return 0;
@@ -194,7 +198,7 @@ int32_t wdog_disable(void)
  * @{
  */
 /**
- * @brief System tick timer handler.
+ * System tick timer handler.
  */
 void SysTick_Handler(void)
 {
@@ -205,7 +209,7 @@ void SysTick_Handler(void)
 }
 
 /**
- * @brief Button IRQ handler.
+ * Button IRQ handler.
  */
 void BTN_IRQ_HANDLER(void)
 {
@@ -213,7 +217,7 @@ void BTN_IRQ_HANDLER(void)
 }
 
 /**
- * @brief Ignition IRQ handler.
+ * Ignition IRQ handler.
  */
 void IGN_IRQ_HANDLER(void)
 {
@@ -221,27 +225,27 @@ void IGN_IRQ_HANDLER(void)
 }
 
 /**
- * @brief Window watch dog IRQ handler.
+ * Window watch dog IRQ handler.
  */
 void WWDG_IRQHandler(void)
 {
 	/* Early wakeup */
-	if(RESET != __HAL_WWDG_GET_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF) && RESET != __HAL_WWDG_GET_IT_SOURCE(&g_wdog_handle, WWDG_IT_EWI))
+	if (RESET != __HAL_WWDG_GET_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF) && RESET != __HAL_WWDG_GET_IT_SOURCE(&g_wdog_handle, WWDG_IT_EWI))
 	{
 		/* Clear early wakeup flag */
 		__HAL_WWDG_CLEAR_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF);
 		sys_reset();
 	}
 }
-/** @} */ /* IRQ handlers. */
+/** @} */ // IRQ handlers.
 
 /*******************************************************************************
  * Local Functions
  ******************************************************************************/
 /**
- * @brief   System Clock Configuration.
+ * System Clock Configuration.
  *
- * @details The system Clock is configured as follow: 
+ * The system Clock is configured as follow: 
  *          - System Clock source            = PLL (HSE)
  *          - SYSCLK(Hz)                     = 120000000
  *          - HCLK(Hz)                       = 120000000
@@ -256,14 +260,14 @@ void WWDG_IRQHandler(void)
  *          - VDD(V)                         = 3.3
  *          - Flash Latency(WS)              = 3
  *
- * @return  Success(0) or failure(other values).
+ * @return Success(0) or failure(other values).
  */
 static int32_t sys_clk_config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	
-	/* Enable HSE Oscillator and activate PLL with HSE as source */
+	// Enable HSE Oscillator and activate PLL with HSE as source
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -275,7 +279,7 @@ static int32_t sys_clk_config(void)
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
 	
 	/* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 
-	   clocks dividers */
+	   clocks dividers. */
 	RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
 	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;

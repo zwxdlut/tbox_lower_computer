@@ -22,7 +22,7 @@ typedef struct
 	uint8_t      cs_pin_;
 	port_mux_t   gpio_af_;
 	IRQn_Type    irqs_[1];
-}comm_config_t;
+} comm_config_t;
 
 static comm_config_t g_comm_config[SPI0_INDEX + 1] =
 {
@@ -89,7 +89,7 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 {
     spi_init(_index);
 
-	/* SPI initialization */
+	// SPI initialization
     g_master_config[_index]->bitsPerSec = _baudrate;
 	g_master_config[_index]->clkPolarity = (SPI_CPOL_LOW == _cpol ? LPSPI_SCK_ACTIVE_HIGH : LPSPI_SCK_ACTIVE_LOW);
 	g_master_config[_index]->clkPhase = (SPI_CPHA_1EDGE == _cpha ? LPSPI_CLOCK_PHASE_1ST_EDGE : LPSPI_CLOCK_PHASE_2ND_EDGE);
@@ -104,7 +104,6 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 int32_t spi_master_deinit(const uint8_t _index)
 {
 	LPSPI_DRV_MasterDeinit(g_handle[_index]);
-
 	return spi_deinit(_index);
 }
 
@@ -112,14 +111,19 @@ int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
-    if(STATUS_SUCCESS != LPSPI_DRV_MasterTransfer(g_handle[_index], NULL, _buf, _size))
-    	return -1;
+    if (STATUS_SUCCESS != LPSPI_DRV_MasterTransfer(g_handle[_index], NULL, _buf, _size))
+	{
+		return -1;
+	}
 
     status_t status;
 
-    while(STATUS_BUSY == (status = LPSPI_DRV_MasterGetTransferStatus(g_handle[_index], NULL))){}
-	if(STATUS_SUCCESS != status)
+    while (STATUS_BUSY == (status = LPSPI_DRV_MasterGetTransferStatus(g_handle[_index], NULL))) {}
+
+	if (STATUS_SUCCESS != status)
+	{
 		return -1;
+	}
 
 	return 0;
 }
@@ -128,14 +132,17 @@ int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, con
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
-    if(STATUS_SUCCESS != LPSPI_DRV_MasterTransfer(g_handle[_index], _buf, NULL, _size))
+    if (STATUS_SUCCESS != LPSPI_DRV_MasterTransfer(g_handle[_index], _buf, NULL, _size))
     	return -1;
 
     status_t status;
 
-    while(STATUS_BUSY == (status = LPSPI_DRV_MasterGetTransferStatus(g_handle[_index], NULL))){}
-	if(STATUS_SUCCESS != status)
+    while (STATUS_BUSY == (status = LPSPI_DRV_MasterGetTransferStatus(g_handle[_index], NULL))) {}
+
+	if (STATUS_SUCCESS != status)
+	{
 		return -1;
+	}
 
 	return 0;
 }
@@ -144,7 +151,7 @@ int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t 
 {
     spi_init(_index);
 
-	/* SPI initialization */
+	// SPI initialization
 	g_slave_config[_index]->clkPolarity = (SPI_CPOL_LOW == _cpol ? LPSPI_SCK_ACTIVE_HIGH : LPSPI_SCK_ACTIVE_LOW);
 	g_slave_config[_index]->clkPhase = (SPI_CPHA_1EDGE == _cpha ? LPSPI_CLOCK_PHASE_1ST_EDGE : LPSPI_CLOCK_PHASE_2ND_EDGE);
 	g_slave_config[_index]->bitcount = _data_bits;
@@ -157,7 +164,6 @@ int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t 
 int32_t spi_slave_deinit(const uint8_t _index)
 {
 	LPSPI_DRV_SlaveDeinit(g_handle[_index]);
-
 	return spi_deinit(_index);
 }
 
@@ -165,14 +171,19 @@ int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint1
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
-    if(STATUS_SUCCESS != LPSPI_DRV_SlaveTransfer(g_handle[_index], NULL, _buf, _size))
-    	return -1;
+    if (STATUS_SUCCESS != LPSPI_DRV_SlaveTransfer(g_handle[_index], NULL, _buf, _size))
+	{
+		return -1;
+	}
 
     status_t status;
 
-    while(STATUS_BUSY == (status = LPSPI_DRV_SlaveGetTransferStatus(g_handle[_index], NULL))){}
-	if(STATUS_SUCCESS != status)
+    while (STATUS_BUSY == (status = LPSPI_DRV_SlaveGetTransferStatus(g_handle[_index], NULL))) {}
+
+	if (STATUS_SUCCESS != status)
+	{
 		return -1;
+	}
 
 	return 0;
 }
@@ -181,14 +192,19 @@ int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, cons
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
-    if(STATUS_SUCCESS != LPSPI_DRV_SlaveTransfer(g_handle[_index], _buf, NULL, _size))
-    	return -1;
+    if (STATUS_SUCCESS != LPSPI_DRV_SlaveTransfer(g_handle[_index], _buf, NULL, _size))
+	{
+		return -1;
+	}
 
     status_t status;
 
-    while(STATUS_BUSY == (status = LPSPI_DRV_SlaveGetTransferStatus(g_handle[_index], NULL))){}
-	if(STATUS_SUCCESS != status)
+    while (STATUS_BUSY == (status = LPSPI_DRV_SlaveGetTransferStatus(g_handle[_index], NULL))) {}
+
+	if (STATUS_SUCCESS != status)
+	{
 		return -1;
+	}
 
 	return 0;
 }
@@ -202,7 +218,7 @@ int32_t spi_init(const uint8_t _index)
 
     EDMA_DRV_Init(&dmaController1_State, &dmaController1_InitConfig0, edmaChnStateArray, edmaChnConfigArray, EDMA_CONFIGURED_CHANNELS_COUNT);
 
-	/* GPIO initialization */
+	// GPIO initialization
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sck_port_, g_comm_config[_index].sck_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdi_port_, g_comm_config[_index].sdi_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdo_port_, g_comm_config[_index].sdo_pin_, g_comm_config[_index].gpio_af_);
@@ -211,8 +227,10 @@ int32_t spi_init(const uint8_t _index)
 #if defined USING_OS_FREERTOS
 	/* The interrupt calls an interrupt safe API function - so its priority must
 	   be equal to or lower than configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
-	for(uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_) && NotAvail_IRQn != g_comm_config[_index].irqs_[i]; i++)
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_) && NotAvail_IRQn != g_comm_config[_index].irqs_[i]; i++)
+	{
 		INT_SYS_SetPriority( g_comm_config[_index].irqs_[i], configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+	}
 #endif
 
 	return 0;
@@ -226,6 +244,6 @@ int32_t spi_deinit(const uint8_t _index)
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdi_port_, g_comm_config[_index].sdi_pin_, PORT_PIN_DISABLED);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdo_port_, g_comm_config[_index].sdo_pin_, PORT_PIN_DISABLED);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].cs_port_, g_comm_config[_index].cs_pin_, PORT_PIN_DISABLED);
-
+	
 	return 0;
 }

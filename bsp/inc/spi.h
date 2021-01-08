@@ -22,7 +22,7 @@ extern "C" {
  * @{
  */
 #define SPI0_INDEX       		                0
-/** @} */ /* SPI module index. */
+/** @} */ // SPI module index.
 
 /**
  * @name SPI clock polarity.
@@ -30,7 +30,7 @@ extern "C" {
  */
 #define SPI_CPOL_LOW      		                0
 #define SPI_CPOL_HIGH      		                1
-/** @} */ /* SPI clock polarity. */
+/** @} */ // SPI clock polarity.
 
 /**
  * @name SPI clock phase.
@@ -38,7 +38,7 @@ extern "C" {
  */
 #define SPI_CPHA_1EDGE      		            0
 #define SPI_CPHA_2EDGE      		            1
-/** @} */ /* SPI clock phase. */
+/** @} */ // SPI clock phase.
 
 /**
  * @name SPI data bits.
@@ -46,100 +46,100 @@ extern "C" {
  */
 #define SPI_DATA_BITS_8      		            8
 #define SPI_DATA_BITS_16      		            16
-/** @} */ /* SPI data bits. */
+/** @} */ // SPI data bits.
 
 /*******************************************************************************
  * Function prototypes
  ******************************************************************************/
 /**
- * @brief  Initialize master SPI.
+ * Initialize master SPI.
  *
- * @param  [in] _index    SPI index.
- * @param  [in] _baudrate Baud rate.
- * @param  [in] _cpol     Clock polarity:
- *  - SPI_CPOL_LOW:  Clock is idle low.
- *  - SPI_CPOL_HIGH: Clock is idle high.
- * @param  [in] _cpha Clock phase:
- *  - SPI_CPHA_1EDGE: Data is sampled on clock 1st edge, changed on 2nd.
- *  - SPI_CPHA_2EDGE: Data is sampled on clock 2nd edge, changed on 1st.
- * @param  [in] _data_bits Data bits:
- *  - SPI_DATA_BITS_8:  8 bits data.
- *  - SPI_DATA_BITS_16: 16 bits data.
- * @param  [in] _lsb_first Select LSB or MSB first.
+ * @param [in] _index SPI index
+ * @param [in] _baudrate Baud rate
+ * @param [in] _cpol Clock polarity:
+ *  - SPI_CPOL_LOW: Clock is idle low
+ *  - SPI_CPOL_HIGH: Clock is idle high
+ * @param [in] _cpha Clock phase:
+ *  - SPI_CPHA_1EDGE: Data is sampled on clock 1st edge, changed on 2nd
+ *  - SPI_CPHA_2EDGE: Data is sampled on clock 2nd edge, changed on 1st
+ * @param [in] _data_bits Data bits:
+ *  - SPI_DATA_BITS_8: 8 bits data
+ *  - SPI_DATA_BITS_16: 16 bits data
+ * @param [in] _lsb_first Select LSB or MSB first
  * @return Success(0) or failure(other values).
  */
 int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
 
 /**
- * @brief  De-initialize master SPI.
+ * De-initialize master SPI.
  *
- * @param  [in] _index SPI index.
+ * @param [in] _index SPI index
  * @return Success(0) or failure(other values).
  */
 int32_t spi_master_deinit(const uint8_t _index);
 
 /**
- * @brief  Receive master SPI data.
+ * Receive master SPI data.
  *
- * @param  [in]  _index SPI index.
- * @param  [out] _buf   Receive buffer.
- * @param  [in]  _size  Receive size.
+ * @param [in]  _index SPI index
+ * @param [out] _buf Receive buffer
+ * @param [in]  _size Receive size
  * @return Success(0) or failure(other values).
  */
 int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size);
 
 /**
- * @brief  Transmit master SPI data.
+ * Transmit master SPI data.
  *
- * @param  [in] _index SPI index.
- * @param  [in] _buf   Transmit buffer.
- * @param  [in] _size  Transmit size.
+ * @param [in] _index SPI index
+ * @param [in] _buf Transmit buffer
+ * @param [in] _size Transmit size
  * @return Success(0) or failure(other values).
  */
 int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size);
 
 /**
- * @brief  Initialize slave SPI.
+ * Initialize slave SPI.
  *
- * @param  [in] _index SPI index.
- * @param  [in] _cpol  Clock polarity:
- *  - SPI_CPOL_LOW:  Signal is idle low.
- *  - SPI_CPOL_HIGH: Signal is idle high.
- * @param  [in] _cpha Clock phase:
- *  - SPI_CPOL_1EDGE: Data is sampled on SCK 1st edge, changed on 2nd.
- *  - SPI_CPOL_2EDGE: Data is sampled on SCK 2nd edge, changed on 1st.
- * @param  [in] _data_bits Data bits:
- *  - SPI_DATA_BITS_8:  8 bits data.
- *  - SPI_DATA_BITS_16: 16 bits data.
- * @param  [in] _lsb_first Select LSB or MSB first.
+ * @param [in] _index SPI index
+ * @param [in] _cpol  Clock polarity:
+ *  - SPI_CPOL_LOW: Signal is idle low
+ *  - SPI_CPOL_HIGH: Signal is idle high
+ * @param [in] _cpha Clock phase:
+ *  - SPI_CPOL_1EDGE: Data is sampled on SCK 1st edge, changed on 2nd
+ *  - SPI_CPOL_2EDGE: Data is sampled on SCK 2nd edge, changed on 1st
+ * @param [in] _data_bits Data bits:
+ *  - SPI_DATA_BITS_8: 8 bits data
+ *  - SPI_DATA_BITS_16: 16 bits data
+ * @param [in] _lsb_first Select LSB or MSB first
  * @return Success(0) or failure(other values).
  */
 int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
 
 /**
- * @brief  De-initialize slave SPI.
+ * De-initialize slave SPI.
  *
- * @param  [in] _index SPI index.
+ * @param [in] _index SPI index
  * @return Success(0) or failure(other values).
  */
 int32_t spi_slave_deinit(const uint8_t _index);
 
 /**
- * @brief  Receive slave SPI data.
+ * Receive slave SPI data.
  *
- * @param  [in]  _index SPI index.
- * @param  [out] _buf   Receive buffer.
- * @param  [in]  _size  Receive size.
+ * @param [in] _index SPI index
+ * @param [out] _buf Receive buffer
+ * @param [in] _size Receive size
  * @return Success(0) or failure(other values).
  */
 int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size);
 
 /**
- * @brief  Transmit slave SPI data.
+ * Transmit slave SPI data.
  *
- * @param  [in] _index SPI index.
- * @param  [in] _buf   Transmit buffer.
- * @param  [in] _size  Transmit size.
+ * @param [in] _index SPI index
+ * @param [in] _buf Transmit buffer
+ * @param [in] _size Transmit size
  * @return Success(0) or failure(other values).
  */
 int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size);
@@ -148,4 +148,4 @@ int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, cons
 }
 #endif
 
-#endif /* __SPI_H__ */
+#endif // __SPI_H__

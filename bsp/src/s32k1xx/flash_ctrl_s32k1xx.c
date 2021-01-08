@@ -1,7 +1,7 @@
 /*
  * flash_ctrl_s32k1xx.c
  *
- *  Created on: 2018Äê10ÔÂ17ÈÕ
+ *  Created on: 2018ï¿½ï¿½10ï¿½ï¿½17ï¿½ï¿½
  *      Author: Administrator
  */
 
@@ -10,15 +10,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-/* Declare a FLASH config struct which initialized by FlashInit, and will be used by all flash operations */
+// Declare a FLASH config struct which initialized by FlashInit, and will be used by all flash operations.
 static flash_ssd_config_t g_flash_ssd_cfg;
 
 /*******************************************************************************
  * Local Function prototypes
  ******************************************************************************/
-/* Function declarations */
+// Function declarations
 void CCIF_Handler(void);
-/* If target is flash, insert this macro to locate callback function into RAM */
+// If target is flash, insert this macro to locate callback function into RAM.
 START_FUNCTION_DECLARATION_RAMSECTION
 void CCIF_Callback(void)
 END_FUNCTION_DECLARATION_RAMSECTION
@@ -118,7 +118,6 @@ int32_t flash_ctrl_init(void)
 int32_t flash_ctrl_deinit(void)
 {
 	INT_SYS_DisableIRQ(FTFC_IRQn);
-
 	return 0;
 }
 
@@ -207,9 +206,9 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 
         /* Verify the written data */
         uint32_t i = 0;
-        while(i < _size )
+        while (i < _size )
         {
-        	if(*((uint8_t*)(_buf + i)) != *((uint8_t*)(_addr + g_flash_ssd_cfg.EERAMBase + i)))
+        	if (*((uint8_t*)(_buf + i)) != *((uint8_t*)(_addr + g_flash_ssd_cfg.EERAMBase + i)))
         	{
         		DEV_ASSERT(false);
         	}
@@ -257,7 +256,7 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
  * Local Function prototypes
  ******************************************************************************/
 /**
- * @brief IRQ handler for Flash Command Complete event.
+ * IRQ handler for Flash Command Complete event.
  */
 void CCIF_Handler(void)
 {
@@ -268,7 +267,7 @@ void CCIF_Handler(void)
 }
 
 /**
- * @brief Callback function for Flash operations.
+ * Callback function for Flash operations.
  */
 START_FUNCTION_DEFINITION_RAMSECTION
 void CCIF_Callback(void)

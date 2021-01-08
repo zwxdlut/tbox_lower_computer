@@ -25,51 +25,51 @@ extern "C" {
  * @{
  */
 #define TIMER0_INDEX                            0
-/** @} */ /* Timer module index. */
+/** @} */ // Timer module index.
 																	  
 /******************************************************************************
  * Function prototypes
  ******************************************************************************/
 /**
- * @brief  Initialize timer.
+ * Initialize timer.
  *
- * @param  [in] _index  Timer index.
- * @param  [in] _period Timer period in milliseconds.
+ * @param [in] _index  Timer index
+ * @param [in] _period Timer period in milliseconds
  * @return Success(0) or failure(other values).
  */
 
 int32_t timer_init(const uint8_t _index, const uint32_t _period);
 
 /**
- * @brief  Deinitialize timer.
+ * Deinitialize timer.
  *
- * @param  [in] _index Timer index.
+ * @param [in] _index Timer index
  * @return Success(0) or failure(other values).
  */
 int32_t timer_deinit(const uint8_t _index);
 
 /**
- * @brief  Start timer.
+ * Start timer.
  *
- * @param  [in] _index Timer index.
+ * @param [in] _index Timer index
  * @return Success(0) or failure(other values).
  */
 int32_t timer_start(const uint8_t _index);
 
 /**
- * @brief  Stop timer.
+ * Stop timer.
  *
- * @param  [in] _index Timer index.
+ * @param [in] _index Timer index
  * @return Success(0) or failure(other values).
  */
 int32_t timer_stop(const uint8_t _index);
 
 /**
- * @brief   Timer IRQ callback.
+ * Timer IRQ callback.
  *
- * @details This weak function can be implemented by user.
+ * This weak function can be implemented by user.
  *
- * @param   [in] _index Timer index.
+ * @param [in] _index Timer index
  */
 void timer_irq_callback(const uint8_t _index);
 
@@ -77,4 +77,4 @@ void timer_irq_callback(const uint8_t _index);
 }
 #endif
 
-#endif /* __TIMER_H__ */
+#endif // __TIMER_H__

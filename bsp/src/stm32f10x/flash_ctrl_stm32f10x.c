@@ -1,7 +1,7 @@
 /*
  * flash_ctrl_stm32f10x.c
  *
- *  Created on: 2018Äê10ÔÂ17ÈÕ
+ *  Created on: 2018ï¿½ï¿½10ï¿½ï¿½17ï¿½ï¿½
  *      Author: Administrator
  */
 
@@ -40,14 +40,19 @@ int32_t flash_ctrl_erase_sector(const uint32_t _addr, const uint32_t _size)
 	
 	ret = FLASH_COMPLETE;
 	FLASH_Unlock();
-	while(FLASH_COMPLETE == ret && start_sector_addr <= end_sector_addr)
+
+	while (FLASH_COMPLETE == ret && start_sector_addr <= end_sector_addr)
 	{
 		ret = FLASH_ErasePage(start_sector_addr);
 		start_sector_addr += get_sector_size(get_sector(start_sector_addr));
 	}
+
 	FLASH_Lock();
-	if(FLASH_COMPLETE == ret)
+
+	if (FLASH_COMPLETE == ret)
+	{
 		ret = 0;
+	}
 
     return ret;
 }
@@ -59,24 +64,33 @@ int32_t flash_ctrl_verify_sector(const uint32_t _addr, const uint32_t _size)
 	int32_t  ret = 0;
 	uint32_t i = 0;
 	
-	while(i < _size)
+	while (i < _size)
 	{
-		if(_size - i >= 4)
+		if (_size - i >= 4)
 		{
-			if(0xFFFFFFFF != *(__IO uint32_t *)(_addr + i))
+			if (0xFFFFFFFF != *(__IO uint32_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i += 4;
 		}
-		else if(_size - i >= 2)
+		else if (_size - i >= 2)
 		{
-			if(0xFFFF != *(__IO uint16_t *)(_addr + i))
+			if (0xFFFF != *(__IO uint16_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i += 2;
 		}
 		else
 		{
-			if(0xFF != *(__IO uint8_t *)(_addr + i))
+			if (0xFF != *(__IO uint8_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i++;
 		}
 	}
@@ -100,9 +114,10 @@ int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uin
 	
 	ret = FLASH_COMPLETE;
 	FLASH_Unlock();
-	while(FLASH_COMPLETE == ret && i < _size)
+
+	while (FLASH_COMPLETE == ret && i < _size)
 	{
-		if(_size - i >= 4)
+		if (_size - i >= 4)
 		{			
 			ret = FLASH_ProgramWord( _addr + i, *((uint32_t*)(_buf + i)));
 			i += 4;
@@ -113,9 +128,13 @@ int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uin
 			i += 2;
 		}
 	}
+
 	FLASH_Lock();
-	if(FLASH_COMPLETE == ret)
+
+	if (FLASH_COMPLETE == ret)
+	{
 		ret = 0;
+	}
 
     return ret;
 }
@@ -127,24 +146,33 @@ int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, co
 	int32_t  ret = 0;
 	uint32_t i = 0;
 
-	while(i < _size)
+	while (i < _size)
 	{
-		if(_size - i >= 4)
+		if (_size - i >= 4)
 		{
-			if(*((uint32_t *)(_buf + i)) != *(__IO uint32_t *)(_addr + i))
+			if (*((uint32_t *)(_buf + i)) != *(__IO uint32_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i += 4;
 		}
-		else if(_size - i >= 2)
+		else if (_size - i >= 2)
 		{
-			if(*((uint16_t *)(_buf + i)) != *(__IO uint16_t *)(_addr + i))
+			if (*((uint16_t *)(_buf + i)) != *(__IO uint16_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i += 2;
 		}
 		else
 		{
-			if(*((uint8_t *)(_buf + i)) != *(__IO uint8_t *)(_addr + i))
+			if (*((uint8_t *)(_buf + i)) != *(__IO uint8_t *)(_addr + i))
+			{
 				ret++;
+			}
+
 			i++;
 		}
     }
@@ -161,9 +189,9 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
  * Local Function prototypes
  ******************************************************************************/
 /**
- * @brief  Get the sector of a given address.
+ * Get the sector of a given address.
  *
- * @param  [in] _addr Address.
+ * @param [in] _addr Address.
  * @return Sector of the given address
  */
 static uint32_t get_sector(const uint32_t _addr)
@@ -173,9 +201,9 @@ static uint32_t get_sector(const uint32_t _addr)
 }
 
 /**
- * @brief  Get the sector address of a given sector.
+ * Get the sector address of a given sector.
  *
- * @param  [in] _sector Sector.
+ * @param [in] _sector Sector.
  * @return Sector address of the given sector.
  */
 static uint32_t get_sector_addr(const uint32_t _sector)
@@ -185,9 +213,9 @@ static uint32_t get_sector_addr(const uint32_t _sector)
 }
 
 /**
- * @brief  Get the sector size.
+ * Get the sector size.
  *
- * @param  [in] _sector Sector.
+ * @param [in] _sector Sector.
  * @return Sector size of the given sector.
  */
 static uint32_t get_sector_size(const uint32_t _sector)
