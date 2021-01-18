@@ -11,11 +11,11 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; // Rx/Tx Mutex
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; // the RX/TX mutex
 #endif
 
 /******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 /******************************************************************************
  * Functions
@@ -45,24 +45,24 @@ int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const ui
 }
 
 /**
- * @name IRQ handlers.
+ * @name The IRQ handlers.
  * @{
  */
 /**
- * I2C0 event IRQ handler.
+ * The I2C0 event IRQ handler.
  */
 void I2C0_EV_IRQ_HANDLER(void)
 {
 }
 
 /**
- * I2C0 error IRQ handler.
+ * The I2C0 error IRQ handler.
  */
 void I2C0_ER_IRQ_HANDLER(void)
 {
 }
-/** @} */ // IRQ handlers.
+/** @} */ // The IRQ handlers.
 
 /******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/

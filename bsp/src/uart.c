@@ -11,15 +11,15 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; // Tx mutex
+extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; // the TX mutex
 #endif
 
-extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // Ring queue
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; // Ring queue head
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; // Ring queue tail
+extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // the ring queue
+extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; // the ring queue head
+extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; // the ring queue tail
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 /*******************************************************************************
  * Functions
@@ -30,10 +30,10 @@ uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t 
 
 	uint16_t i = 0;
 
-	// Rx queue is not empty
+	// check if the RX queue is not empty
 	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
 	{
-		// Pop rx queue
+		// pop the RX queue
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
 		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_BUFFER_SIZE;
 	}
@@ -48,7 +48,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
-	// Receive 0xAA
+	// receive 0xAA
 	size = 1;
 
 	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
@@ -56,7 +56,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		return 0;
 	}
 
-	// Receive 0x55
+	// receive 0x55
 	size = 1;
 	out_size = 0;
 
@@ -73,7 +73,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		return 0;
 	}
 
-	// Receive data length
+	// receive data length
 	size = HEADER_SIZE - 2;
 	out_size = 0;
 
@@ -85,7 +85,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
 
-	// Receive data
+	// receive data
 	memcpy(&size, _buf, HEADER_SIZE - 2);
 	size = _size > size ? size : _size;
 	out_size = 0;
@@ -259,5 +259,5 @@ int fputc(int ch, FILE *f)
 /** @} */ // Retarget printf.
 
 /*******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/

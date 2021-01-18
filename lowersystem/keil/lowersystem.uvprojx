@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F205xx,MX_TB,USING_OS_FREERTOS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\..\bsp\inc;..\..\middleware;inc</IncludePath>
+              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\..\bsp\inc;..\..\middlewares;inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -394,7 +394,7 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>driver</GroupName>
+          <GroupName>drivers</GroupName>
           <Files>
             <File>
               <FileName>stm32f2xx_hal.c</FileName>
@@ -809,57 +809,57 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>middleware</GroupName>
+          <GroupName>middlewares</GroupName>
           <Files>
             <File>
               <FileName>8byte.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\bitfield\8byte.c</FilePath>
+              <FilePath>..\..\middlewares\bitfield\8byte.c</FilePath>
             </File>
             <File>
               <FileName>bitarray.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\bitfield\bitarray.c</FilePath>
+              <FilePath>..\..\middlewares\bitfield\bitarray.c</FilePath>
             </File>
             <File>
               <FileName>bitfield.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\bitfield\bitfield.c</FilePath>
+              <FilePath>..\..\middlewares\bitfield\bitfield.c</FilePath>
             </File>
             <File>
               <FileName>diag.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\diag\diag.c</FilePath>
+              <FilePath>..\..\middlewares\diag\diag.c</FilePath>
             </File>
             <File>
               <FileName>diag_client.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\diag\diag_client.c</FilePath>
+              <FilePath>..\..\middlewares\diag\diag_client.c</FilePath>
             </File>
             <File>
               <FileName>diag_server.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\diag\diag_server.c</FilePath>
+              <FilePath>..\..\middlewares\diag\diag_server.c</FilePath>
             </File>
             <File>
               <FileName>isotp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\diag\isotp\isotp.c</FilePath>
+              <FilePath>..\..\middlewares\diag\isotp\isotp.c</FilePath>
             </File>
             <File>
               <FileName>osek_nm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\nm\osek_nm.c</FilePath>
+              <FilePath>..\..\middlewares\nm\osek_nm.c</FilePath>
             </File>
             <File>
               <FileName>gen_resolve.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\resolve\gen_resolve.c</FilePath>
+              <FilePath>..\..\middlewares\resolve\gen_resolve.c</FilePath>
             </File>
             <File>
               <FileName>resolve.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middleware\resolve\resolve.c</FilePath>
+              <FilePath>..\..\middlewares\resolve\resolve.c</FilePath>
             </File>
           </Files>
         </Group>

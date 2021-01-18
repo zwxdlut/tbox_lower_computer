@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static uint32_t get_sector(uint32_t _addr);
 static uint32_t get_sector_addr(const uint32_t _sector);
@@ -186,13 +186,13 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 }
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 /**
  * Get the sector of a given address.
  *
- * @param [in] _addr Address.
- * @return Sector of the given address
+ * @param [in] _addr the sector start address
+ * @return the sector of the given address
  */
 static uint32_t get_sector(const uint32_t _addr)
 {
@@ -201,10 +201,10 @@ static uint32_t get_sector(const uint32_t _addr)
 }
 
 /**
- * Get the sector address of a given sector.
+ * Get the address of a given sector.
  *
- * @param [in] _sector Sector.
- * @return Sector address of the given sector.
+ * @param [in] _sector the sector
+ * @return the address of the given sector
  */
 static uint32_t get_sector_addr(const uint32_t _sector)
 {
@@ -213,10 +213,10 @@ static uint32_t get_sector_addr(const uint32_t _sector)
 }
 
 /**
- * Get the sector size.
+ * Get a sector size.
  *
- * @param [in] _sector Sector.
- * @return Sector size of the given sector.
+ * @param [in] _sector the sector
+ * @return the size of the given sector.
  */
 static uint32_t get_sector_size(const uint32_t _sector)
 {

@@ -21,7 +21,7 @@ static timer_confg_t g_timer_config[TIMER0_INDEX + 1] =
 static TIM_TypeDef *g_handle[TIMER0_INDEX + 1] = {TIMER0_INST};
 
 /******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static void timer_irq_handler(const uint8_t _index);
 
@@ -36,7 +36,7 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef         NVIC_InitStructure;
 
- 	// Timer initialization
+ 	// initialize the timer
 	TIMER_CLK_ENABLE(_index);
 	RCC_GetClocksFreq(&clks);
 	TIM_TimeBaseStructure.TIM_Prescaler     = 2 * clks.PCLK1_Frequency / g_timer_config[_index].clk_ - 1;
@@ -46,7 +46,7 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	TIM_TimeBaseInit(g_handle[_index], &TIM_TimeBaseStructure);
 	TIM_ITConfig(g_handle[_index], TIM_IT_Update, ENABLE);
 	
-	// NVIC initialization
+	// initialize the NVIC
 	NVIC_InitStructure.NVIC_IRQChannel                   = g_timer_config[_index].irq_;  
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;         
@@ -96,29 +96,29 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
 }
 
 /**
- * @name IRQ handlers.
+ * @name The IRQ handlers.
  * @{
  */
 /**
- * Timer0 IRQ handler.
+ * The timer0 IRQ handler.
  */
 void TIMER0_IRQ_HANDLER(void)   
 {
 	timer_irq_handler(TIMER0_INDEX);
 }
-/** @} */ // IRQ handlers.
+/** @} */ // The IRQ handlers.
 
 /******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/
 /**
- * Timer IRQ handler.
+ * The timer IRQ handler.
  *
- * @param [in] _index Timer index.
+ * @param [in] _index the timer index
  */
 static void timer_irq_handler(const uint8_t _index)
 {
-	// Timer Update event
+	// the timer update event
 	if (TIM_GetITStatus(g_handle[_index], TIM_IT_Update) != RESET)
 	{
 		TIM_ClearITPendingBit(g_handle[_index], TIM_IT_Update);

@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // Tx mutex
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // the TX mutex
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // Ring queue
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // Ring queue head
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // Ring queue tail
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // the ring queue
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // the ring queue head
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // the ring queue tail
 
 typedef struct
 {
@@ -45,7 +45,7 @@ static comm_config_t g_comm_config[UART1_INDEX + 1] =
 static USART_TypeDef *g_handle[UART1_INDEX + 1] = {UART0_INST, UART1_INST};
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static void uart_irq_handler(const uint8_t _index);
 
@@ -60,7 +60,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef  NVIC_InitStructure;
 
-	// Rx ring queue initialization
+	// initialize the RX ring queue
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 	
@@ -68,7 +68,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 	
-	// GPIO initialization
+	// initialize the GPIOs
 	UART_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.GPIO_Pin   = g_comm_config[_index].rx_pin_;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -78,7 +78,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
 	GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	// UART initialization
+	// initialize the UART
 	UART_CLK_ENABLE(_index);
 	USART_InitStructure.USART_BaudRate            = _baudrate;
 	USART_InitStructure.USART_WordLength          = _data_bits;
@@ -91,7 +91,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_Cmd(g_handle[_index], ENABLE);
 	USART_ClearFlag(g_handle[_index], USART_FLAG_TC);
 	
-	// NVIC initialization
+	// initialize the NVIC
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
@@ -162,11 +162,11 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
 }
 
 /**
- * @name IRQ handlers.
+ * @name The IRQ handlers.
  * @{
  */
 /**
- * UART0 IRQ handler.
+ * The UART0 IRQ handler.
  */
 void UART0_IRQ_HANDLER(void)
 {	
@@ -174,21 +174,21 @@ void UART0_IRQ_HANDLER(void)
 }
 
 /**
- * UART1 IRQ handler.
+ * The UART1 IRQ handler.
  */
 void UART1_IRQ_HANDLER(void)
 {
 	uart_irq_handler(UART1_INDEX);
 }
-/** @} */ // IRQ handlers.
+/** @} */ // The IRQ handlers.
 
 /*******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/
 /**
- * UART IRQ handler.
+ * The UART IRQ handler.
  *
- * @param [in] _index UART index.
+ * @param [in] _index the UART channel index
  */
 void uart_irq_handler(const uint8_t _index)
 {
@@ -197,10 +197,10 @@ void uart_irq_handler(const uint8_t _index)
 	{		
 		USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
 
-		// Rx queue is not full
+		// check if the RX queue is not full
 		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE)
 		{
-			// Push rx queue
+			// push the RX queue
 			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
 			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE;
 		}		

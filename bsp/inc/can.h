@@ -18,25 +18,25 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name CAN module index.
+ * @name The CAN channel indexes
  * @{
  */
 #define CAN0_INDEX                              0
 #define CAN1_INDEX                              1
-/** @} */ // name CAN module index.
+/** @} */ // The CAN channel indexes
 
 /**
- * @name CAN power modes.
+ * @name The CAN power modes
  * @{
  */
 #define CAN_PWR_MODE_SLEEP                      0
 #define CAN_PWR_MODE_RUN                        1
-/** @} */ // CAN power modes.
+/** @} */ // The CAN power modes
 
-#define CAN_BUFFER_SIZE                         10 ///< CAN rx queue max size
+#define CAN_BUFFER_SIZE                         10 ///< the CAN RX queue max size
 
 /**
- * CAN message.
+ * The CAN message structure
  */
 typedef struct
 {
@@ -49,53 +49,55 @@ typedef struct
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize CAN module.
+ * Initialize the CAN.
  *
- * @param [in] _index CAN index
- * @param [in] _filter_id_list Filter id list
- * @param [in] _filter_id_num Filter id number
- * @return Success(0) or failure(other values).
+ * @param [in] _index the CAN channel index
+ * @param [in] _filter_id_list the CAN filter id list
+ * @param [in] _filter_id_num the CAN filter id number
+ * @return 0(success) or other values(failure)
  */
 int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const uint8_t _filter_id_num);
 
 /**
- * Deinitialize CAN module.
+ * De-initialize the CAN.
  * 
- * @param [in] _index CAN index
- * @return Success(0) or failure(other values).
+ * @param [in] _index the CAN channel index
+ * @return 0(success) or other values(failure)
  */
 int32_t can_deinit(const uint8_t _index);
 
 /**
- * Receive CAN message.
+ * Receive a CAN message.
  *
- * @param [in]  _index CAN index
- * @param [out] _id CAN ID
- * @param [out] _buf Receive buffer
- * @param [in]  _size Receive size
- * @return Received size.
+ * @param [in]  _index the CAN channel index
+ * @param [out] _id the received CAN ID 
+ * @param [out] _buf the buffer to receive to
+ * @param [in]  _size the size to receive
+ * @return the received size
  */
 uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t *const _buf,  const uint8_t _size);
 
 /**
- * Transmit CAN message.
+ * Transmit a CAN message.
  *
- * @param [in] _index CAN index
- * @param [in] _id CAN ID
- * @param [in] _buf Transmit buffer
- * @param [in] _size Transmit size
- * @return Transmitted size.
+ * @param [in] _index the CAN channel index
+ * @param [in] _id the transmitted CAN ID
+ * @param [in] _buf the buffer to transmit from
+ * @param [in] _size the size to transmit
+ * @return the transmitted size
  */
 uint8_t can_transmit(const uint8_t _index, const uint32_t _id, const uint8_t *const _buf, const uint8_t _size);
 
 /**
- * Transfer CAN power mode.
+ * Transfer the CAN power mode.
  *
- * @param [in] _index CAN index
- * @param [in] _mode Power mode:
- *  - CAN_PWR_MODE_SLEEP: Sleep
- *  - CAN_PWR_MODE_RUN: Run
- * @return Success(0) or failure(other values).
+ * @param [in] _index the CAN channel index
+ * @param [in] _mode the CAN power mode to transfer to:
+ * <ul>
+ * <li>{@link #CAN_PWR_MODE_SLEEP} sleep</li>
+ * <li>{@link #CAN_PWR_MODE_RUN} run</li>
+ * </ul>
+ * @return 0(success) or other values(failure)
  */
 int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode);
 

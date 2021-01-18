@@ -21,72 +21,72 @@ extern "C" {
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize flash control module.
+ * Initialize the flash memory.
  *
- * @return Success(0) or failure(other values).
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_init(void);
 
 /**
- * De-initialize flash control module.
+ * De-initialize the flash memory.
  *
- * @return Success(0) or failure(other values).
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_deinit(void);
 
 /** 
  * Erase continuous sectors.
  *
- * @param [in] _addr Sector start address
- * @param [in] _size Erase size aligned to sector
- * @return Success(0) or failure(other values).
+ * @param [in] _addr the sector start address to be erased
+ * @param [in] _size the size to erase which must be aligned to sector
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_erase_sector(const uint32_t _addr, const uint32_t _size);
 
 /**
  * Verify continuous sectors.
  *
- * @param [in] _addr Sector start address
- * @param [in] _size Erase size aligned to sector
- * @return Success(0) or failure(other values).
+ * @param [in] _addr the sector start address to be verified
+ * @param [in] _size the size to verify which must be aligned to sector
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_verify_sector(const uint32_t _addr, const uint32_t _size);
 
 /**
- * Check if the the address is sector aligned.
+ * Check if an address is sector aligned.
  *
- * @param [in] _addr Address
- * @return Aligned(true) or not(false).
+ * @param [in] _addr the address to be checked
+ * @return true(aligned) or false(not alined)
  */
 bool flash_ctrl_is_sector_aligned(const uint32_t _addr);
 
 /**
- * Program flash memory.
+ * Program the flash memory.
  *
- * @param [in] _addr Program start address
- * @param [in] _size Program size
- * @param [in] _buf Program buffer
- * @return Success(0) or failure(other values).
+ * @param [in] _addr the start address to be programed
+ * @param [in] _size the size to program
+ * @param [in] _buf the buffer to program from
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf);
 
 /**
- * Verify programed flash memory.
+ * Verify the programed flash memory.
  *
- * @param [in] _addr Verify start address
- * @param [in] _size Verify size
- * @param [in] _buf Verify buffer
- * @return Success(0) or failure(other values).
+ * @param [in] _addr the programed start address to be verified
+ * @param [in] _size the programed size to verify
+ * @param [in] _buf the buffer to verify with
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf);
 
 /**
- * Write data to a flash area which is partitioned as EEPROM.
+ * Write data to the flash area which is partitioned as EEPROM.
  *
- * @param [in] _addr Write start address
- * @param [in] _size Write size
- * @param [in] _buf Write buffer
- * @return Success(0) or failure(other values).
+ * @param [in] _addr the start address to write to
+ * @param [in] _size the size to write
+ * @param [in] _buf the buffer to write from
+ * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf);
 

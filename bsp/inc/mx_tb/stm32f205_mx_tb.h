@@ -16,7 +16,7 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /** 
- * @name LEDs configuration.
+ * @name The LEDs configuration
  * @{
  */
 #define LED0_GPIO       					    GPIOC
@@ -33,10 +33,10 @@ extern "C" {
 #define LED2_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
 #define LED_ON          					    GPIO_PIN_SET
 #define LED_OFF         					    GPIO_PIN_RESET
-/** @} */ // LEDs configuration.
+/** @} */ // The LEDs configuration
  
 /** 
- * @name Button configuration.
+ * @name The buttons configuration
  * @{
  */                                       
 #define BTN_GPIO        					    GPIOC
@@ -45,10 +45,10 @@ extern "C" {
 #define BTN_IRQ_HANDLER                         EXTI3_IRQHandler
 #define BTN_GPIO_CLK_ENABLE()                   __HAL_RCC_GPIOC_CLK_ENABLE()
 #define BTN_GPIO_CLK_DISABLE()                  __HAL_RCC_GPIOC_CLK_DISABLE()
-/** @} */ // Button configuration.
+/** @} */ // The buttons configuration
 
 /**
- * @name Upper computer configuration.
+ * @name The upper computer configuration
  * @{
  */
 #define UC_POWER_GPIO 					        GPIOC
@@ -63,10 +63,10 @@ extern "C" {
 #define UC_RESET_PIN						    GPIO_PIN_0
 #define UC_RESET_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOB_CLK_ENABLE()
 #define UC_RESET_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOB_CLK_DISABLE()
-/** @} */ // Upper computer configuration.
+/** @} */ // The upper computer configuration
 
 /**
- * @name Ignition configuration.
+ * @name The ignition configuration
  * @{
  */
 #define IGN_GPIO        					    GPIOC
@@ -75,10 +75,10 @@ extern "C" {
 #define IGN_IRQ_HANDLER                         EXTI4_IRQHandler
 #define IGN_GPIO_CLK_ENABLE()                   __HAL_RCC_GPIOC_CLK_ENABLE()
 #define IGN_GPIO_CLK_DISABLE()                  __HAL_RCC_GPIOC_CLK_DISABLE()
-/** @} */ // Ignition configuration.
+/** @} */ // The ignition configuration
 
 /**
- * @name UART configuration.
+ * @name The UART configuration
  * @{
  */
 #define UART0_GPIO                              GPIOA
@@ -107,10 +107,10 @@ extern "C" {
                                                                        { __HAL_RCC_USART1_FORCE_RESET(); }} while (0)
 #define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { __HAL_RCC_USART2_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_USART1_RELEASE_RESET(); }} while (0)
-/** @} */ // UART configuration.
+/** @} */ // The UART configuration
 
 /** 
- * @name CAN configuration.
+ * @name The CAN configuration
  * @{
  */
 #define CAN0_GPIO                               GPIOB
@@ -167,11 +167,11 @@ extern "C" {
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
 #define CAN_TRANS_INH_GPIO_CLK_DISABLE(INDEX)   do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
-#define CAN_SLAVE_START_FILTER_BANK_NUM         21 ///< Slave CAN start filter bank number
-/** @} */ // CAN configuration.
+#define CAN_SLAVE_START_FILTER_BANK_NUM         21 ///< the slave CAN start filter bank number
+/** @} */ // The CAN configuration
 
 /** 
- * @name I2C configuration.
+ * @name The I2C configuration
  * @{
  */
 #define I2C0_GPIO                               GPIOB
@@ -195,10 +195,10 @@ extern "C" {
                                                                        { __HAL_RCC_I2C1_FORCE_RESET(); }} while (0)
 #define I2C_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { __HAL_RCC_I2C1_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_I2C1_RELEASE_RESET(); }} while (0)
-/** @} */ // of I2C configuration.
+/** @} */ // The I2C configuration
 
 /**
- * @name SPI configuration.
+ * @name The SPI configuration
  * @{
  */
 #define SPI0_SCK_GPIO                           GPIOC
@@ -249,7 +249,7 @@ extern "C" {
                                                                        { __HAL_RCC_DMA1_CLK_ENABLE(); }} while (0)
 #define SPI_DMA_CLK_DISABLE(INDEX)              do { if (0 == (INDEX)) { __HAL_RCC_DMA1_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_DMA1_CLK_DISABLE(); }} while (0)
-/** @} */ // SPI configuration.
+/** @} */ // The SPI configuration
 
 #ifdef __cplusplus
 }

@@ -16,7 +16,7 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /** 
- * @name LEDs configuration.
+ * @name The LEDs configuration
  * @{
  */
 #define LED0_PORT       					    PORTE
@@ -30,20 +30,20 @@ extern "C" {
 #define LED2_PIN           					    4
 #define LED_ON          					    1
 #define LED_OFF         					    0
-/** @} */ // LEDs configuration.
+/** @} */ // The LEDs configuration
  
 /** 
- * @name Button configuration.
+ * @name The buttons configuration
  * @{
  */                                       
 #define BTN_PORT        					    PORTA
 #define BTN_GPIO        					    PTA
 #define BTN_PIN         					    0
 #define BTN_IRQ                                 PORTA_IRQn
-/** @} */ // Button configuration.
+/** @} */ // The buttons configuration
 
 /**
- * @name Upper computer configuration.
+ * @name The upper computer configuration
  * @{
  */
 #define UC_POWER_PORT						    PORTE
@@ -55,20 +55,20 @@ extern "C" {
 #define UC_RESET_PORT						    PORTA
 #define UC_RESET_GPIO 					        PTA
 #define UC_RESET_PIN						    13
-/** @} */ // Upper computer configuration.
+/** @} */ // The upper computer configuration
 
 /**
- * @name Ignition configuration.
+ * @name The ignition configuration
  * @{
  */
 #define IGN_PORT        					    PORTD
 #define IGN_GPIO        					    PTD
 #define IGN_PIN         					    16
 #define IGN_IRQ                                 PORTD_IRQn
-/** @} */ // Ignition configuration.
+/** @} */ // The ignition configuration
 
 /**
- * @name UART configuration.
+ * @name The UART configuration
  * @{
  */
 #define UART0_PORT                              PORTB
@@ -81,10 +81,10 @@ extern "C" {
 #define UART1_TX_PIN                            7
 #define UART1_GPIO_AF                           PORT_MUX_ALT2
 #define UART1_IRQ                               LPUART2_RxTx_IRQn
-/** @} */ // UART configuration.
+/** @} */ // The UART configuration
 
 /** 
- * @name CAN configuration.
+ * @name The CAN configuration
  * @{
  */
 #define CAN0_PORT                               PORTE
@@ -123,10 +123,10 @@ extern "C" {
 #define CAN1_TRANS_INH_GPIO    			        PTB
 #define CAN1_TRANS_INH_PIN					    2
 #define CAN1_TRANS_INH_IRQ  		            PORTB_IRQn
-/** @} */ // CAN configuration.
+/** @} */ // The CAN configuration
 
 /** 
- * @name I2C configuration.
+ * @name The I2C configuration
  * @{
  */
 #define I2C0_PORT                               PORTA
@@ -134,10 +134,10 @@ extern "C" {
 #define I2C0_SDA_PIN                            2
 #define I2C0_GPIO_AF                            PORT_MUX_ALT3
 #define I2C0_IRQ                                LPI2C0_Master_IRQn
-/** @} */ // I2C configuration.
+/** @} */ // The I2C configuration
 
 /**
- * @name SPI configuration.
+ * @name The SPI configuration
  * @{
  */
 #define SPI0_SCK_PORT                           PORTB
@@ -150,7 +150,7 @@ extern "C" {
 #define SPI0_CS_PIN                             3
 #define SPI0_GPIO_AF                            PORT_MUX_ALT3
 #define SPI0_IRQ                                LPSPI1_IRQn
-/** @} */ // SPI configuration.
+/** @} */ // The SPI configuration
 
 #ifdef __cplusplus
 }

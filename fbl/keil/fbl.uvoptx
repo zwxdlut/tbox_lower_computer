@@ -254,7 +254,7 @@
   </Group>
 
   <Group>
-    <GroupName>driver</GroupName>
+    <GroupName>drivers</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -1146,7 +1146,7 @@
   </Group>
 
   <Group>
-    <GroupName>middleware</GroupName>
+    <GroupName>middlewares</GroupName>
     <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -1158,7 +1158,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middleware\diag\diag.c</PathWithFileName>
+      <PathWithFileName>..\..\middlewares\diag\diag.c</PathWithFileName>
       <FilenameWithoutPath>diag.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1170,7 +1170,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middleware\diag\diag_client.c</PathWithFileName>
+      <PathWithFileName>..\..\middlewares\diag\diag_client.c</PathWithFileName>
       <FilenameWithoutPath>diag_client.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1182,7 +1182,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middleware\diag\diag_server.c</PathWithFileName>
+      <PathWithFileName>..\..\middlewares\diag\diag_server.c</PathWithFileName>
       <FilenameWithoutPath>diag_server.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1194,7 +1194,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middleware\diag\isotp\isotp.c</PathWithFileName>
+      <PathWithFileName>..\..\middlewares\diag\isotp\isotp.c</PathWithFileName>
       <FilenameWithoutPath>isotp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

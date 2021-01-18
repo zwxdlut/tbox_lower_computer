@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static uint32_t get_sector(uint32_t _addr);
 
@@ -168,13 +168,13 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 }
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 /**
  * Get the sector of a given address.
  *
- * @param  [in] _addr Address.
- * @return Sector of the given address
+ * @param  [in] _addr the sector start address
+ * @return the sector of the given address
  */
 static uint32_t get_sector(const uint32_t _addr)
 {

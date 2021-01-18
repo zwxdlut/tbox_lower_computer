@@ -14,7 +14,7 @@
 static flash_ssd_config_t g_flash_ssd_cfg;
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 // Function declarations
 void CCIF_Handler(void);
@@ -253,7 +253,7 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 }
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 /**
  * IRQ handler for Flash Command Complete event.

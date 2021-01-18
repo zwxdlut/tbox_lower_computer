@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static void pin_irq_handler(void);
 static void wdog_irq_handler(void);
@@ -33,7 +33,7 @@ int32_t sys_init(void)
 
 void gpio_init(void)
 {
-	// LEDs initialization
+	// initialize the LEDs
 	PINS_DRV_SetMuxModeSel(LED0_PORT, LED0_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(LED0_GPIO, LED0_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED0_GPIO, LED0_PIN, LED_OFF);
@@ -44,7 +44,7 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(LED2_GPIO, LED2_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 
-	// Button initialization
+	// initialize the buttons
 	PINS_DRV_SetMuxModeSel(BTN_PORT, BTN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(BTN_GPIO, BTN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(BTN_PORT, BTN_PIN, PORT_INT_RISING_EDGE);
@@ -58,7 +58,7 @@ void gpio_init(void)
 #endif
 
 #if defined MX_TB
-	// Upper computer initialization
+	// initialize the upper computer
 	PINS_DRV_SetMuxModeSel(UC_POWER_PORT, UC_POWER_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(UC_POWER_GPIO, UC_POWER_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_POWER_GPIO, UC_POWER_PIN, 0);
@@ -69,7 +69,7 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, 0);
 
-    // Ignition initialization
+    // initialize the ignition
 	PINS_DRV_SetMuxModeSel(IGN_PORT, IGN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(IGN_GPIO, IGN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(IGN_PORT, IGN_PIN, PORT_INT_FALLING_EDGE);
@@ -169,18 +169,18 @@ void pwr_mode_trans(const uint8_t _mode)
 int32_t wdog_enable(void)
 {
 #if defined EXTWDOG
-	// Initialize EWM
+	// initialize the EWM
 	EWM_DRV_Init(EXTWDOG, &extWdog_Config0);
 #endif
 
 #if defined INST_WATCHDOG
-	// Initialize WDOG
+	// initialize the WDOG
     WDOG_DRV_Init(INST_WATCHDOG, &watchdog_Config0);
 #endif
 
-	// Install IRQ handler
+	// install the IRQ handler
 	INT_SYS_InstallHandler(WDOG_EWM_IRQn, wdog_irq_handler, (isr_t *)0);
-    // Enable IRQ
+    // enable the IRQ
     INT_SYS_EnableIRQ(WDOG_EWM_IRQn);
 
     return 0;
@@ -201,7 +201,7 @@ int32_t wdog_refresh(void)
 
 int32_t wwdog_disable(void)
 {
-	// Disable IRQ
+	// disable the IRQ
 	INT_SYS_DisableIRQ(WDOG_EWM_IRQn);
 	
 #if defined INST_WATCHDOG
@@ -212,10 +212,10 @@ int32_t wwdog_disable(void)
 }
 
 /*******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/
 /**
- * Pin IRQ handler.
+ * The pin IRQ handler.
  */
 static void pin_irq_handler(void)
 {
@@ -253,7 +253,7 @@ static void pin_irq_handler(void)
 }
 
 /**
- * Watch dog IRQ handler.
+ * The watch dog IRQ handler.
  */
 static void wdog_irq_handler(void)
 {

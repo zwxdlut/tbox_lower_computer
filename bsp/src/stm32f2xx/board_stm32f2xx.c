@@ -17,7 +17,7 @@ extern void xPortSysTickHandler(void);
 static WWDG_HandleTypeDef g_wdog_handle;
 
 /*******************************************************************************
- * Local Function prototypes
+ * Local function prototypes
  ******************************************************************************/
 static int32_t sys_clk_config(void);
 
@@ -36,7 +36,7 @@ void gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	// LEDs initialization
+	// initialize the LEDs
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin   = LED0_PIN;
 	GPIO_InitStructure.Mode  = GPIO_MODE_OUTPUT_PP;
@@ -52,7 +52,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	// Button initialization
+	// initialize the buttons
 	BTN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = BTN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -61,7 +61,7 @@ void gpio_init(void)
 	HAL_NVIC_SetPriority(BTN_IRQ, 0, 0);
     HAL_NVIC_EnableIRQ(BTN_IRQ);
 	
-	// Upper computer initialization
+	// initialize the upper computer
 	UC_POWER_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = UC_POWER_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -77,7 +77,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(UC_RESET_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_RESET_GPIO, UC_RESET_PIN, GPIO_PIN_RESET);
 	
-    // Ignition initialization
+    // initialize the ignition
 	IGN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = IGN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -146,14 +146,14 @@ void pwr_mode_trans(const uint8_t _mode)
 	}
 
 	sys_clk_config();
-	// Resume Tick interrupt if disabled prior to sleep mode entry
+	// resume the tick interrupt if it is disabled prior to sleep mode entry
 	HAL_ResumeTick();
 	__HAL_RCC_PWR_CLK_DISABLE();
 }
 
 int32_t wdog_enable(void)
 {
-#if 0 // Individual watch dog
+#if 0 // the individual watch dog
 	g_wdog_handle.Instance       = IWDG;
 	g_wdog_handle.Init.Prescaler = IWDOG_PRV;
 	g_wdog_handle.Init.Reload    = IWDOG_RLV;
@@ -175,7 +175,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 // Individual watch dog
+#if 0 // the individual watch dog
 	HAL_IWDG_Refresh(&g_wdog_handle);
 #endif
 
@@ -194,11 +194,11 @@ int32_t wdog_disable(void)
 }
 
 /**
- * @name IRQ handlers.
+ * @name The IRQ handlers.
  * @{
  */
 /**
- * System tick timer handler.
+ * The system tick timer handler.
  */
 void SysTick_Handler(void)
 {
@@ -209,7 +209,7 @@ void SysTick_Handler(void)
 }
 
 /**
- * Button IRQ handler.
+ * The button IRQ handler.
  */
 void BTN_IRQ_HANDLER(void)
 {
@@ -217,7 +217,7 @@ void BTN_IRQ_HANDLER(void)
 }
 
 /**
- * Ignition IRQ handler.
+ * The ignition IRQ handler.
  */
 void IGN_IRQ_HANDLER(void)
 {
@@ -225,22 +225,22 @@ void IGN_IRQ_HANDLER(void)
 }
 
 /**
- * Window watch dog IRQ handler.
+ * The window watch dog IRQ handler.
  */
 void WWDG_IRQHandler(void)
 {
-	/* Early wakeup */
+	// early wakeup
 	if (RESET != __HAL_WWDG_GET_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF) && RESET != __HAL_WWDG_GET_IT_SOURCE(&g_wdog_handle, WWDG_IT_EWI))
 	{
-		/* Clear early wakeup flag */
+		// clear the early wakeup flag
 		__HAL_WWDG_CLEAR_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF);
 		sys_reset();
 	}
 }
-/** @} */ // IRQ handlers.
+/** @} */ // The IRQ handlers.
 
 /*******************************************************************************
- * Local Functions
+ * Local functions
  ******************************************************************************/
 /**
  * System Clock Configuration.
@@ -260,14 +260,14 @@ void WWDG_IRQHandler(void)
  *          - VDD(V)                         = 3.3
  *          - Flash Latency(WS)              = 3
  *
- * @return Success(0) or failure(other values).
+ * @return 0(success) or other values(failure).
  */
 static int32_t sys_clk_config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	
-	// Enable HSE Oscillator and activate PLL with HSE as source
+	// enable the HSE oscillator and activate PLL with HSE as source
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
@@ -278,7 +278,7 @@ static int32_t sys_clk_config(void)
 	RCC_OscInitStruct.PLL.PLLQ = 5;
 	HAL_RCC_OscConfig(&RCC_OscInitStruct);
 	
-	/* Select PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 
+	/* Select the PLL as system clock source and configure the HCLK, PCLK1 and PCLK2 
 	   clocks dividers. */
 	RCC_ClkInitStruct.ClockType = (RCC_CLOCKTYPE_SYSCLK | RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2);
 	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;

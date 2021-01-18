@@ -41,9 +41,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
-			<name>src/middleware</name>
+			<name>src/middlewares</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/middleware</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/middlewares</locationURI>
 		</link>
 		<link>
 			<name>src/rtos.c</name>
@@ -89,21 +89,12 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1610096424617</id>
-			<name>src/middleware</name>
-			<type>30</type>
+			<id>1610955854887</id>
+			<name>src/middlewares</name>
+			<type>21</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.h</arguments>
-			</matcher>
-		</filter>
-		<filter>
-			<id>1610096424617</id>
-			<name>src/middleware</name>
-			<type>30</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.chm</arguments>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
 			</matcher>
 		</filter>
 	</filteredResources>

@@ -21,55 +21,55 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name Timer module index.
+ * @name The timer indexes.
  * @{
  */
 #define TIMER0_INDEX                            0
-/** @} */ // Timer module index.
+/** @} */ // The timer indexes.
 																	  
 /******************************************************************************
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize timer.
+ * Initialize the timer.
  *
- * @param [in] _index  Timer index
- * @param [in] _period Timer period in milliseconds
- * @return Success(0) or failure(other values).
+ * @param [in] _index the timer index
+ * @param [in] _period the timer period in milliseconds
+ * @return 0(success) or other values(failure)
  */
 
 int32_t timer_init(const uint8_t _index, const uint32_t _period);
 
 /**
- * Deinitialize timer.
+ * Deinitialize the timer.
  *
- * @param [in] _index Timer index
- * @return Success(0) or failure(other values).
+ * @param [in] _index the timer index
+ * @return 0(success) or other values(failure)
  */
 int32_t timer_deinit(const uint8_t _index);
 
 /**
- * Start timer.
+ * Start the timer.
  *
- * @param [in] _index Timer index
- * @return Success(0) or failure(other values).
+ * @param [in] _index the timer index
+ * @return 0(success) or other values(failure)
  */
 int32_t timer_start(const uint8_t _index);
 
 /**
- * Stop timer.
+ * Stop the timer.
  *
- * @param [in] _index Timer index
- * @return Success(0) or failure(other values).
+ * @param [in] _index the timer index
+ * @return 0(success) or other values(failure)
  */
 int32_t timer_stop(const uint8_t _index);
 
 /**
- * Timer IRQ callback.
+ * The timer IRQ callback.
  *
- * This weak function can be implemented by user.
+ * This function can be implemented by user, default implemention is "weak".
  *
- * @param [in] _index Timer index
+ * @param [in] _index the timer index
  */
 void timer_irq_callback(const uint8_t _index);
 

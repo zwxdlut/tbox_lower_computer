@@ -91,7 +91,7 @@
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/SDK/rtos/FreeRTOS_S32K/Source/portable/GCC/ARM_CM4F&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Generated_Code&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsp/inc&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../middleware&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../middlewares&quot;"/>
 								</option>
 								<option id="com.nxp.s32ds.cle.arm.mbs.arm32.bare.tool.c.compiler.option.target.mcpu.1729197240" name="ARM family" superClass="com.nxp.s32ds.cle.arm.mbs.arm32.bare.tool.c.compiler.option.target.mcpu" useByScannerDiscovery="true" value="com.nxp.s32ds.cle.arm.mbs.arm32.bare.tool.c.compiler.option.target.mcpu.cortex-m4" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.128313587" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -241,8 +241,8 @@
 									<listOptionValue builtIn="false" value="&quot;${S32K144_SDK_3.0.0_PATH}/platform/devices/S32K116/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${S32K144_SDK_3.0.0_PATH}/platform/devices/S32K148/include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/Generated_Code&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../middleware&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../bsp/inc&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${ProjDirPath}/../../middlewares&quot;"/>
 								</option>
 								<option id="com.freescale.s32ds.cross.gnu.tool.assembler.option.defs.1584052170" name="Defined symbols (-D)" superClass="com.freescale.s32ds.cross.gnu.tool.assembler.option.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="START_FROM_FLASH"/>
