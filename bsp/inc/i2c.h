@@ -231,8 +231,8 @@ int32_t accr_deinit(void);
  *
  * @param [in] _mode the system mode to transfer to:
  * <ul>
- * <li>{@link #ACCR_SYSMOD_STANDBY} standby</li>
- * <li>{@link #ACCR_SYSMOD_ACTIVE} active</li>
+ * <li>{@link ACCR_SYSMOD_STANDBY} standby</li>
+ * <li>{@link ACCR_SYSMOD_ACTIVE} active</li>
  * </ul>
  * @return 0(success) or other values(failure)
  */

@@ -53,22 +53,22 @@ extern "C" {
  * @param [in] _baudrate the baud rate
  * @param [in] _data_bits the data bits:
  * <ul>
- * <li>{@link #UART_DATA_BITS_8} 8 bits data</li>
- * <li>{@link #UART_DATA_BITS_9} 9 bits data</li>
- * <li>{@link #UART_DATA_BITS_10} 10 bits data</li>
+ * <li>{@link UART_DATA_BITS_8} 8 bits data</li>
+ * <li>{@link UART_DATA_BITS_9} 9 bits data</li>
+ * <li>{@link UART_DATA_BITS_10} 10 bits data</li>
  * </ul>
  * @param [in] _stop_bits the stop bits:
  * <ul>
- * <li>{@link #UART_STOP_BITS_0_5} 0.5 stop bit</li>
- * <li>{@link #UART_STOP_BITS_1} 1 stop bit</li>
- * <li>{@link #UART_STOP_BITS_1_5} 1.5 stop bit</li>
- * <li>{@link #UART_STOP_BITS_2} 2 stop bit</li>
+ * <li>{@link UART_STOP_BITS_0_5} 0.5 stop bit</li>
+ * <li>{@link UART_STOP_BITS_1} 1 stop bit</li>
+ * <li>{@link UART_STOP_BITS_1_5} 1.5 stop bit</li>
+ * <li>{@link UART_STOP_BITS_2} 2 stop bit</li>
  * </ul>
  * @param [in] _parity the partity:
  * <ul>
- * <li>{@link #UART_PARITY_MODE_NONE} no parity</li>
- * <li>{@link #UART_PARITY_MODE_EVEN} even parity</li>
- * <li>{@link #UART_PARITY_MODE_ODD} odd parity</li>
+ * <li>{@link UART_PARITY_MODE_NONE} no parity</li>
+ * <li>{@link UART_PARITY_MODE_EVEN} even parity</li>
+ * <li>{@link UART_PARITY_MODE_ODD} odd parity</li>
  * </ul>
  * @return 0(success) or other values(failure)
  */

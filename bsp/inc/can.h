@@ -94,8 +94,8 @@ uint8_t can_transmit(const uint8_t _index, const uint32_t _id, const uint8_t *co
  * @param [in] _index the CAN channel index
  * @param [in] _mode the CAN power mode to transfer to:
  * <ul>
- * <li>{@link #CAN_PWR_MODE_SLEEP} sleep</li>
- * <li>{@link #CAN_PWR_MODE_RUN} run</li>
+ * <li>{@link CAN_PWR_MODE_SLEEP} sleep</li>
+ * <li>{@link CAN_PWR_MODE_RUN} run</li>
  * </ul>
  * @return 0(success) or other values(failure)
  */

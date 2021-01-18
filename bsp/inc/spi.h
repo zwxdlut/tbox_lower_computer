@@ -58,18 +58,18 @@ extern "C" {
  * @param [in] _baudrate the baud rate
  * @param [in] _cpol the clock polarity:
  * <ul>
- * <li>{@link #SPI_CPOL_LOW} Clock is idle low.</li>
- * <li>{@link #SPI_CPOL_HIGH} Clock is idle high.</li>
+ * <li>{@link SPI_CPOL_LOW} Clock is idle low.</li>
+ * <li>{@link SPI_CPOL_HIGH} Clock is idle high.</li>
  * </ul>
  * @param [in] _cpha the clock phase:
  * <ul>
- * <li>{@link #SPI_CPHA_1EDGE} Data is sampled on clock 1st edge, changed on 2nd.</li>
- * <li>{@link #SPI_CPHA_2EDGE} Data is sampled on clock 2nd edge, changed on 1st.</li>
+ * <li>{@link SPI_CPHA_1EDGE} Data is sampled on clock 1st edge, changed on 2nd.</li>
+ * <li>{@link SPI_CPHA_2EDGE} Data is sampled on clock 2nd edge, changed on 1st.</li>
  * </ul>
  * @param [in] _data_bits the data bits:
  * <ul>
- * <li>{@link #SPI_DATA_BITS_8} 8 bits data</li>
- * <li>{@link #SPI_DATA_BITS_16} 16 bits data</li>
+ * <li>{@link SPI_DATA_BITS_8} 8 bits data</li>
+ * <li>{@link SPI_DATA_BITS_16} 16 bits data</li>
  * </ul>
  * @param [in] _lsb_first if LSB or MSB first
  * @return 0(success) or other values(failure)
@@ -110,18 +110,18 @@ int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, con
  * @param [in] _index the SPI channel index
  * @param [in] _cpol  the clock polarity:
  * <ul>
- * <li>{@link #SPI_CPOL_LOW} clock is idle low.</li>
- * <li>{@link #SPI_CPOL_HIGH} clock is idle high.</li>
+ * <li>{@link SPI_CPOL_LOW} clock is idle low.</li>
+ * <li>{@link SPI_CPOL_HIGH} clock is idle high.</li>
  * </ul>
  * @param [in] _cpha the clock phase:
  * <ul>
- * <li>{@link #SPI_CPHA_1EDGE} Data is sampled on clock 1st edge, changed on 2nd.</li>
- * <li>{@link #SPI_CPHA_2EDGE} Data is sampled on clock 2nd edge, changed on 1st.</li>
+ * <li>{@link SPI_CPHA_1EDGE} Data is sampled on clock 1st edge, changed on 2nd.</li>
+ * <li>{@link SPI_CPHA_2EDGE} Data is sampled on clock 2nd edge, changed on 1st.</li>
  * </ul>
  * @param [in] _data_bits the data bits:
  * <ul>
- * <li>{@link #SPI_DATA_BITS_8} 8 bits data</li>
- * <li>{@link #SPI_DATA_BITS_16} 16 bits data</li>
+ * <li>{@link SPI_DATA_BITS_8} 8 bits data</li>
+ * <li>{@link SPI_DATA_BITS_16} 16 bits data</li>
  * </ul>
  * @param [in] _lsb_first if LSB or MSB first
  * @return 0(success) or other values(failure)

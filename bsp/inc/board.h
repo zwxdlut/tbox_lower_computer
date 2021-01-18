@@ -70,8 +70,8 @@ void sys_reset(void);
  *
  * @param [in] _mode the power mode to transfer to:
  * <ul>
- * <li>{@link #PWR_MODE_SLEEP} sleep</li>
- * <li>{@link #PWR_MODE_DEEPSLEEP} deep sleep</li>
+ * <li>{@link PWR_MODE_SLEEP} sleep</li>
+ * <li>{@link PWR_MODE_DEEPSLEEP} deep sleep</li>
  * </ul>
  */
 void pwr_mode_trans(const uint8_t _mode);
