@@ -420,7 +420,7 @@ static void downstream_receive_task( void *pvParameters )
 		else if(REQ_SW_NO_ID == *((uint16_t*)buf))
 		{
 			diag_server_read_data_by_id(SSECUSWVNDID, buf + ID_LENGTH, SSECUSWVN_LEN);
-			uart_transmit_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + SSECUSWVN_LEN);
+			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + SSECUSWVN_LEN);
 			print_buf("UART TX", 0, buf, ID_LENGTH + SSECUSWVN_LEN);
 		}
 		else if(HEARTBEAT_ID == *((uint16_t*)buf))
@@ -516,7 +516,7 @@ static void downstream_receive_task( void *pvParameters )
 			*((uint16_t*)buf) = UPDATE_ECU_NOTIFY_ID;
 			buf[ID_LENGTH] = 0;
 			*((uint16_t*)(buf + ID_LENGTH + ECU_TYPE0_BIT_LEN / 8)) = block_size;
-			uart_transmit_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
+			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
 			print_buf("UART TX", 0, buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
 			transfered_size = 0;
 		}
@@ -568,7 +568,7 @@ static void downstream_receive_task( void *pvParameters )
 			buf[ID_LENGTH] = 0;
 			*((uint16_t*)(buf + ID_LENGTH + ECU_TYPE1_BIT_LEN / 8)) = block_count;
 			buf[ID_LENGTH + TRANSFER_ECU_DATA_LEN] = TRANSFER_ACK;
-			uart_transmit_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
+			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
 			print_buf("UART TX", 0, buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
 		}
 		else if(REQ_ECU_SW_NO_ID == *((uint16_t*)buf))
@@ -583,7 +583,7 @@ static void downstream_receive_task( void *pvParameters )
 			/* ACK */
 			*((uint16_t*)buf) = REQ_ECU_SW_NO_ID;
 			buf[ID_LENGTH] = 0;
-			uart_transmit_with_header((uint32_t)pvParameters, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
+			uart_send_with_header((uint32_t)pvParameters, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
 			print_buf("UART TX", 0, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
 		}
 		else
@@ -712,7 +712,7 @@ static void timer_callback( TimerHandle_t xTimer )
     		if(0 == GPIO_READ_PIN(IGN_GPIO, IGN_PIN))
     			set_bitfield(0x01, CAR_STATUS_START_BIT, CAR_STATUS_BIT_LEN, buf + ID_LENGTH, GB32960_DATA_LEN);
 #endif
-    		uart_transmit_with_header(UART0_INDEX ,buf, ID_LENGTH + len);
+    		uart_send_with_header(UART0_INDEX ,buf, ID_LENGTH + len);
     		debug("UART TX GB32960 %d bytes\n", len);
     		upstream_count = 0;
     	}
@@ -780,7 +780,7 @@ static int32_t transmit_callback(const uint32_t _id, const uint8_t *const _buf, 
 	
 	if(SERVER_TX_ID != _id && !diag_server_comm_ctrl_tx_enabled(COMM_MSG_TYPE_MASK_NCM))
 		return -1;
-	if(0 == can_transmit(CAN0_INDEX, _id, _buf, _size))
+	if(0 == can_send(CAN0_INDEX, _id, _buf, _size))
 		return -1;
 	print_buf("CAN TX", _id, _buf, _size);
 

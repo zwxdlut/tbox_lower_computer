@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; // the RX/TX mutex
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* the RX/TX mutex */
 #endif
 
 typedef struct
@@ -65,7 +65,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 	
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	I2C_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].scl_pin_ | g_comm_config[_index].sda_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_OD;
@@ -74,13 +74,13 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
 	HAL_GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	// initialize the I2C
+	/* initialize the I2C */
 	I2C_CLK_ENABLE(_index);
 	g_handle[_index].Init.ClockSpeed     = _baudrate;
 	g_handle[_index].Init.AddressingMode = _is_10bit_addr ? I2C_ADDRESSINGMODE_10BIT : I2C_ADDRESSINGMODE_7BIT;
 	HAL_I2C_Init(&g_handle[_index]);
 	
-	// initialize the NVIC
+	/* initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);
@@ -112,7 +112,7 @@ int32_t i2c_master_deinit(const uint8_t _index)
 	return 0;
 }
 
-int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *const _buf, const uint16_t _size, const bool _stop)
+int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 
@@ -126,7 +126,7 @@ int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *
 	return 0;
 }
 
-int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const uint8_t *const _buf, const uint16_t _size, const bool _stop)
+int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 
@@ -142,7 +142,7 @@ int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const ui
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -160,7 +160,7 @@ void I2C0_ER_IRQ_HANDLER(void)
 {
 	HAL_I2C_ER_IRQHandler(&g_handle[I2C0_INDEX]);
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /******************************************************************************
  * Local functions

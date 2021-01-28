@@ -36,7 +36,7 @@ void gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	// initialize the LEDs
+	/* initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin   = LED0_PIN;
 	GPIO_InitStructure.Mode  = GPIO_MODE_OUTPUT_PP;
@@ -52,7 +52,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	// initialize the buttons
+	/* initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = BTN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -61,7 +61,7 @@ void gpio_init(void)
 	HAL_NVIC_SetPriority(BTN_IRQ, 0, 0);
     HAL_NVIC_EnableIRQ(BTN_IRQ);
 	
-	// initialize the upper computer
+	/* initialize the upper computer */
 	UC_POWER_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = UC_POWER_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -77,7 +77,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(UC_RESET_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_RESET_GPIO, UC_RESET_PIN, GPIO_PIN_RESET);
 	
-    // initialize the ignition
+    /* initialize the ignition */
 	IGN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin  = IGN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -146,14 +146,14 @@ void pwr_mode_trans(const uint8_t _mode)
 	}
 
 	sys_clk_config();
-	// resume the tick interrupt if it is disabled prior to sleep mode entry
+	/* resume the tick interrupt if it is disabled prior to sleep mode entry */
 	HAL_ResumeTick();
 	__HAL_RCC_PWR_CLK_DISABLE();
 }
 
 int32_t wdog_enable(void)
 {
-#if 0 // the individual watch dog
+#if 0 /* the individual watch dog */
 	g_wdog_handle.Instance       = IWDG;
 	g_wdog_handle.Init.Prescaler = IWDOG_PRV;
 	g_wdog_handle.Init.Reload    = IWDOG_RLV;
@@ -175,7 +175,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 // the individual watch dog
+#if 0 /* the individual watch dog */
 	HAL_IWDG_Refresh(&g_wdog_handle);
 #endif
 
@@ -194,7 +194,7 @@ int32_t wdog_disable(void)
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -229,15 +229,15 @@ void IGN_IRQ_HANDLER(void)
  */
 void WWDG_IRQHandler(void)
 {
-	// early wakeup
+	/* early wakeup */
 	if (RESET != __HAL_WWDG_GET_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF) && RESET != __HAL_WWDG_GET_IT_SOURCE(&g_wdog_handle, WWDG_IT_EWI))
 	{
-		// clear the early wakeup flag
+		/* clear the early wakeup flag */
 		__HAL_WWDG_CLEAR_FLAG(&g_wdog_handle, WWDG_FLAG_EWIF);
 		sys_reset();
 	}
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
  * Local functions
@@ -260,14 +260,14 @@ void WWDG_IRQHandler(void)
  *          - VDD(V)                         = 3.3
  *          - Flash Latency(WS)              = 3
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 static int32_t sys_clk_config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	
-	// enable the HSE oscillator and activate PLL with HSE as source
+	/* enable the HSE oscillator and activate PLL with HSE as source */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;

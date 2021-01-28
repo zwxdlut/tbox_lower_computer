@@ -23,9 +23,9 @@ extern "C" {
  */
 #define UART0_INDEX       		                0
 #define UART1_INDEX       		                1
-/** @} */ // The UART channel indexes
+/** @} */ /* The UART channel indexes */
 
-#define UART_BUFFER_SIZE                        1000 ///< the UART buffer size.
+#define UART_BUFFER_SIZE                        1000 /**< the UART buffer size. */
 
 /**
  * @name The UART data header definition
@@ -41,7 +41,7 @@ extern "C" {
  *---------------------------------------------------------------------------------*/
 #define HEADER_FLAG      	                    0xAA55
 #define HEADER_SIZE  	                        4
-/** @} */ // The UART data header definition
+/** @} */ /* The UART data header definition */
 
 /*******************************************************************************
  * Function prototypes
@@ -90,7 +90,7 @@ int32_t uart_deinit(const uint8_t _index);
  * @param [in]  _size the size to receive
  * @return the received size
  */
-uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size);
+uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Receive data with header(0xAA55) in poll mode.
@@ -100,27 +100,27 @@ uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t 
  * @param [in]  _size the size to receive
  * @return the received size without header
  */
-uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _buf, const uint16_t _size);
+uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], const uint16_t _size);
 
 /**
- * Transmit UART data.
+ * Send data.
  *
  * @param [in] _index the UART channel index
- * @param [in] _buf the buffer to transmit from
- * @param [in] _size the size to transmit
- * @return the transmitted size
+ * @param [in] _buf the buffer to send from
+ * @param [in] _size the size to send
+ * @return the sent size
  */
-uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size);
+uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
 
 /**
- * Transmit data with header.
+ * Send data with header.
  *
  * @param [in] _index the UART channel index
- * @param [in] _buf the buffer to transmit from
- * @param [in] _size the size to transmit
- * @return the transmitted size
+ * @param [in] _buf the buffer to send from
+ * @param [in] _size the size to send
+ * @return the sent size
  */
-uint16_t uart_transmit_with_header(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size);
+uint16_t uart_send_with_header(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
 
 /**
  * Print the debug information.
@@ -137,10 +137,10 @@ void debug(const char* _info, ...);
  * @param [in] _buf the buffer to be printed
  * @param [in] _size the size to print
  */
-void print_buf(const char *_prefix, const uint32_t _id, const uint8_t *_buf, const uint16_t _size);
+void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], const uint16_t _size);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __UART_H__
+#endif /* __UART_H__ */

@@ -20,7 +20,7 @@ int32_t can::open(void)
 {
 	if (STATUS_OK != OpenDevice(dev_type_, dev_idx_, 0))
 	{
-		printf("Open CAN device failed!\n");
+		printf("can::open: open the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
 		return -1;
 	}
 		
@@ -31,7 +31,7 @@ int32_t can::close(void)
 {
 	if (STATUS_OK != CloseDevice(dev_type_, dev_idx_))
 	{
-		printf("Close CAN device failed!\n");
+		printf("can::close: close the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
 		return -1;
 	}
 
@@ -50,20 +50,20 @@ int32_t can::init(const uint8_t _chl)
 
 	if (STATUS_OK != InitCAN(dev_type_, dev_idx_, _chl, &cfg))
 	{
-		printf("Initialize CAN failed!\n");
+		printf("can::init: initialize the CAN(%d) failed!\n", _chl);
 		return -1;
 	}
 		
 	if (STATUS_OK != StartCAN(dev_type_, dev_idx_, _chl))
 	{
-		printf("Start CAN failed!\n");
+		printf("can::init: start the CAN(%d) failed!\n", _chl);
 		return -1;
 	}
 		
 	return 0;
 }
 
-uint8_t can::receive(const uint8_t _chl, uint32_t* const _id, uint8_t* const _buf, const uint8_t _size)
+uint8_t can::receive(const uint8_t _chl, uint32_t* const _id, uint8_t _buf[], const uint8_t _size)
 {
 	assert(NULL != _buf);
 
@@ -80,7 +80,7 @@ uint8_t can::receive(const uint8_t _chl, uint32_t* const _id, uint8_t* const _bu
 	return size;
 }
 
-uint8_t can::transmit(const uint8_t _chl, const uint32_t _id, const uint8_t *const _buf, const uint8_t _size)
+uint8_t can::send(const uint8_t _chl, const uint32_t _id, const uint8_t _buf[], const uint8_t _size)
 {
 	assert(NULL != _buf);
 
@@ -96,7 +96,7 @@ uint8_t can::transmit(const uint8_t _chl, const uint32_t _id, const uint8_t *con
 	std::lock_guard<std::mutex> guard(tx_mutex_);
 	if (1 != Transmit(dev_type_, dev_idx_, _chl, &frame, 1))
 	{
-		printf("CAN send failed!\n");
+		printf("can::send: transmit failed!\n");
 		return 0;
 	}
 

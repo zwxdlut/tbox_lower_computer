@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // the TX mutex
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // the ring queue
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // the ring queue head
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // the ring queue tail
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; /* the ring queue */
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* the ring queue head */
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* the ring queue tail */
 
 typedef struct
 {
@@ -90,7 +90,7 @@ static lpuart_state_t *g_state[UART1_INDEX + 1] =
 #endif
 };
 
-static uint8_t  g_rx_byte[UART1_INDEX + 1]; // RX byte
+static uint8_t  g_rx_byte[UART1_INDEX + 1]; /* RX byte */
 
 /*******************************************************************************
  * Local function prototypes
@@ -104,7 +104,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 {
 	assert(UART1_INDEX >= _index);
 
-	// initialize the RX ring queue
+	/* initialize the RX ring queue */
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 
@@ -112,12 +112,12 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetPullSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, PORT_INTERNAL_PULL_UP_ENABLED);
 
-	// initialize the UART
+	/* initialize the UART */
 	g_config[_index]->baudRate        = _baudrate;
 	g_config[_index]->bitCountPerChar = (lpuart_bit_count_per_char_t)_data_bits;
 	g_config[_index]->stopBitCount    = (lpuart_stop_bit_count_t)_stop_bits;
@@ -131,7 +131,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 		INT_SYS_SetPriority( g_comm_config[_index].irqs_[i], configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
 #endif
 
-    // trigger receiving
+    /* trigger receiving */
 	LPUART_DRV_ReceiveData( g_handle[_index], g_rx_byte + _index, 1);
 
 	return 0;
@@ -152,7 +152,7 @@ int32_t uart_deinit(const uint8_t _index)
 	return 0;
 }
 
-uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(UART1_INDEX >= _index && NULL != _buf);
 
@@ -200,18 +200,18 @@ static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data
 
     if (UART_EVENT_RX_FULL == _event)
     {
-		// check if the RX queue is not full
+		/* check if the RX queue is not full */
 		if (g_uart_rx_queue_head[index] != (g_uart_rx_queue_tail[index] + 1) % UART_BUFFER_SIZE)
 		{
-			// push the RX queue
+			/* push the RX queue */
 			g_uart_rx_queue[index][g_uart_rx_queue_tail[index]] = g_rx_byte[index];
 			g_uart_rx_queue_tail[index] = (g_uart_rx_queue_tail[index] + 1) % UART_BUFFER_SIZE;
 		}
 
-		// update the RX buffer and trigger the next receiving
+		/* update the RX buffer and trigger the next receiving */
 		LPUART_DRV_SetRxBuffer(g_handle[index], g_rx_byte + index, 1);
     }
 
-    // trigger receiving
+    /* trigger receiving */
     LPUART_DRV_ReceiveData( g_handle[index], g_rx_byte + index, 1);
 }

@@ -30,7 +30,7 @@ extern "C" {
 #define LED2_PIN           					    4
 #define LED_ON          					    1
 #define LED_OFF         					    0
-/** @} */ // The LEDs configuration
+/** @} */ /* The LEDs configuration */
  
 /** 
  * @name The buttons configuration
@@ -40,7 +40,7 @@ extern "C" {
 #define BTN_GPIO        					    PTA
 #define BTN_PIN         					    0
 #define BTN_IRQ                                 PORTA_IRQn
-/** @} */ // The buttons configuration
+/** @} */ /* The buttons configuration */
 
 /**
  * @name The upper computer configuration
@@ -55,7 +55,7 @@ extern "C" {
 #define UC_RESET_PORT						    PORTA
 #define UC_RESET_GPIO 					        PTA
 #define UC_RESET_PIN						    13
-/** @} */ // The upper computer configuration
+/** @} */ /* The upper computer configuration */
 
 /**
  * @name The ignition configuration
@@ -65,7 +65,7 @@ extern "C" {
 #define IGN_GPIO        					    PTD
 #define IGN_PIN         					    16
 #define IGN_IRQ                                 PORTD_IRQn
-/** @} */ // The ignition configuration
+/** @} */ /* The ignition configuration */
 
 /**
  * @name The UART configuration
@@ -81,7 +81,7 @@ extern "C" {
 #define UART1_TX_PIN                            7
 #define UART1_GPIO_AF                           PORT_MUX_ALT2
 #define UART1_IRQ                               LPUART2_RxTx_IRQn
-/** @} */ // The UART configuration
+/** @} */ /* The UART configuration */
 
 /** 
  * @name The CAN configuration
@@ -123,7 +123,7 @@ extern "C" {
 #define CAN1_TRANS_INH_GPIO    			        PTB
 #define CAN1_TRANS_INH_PIN					    2
 #define CAN1_TRANS_INH_IRQ  		            PORTB_IRQn
-/** @} */ // The CAN configuration
+/** @} */ /* The CAN configuration */
 
 /** 
  * @name The I2C configuration
@@ -134,7 +134,7 @@ extern "C" {
 #define I2C0_SDA_PIN                            2
 #define I2C0_GPIO_AF                            PORT_MUX_ALT3
 #define I2C0_IRQ                                LPI2C0_Master_IRQn
-/** @} */ // The I2C configuration
+/** @} */ /* The I2C configuration */
 
 /**
  * @name The SPI configuration
@@ -150,7 +150,7 @@ extern "C" {
 #define SPI0_CS_PIN                             3
 #define SPI0_GPIO_AF                            PORT_MUX_ALT3
 #define SPI0_IRQ                                LPSPI1_IRQn
-/** @} */ // The SPI configuration
+/** @} */ /* The SPI configuration */
 
 #ifdef __cplusplus
 }

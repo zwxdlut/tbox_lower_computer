@@ -108,7 +108,7 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 {
 	uint32_t psr = 0;
 	
-	// calculate the prescaler
+	/* calculate the prescaler */
 	if (SPI1 == g_handle[_index].Instance)
 	{
 		psr = HAL_RCC_GetPCLK2Freq() / _baudrate;
@@ -180,7 +180,7 @@ int32_t spi_master_deinit(const uint8_t _index)
 	return 0;
 }
 
-int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 	
@@ -194,7 +194,7 @@ int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint
 	return 0;
 }
 
-int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 	
@@ -219,18 +219,18 @@ int32_t spi_slave_deinit(const uint8_t _index)
 	return spi_master_deinit(_index);
 }
 
-int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	return spi_master_receive(_index, _buf, _size);
 }
 
-int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
-	return spi_master_transmit(_index, _buf, _size);
+	return spi_master_send(_index, _buf, _size);
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -256,7 +256,7 @@ void SPI0_TX_DMA_IRQ_HANDLER(void)
 {
 	HAL_DMA_IRQHandler(g_handle[SPI0_INDEX].hdmatx);
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
  * Local functions
@@ -267,7 +267,7 @@ int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha,
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	SPI_SCK_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].sck_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_PP;
@@ -285,7 +285,7 @@ int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha,
 	GPIO_InitStructure.Pin       = g_comm_config[_index].cs_pin_;
 	HAL_GPIO_Init(g_comm_config[_index].cs_gpio_, &GPIO_InitStructure);
 
-	// initialize the SPI
+	/* initialize the SPI */
 	SPI_CLK_ENABLE(_index);
 	g_handle[_index].Init.CLKPolarity = (SPI_CPOL_LOW == _cpol ? SPI_POLARITY_LOW : SPI_POLARITY_HIGH);
 	g_handle[_index].Init.CLKPhase    = (SPI_CPHA_1EDGE == _cpha ? SPI_PHASE_1EDGE : SPI_PHASE_2EDGE);
@@ -293,14 +293,14 @@ int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha,
 	g_handle[_index].Init.FirstBit    = _lsb_first ? SPI_FIRSTBIT_LSB : SPI_FIRSTBIT_MSB;
 	HAL_SPI_Init(&g_handle[_index]);
 	
-    // initialize the DMA
+    /* initialize the DMA */
 	SPI_DMA_CLK_ENABLE(_index);
 	HAL_DMA_Init(&g_rx_dma[_index]);
     __HAL_LINKDMA(&g_handle[_index], hdmarx, g_rx_dma[_index]);
     HAL_DMA_Init(&g_tx_dma[_index]);
     __HAL_LINKDMA(&g_handle[_index], hdmatx, g_tx_dma[_index]);
 	
-	// initialize the NVIC
+	/* initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);

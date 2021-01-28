@@ -23,7 +23,7 @@ extern "C" {
  */
 #define CAN0_INDEX                              0
 #define CAN1_INDEX                              1
-/** @} */ // The CAN channel indexes
+/** @} */ /* The CAN channel indexes */
 
 /**
  * @name The CAN power modes
@@ -31,9 +31,9 @@ extern "C" {
  */
 #define CAN_PWR_MODE_SLEEP                      0
 #define CAN_PWR_MODE_RUN                        1
-/** @} */ // The CAN power modes
+/** @} */ /* The CAN power modes */
 
-#define CAN_BUFFER_SIZE                         10 ///< the CAN RX queue max size
+#define CAN_BUFFER_SIZE                         10 /**< the CAN RX queue max size */
 
 /**
  * The CAN message structure
@@ -75,18 +75,18 @@ int32_t can_deinit(const uint8_t _index);
  * @param [in]  _size the size to receive
  * @return the received size
  */
-uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t *const _buf,  const uint8_t _size);
+uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t _buf[],  const uint8_t _size);
 
 /**
- * Transmit a CAN message.
+ * Send a CAN message.
  *
  * @param [in] _index the CAN channel index
- * @param [in] _id the transmitted CAN ID
- * @param [in] _buf the buffer to transmit from
- * @param [in] _size the size to transmit
- * @return the transmitted size
+ * @param [in] _id the sent CAN ID
+ * @param [in] _buf the buffer to send from
+ * @param [in] _size the size to send
+ * @return the sent size
  */
-uint8_t can_transmit(const uint8_t _index, const uint32_t _id, const uint8_t *const _buf, const uint8_t _size);
+uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[], const uint8_t _size);
 
 /**
  * Transfer the CAN power mode.

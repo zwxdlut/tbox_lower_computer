@@ -81,7 +81,7 @@ void __svc( 0 ) EnablePrivilegedMode( void );
 #define TRANSFER_RE_SEND                        0x41
 #define TRANSFER_ACK                            0x45
 #define TRANSFER_BREAK                          0x46
-#define TRANSFER_BLOCK_SIZE                   512
+#define TRANSFER_BLOCK_SIZE                     512
 /** @} */ /* Transfer data protocal. */
 
 /** 
@@ -453,7 +453,7 @@ static int32_t transmit_callback(const uint32_t _id, const uint8_t *const _buf, 
 
 	if(SERVER_TX_ID != _id && !diag_server_comm_ctrl_tx_enabled(COMM_MSG_TYPE_MASK_NCM))
 		return -1;
-	if(0 == can_transmit(CAN0_INDEX, _id, _buf, _size))
+	if(0 == can_send(CAN0_INDEX, _id, _buf, _size))
 		return -1;
 	print_buf("CAN TX", _id, _buf, _size);
 
@@ -473,7 +473,7 @@ static void update_by_uart(void)
 	/* Request update */
 	*((uint16_t*)g_code_buf) = UPDATE_NOTIFY_ID;
 	*((uint16_t*)(g_code_buf + ID_LENGTH)) = TRANSFER_BLOCK_SIZE;
-	uart_transmit_with_header(UART0_INDEX, g_code_buf, ID_LENGTH + 2);
+	uart_send_with_header(UART0_INDEX, g_code_buf, ID_LENGTH + 2);
 	print_buf("FBL UART TX", 0, g_code_buf, ID_LENGTH + 2);
 
 	/* Start waiting for transfer data */
@@ -597,8 +597,8 @@ static void update_by_uart(void)
 				goto CONTINUE;
 			case '3':
 				addr_len = 4;
-
-CONTINUE:		for(uint8_t i = 0; i < addr_len; i++)
+CONTINUE:
+				for(uint8_t i = 0; i < addr_len; i++)
 				{
 					addr |= buf[ADDRESS_INDEX + i] << ((addr_len - i - 1) * 8);
 				}
@@ -661,7 +661,7 @@ CONTINUE:		for(uint8_t i = 0; i < addr_len; i++)
 		/* ACK */
 		*((uint16_t*)buf) = TRANSFER_DATA_ID;
 		buf[ID_LENGTH] = TRANSFER_ACK;
-		uart_transmit_with_header(UART0_INDEX, buf, ID_LENGTH + 1);
+		uart_send_with_header(UART0_INDEX, buf, ID_LENGTH + 1);
 		print_buf("FBL UART TX", 0, buf, ID_LENGTH + 1);
 	}
 	

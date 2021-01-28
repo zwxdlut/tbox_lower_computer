@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; // the TX mutex
+extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* the TX mutex */
 #endif
 
-extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // the ring queue
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; // the ring queue head
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; // the ring queue tail
+extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; /* the ring queue */
+extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* the ring queue head */
+extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* the ring queue tail */
 
 /*******************************************************************************
  * Local function prototypes
@@ -24,16 +24,16 @@ extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; // the ring queue tail
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(UART1_INDEX >= _index && NULL != _buf);
 
 	uint16_t i = 0;
 
-	// check if the RX queue is not empty
+	/* check if the RX queue is not empty */
 	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
 	{
-		// pop the RX queue
+		/* pop the RX queue */
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
 		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_BUFFER_SIZE;
 	}
@@ -41,14 +41,14 @@ uint16_t uart_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t 
 	return i;
 }
 
-uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(NULL != _buf);
 
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
-	// receive 0xAA
+	/* receive 0xAA */
 	size = 1;
 
 	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
@@ -56,7 +56,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		return 0;
 	}
 
-	// receive 0x55
+	/* receive 0x55 */
 	size = 1;
 	out_size = 0;
 
@@ -73,7 +73,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		return 0;
 	}
 
-	// receive data length
+	/* receive data length */
 	size = HEADER_SIZE - 2;
 	out_size = 0;
 
@@ -85,7 +85,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
 
-	// receive data
+	/* receive data */
 	memcpy(&size, _buf, HEADER_SIZE - 2);
 	size = _size > size ? size : _size;
 	out_size = 0;
@@ -101,7 +101,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t *const _bu
 	return size;
 }
 
-uint16_t uart_transmit_with_header(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+uint16_t uart_send_with_header(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(UART1_INDEX >= _index && NULL != _buf);
 
@@ -117,10 +117,10 @@ uint16_t uart_transmit_with_header(const uint8_t _index, const uint8_t *const _b
 	header[1] = HEADER_FLAG & 0xFF;
 	header[2] = _size;
 	header[3] = _size >> 8;
-	size = uart_transmit(_index, header, HEADER_SIZE);
+	size = uart_send(_index, header, HEADER_SIZE);
 #endif
 
-	size += uart_transmit(_index, _buf, _size);
+	size += uart_send(_index, _buf, _size);
 
 #if defined USING_OS_FREERTOS
 	xSemaphoreGiveRecursive( g_uart_tx_mutex[_index] );
@@ -139,17 +139,19 @@ void debug(const char* _info, ...)
 #endif
 }
 
-void print_buf(const char *_prefix, const uint32_t _id, const uint8_t *_buf, const uint16_t _size)
+void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], const uint16_t _size)
 {
 #if defined UDEBUG
 #if defined USING_OS_FREERTOS
 	static SemaphoreHandle_t g_debug_mutex;
 	static bool init = false;
+
 	if (!init)
 	{
 		g_debug_mutex = xSemaphoreCreateMutex();
 		init = true;
 	}
+
 	xSemaphoreTake( g_debug_mutex, portMAX_DELAY);
 #endif
 
@@ -169,7 +171,7 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t *_buf, con
 }
 
 /**
- * @name Retarget printf.
+ * @name Retarget printf
  * @{
  */
 #if defined __EWL__
@@ -177,10 +179,9 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t *_buf, con
 UARTError InitializeUART(UARTBaudRate baudRate)
 {
 #if defined UDEBUG
-	return uart_init(UART1_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
-#else
-	return kUARTNoError;
+	uart_init(UART1_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 #endif
+	return kUARTNoError;
 }
 
 UARTError ReadUARTN(void* bytes, unsigned long limit)
@@ -193,21 +194,20 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 		size += uart_receive(UART1_INDEX, bytes + size, limit - size);
 	}
 #endif
-
 	return kUARTNoError;
 }
 
 UARTError WriteUARTN(const void * bytes, unsigned long length)
 {
 #if defined UDEBUG
-	uart_transmit(UART1_INDEX, bytes, length);
+	uart_send(UART1_INDEX, bytes, length);
 #endif
 	return kUARTNoError;
 }
 #elif defined __NEWLIB__
-#if defined UDEBUG
 int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
+#if defined UDEBUG
 	static bool init = false;
 
 	if (!init)
@@ -216,11 +216,12 @@ int _write(int iFileHandle, char *pcBuffer, int iLength)
 		init = true;
 	}
 
-	return uart_transmit(UART1_INDEX, (uint8_t*)pcBuffer, iLength);
-}
+	return uart_send(UART1_INDEX, (uint8_t*)pcBuffer, iLength);
+#else
+	return 0;
 #endif
+}
 #elif defined __ARMCLIB_VERSION
-#if defined UDEBUG
 #pragma import(__use_no_semihosting)
 
 void _sys_exit(int x)
@@ -242,6 +243,7 @@ FILE __stdout;
 
 int fputc(int ch, FILE *f)
 {
+#if defined UDEBUG
 	static bool init = false;
 
 	if (!init)
@@ -250,13 +252,12 @@ int fputc(int ch, FILE *f)
 		init = true;
 	}
 
-	uart_transmit(UART1_INDEX, (uint8_t*)(&ch), 1);
-
+	uart_send(UART1_INDEX, (uint8_t*)(&ch), 1);
+#endif
 	return (ch);
 }
 #endif
-#endif
-/** @} */ // Retarget printf.
+/** @} */ /* Retarget printf */
 
 /*******************************************************************************
  * Local functions

@@ -36,7 +36,7 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	TIM_TimeBaseInitTypeDef  TIM_TimeBaseStructure;
 	NVIC_InitTypeDef         NVIC_InitStructure;
 
- 	// initialize the timer
+ 	/* initialize the timer */
 	TIMER_CLK_ENABLE(_index);
 	RCC_GetClocksFreq(&clks);
 	TIM_TimeBaseStructure.TIM_Prescaler     = 2 * clks.PCLK1_Frequency / g_timer_config[_index].clk_ - 1;
@@ -46,7 +46,7 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	TIM_TimeBaseInit(g_handle[_index], &TIM_TimeBaseStructure);
 	TIM_ITConfig(g_handle[_index], TIM_IT_Update, ENABLE);
 	
-	// initialize the NVIC
+	/* initialize the NVIC */
 	NVIC_InitStructure.NVIC_IRQChannel                   = g_timer_config[_index].irq_;  
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;         
@@ -96,7 +96,7 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -106,7 +106,7 @@ void TIMER0_IRQ_HANDLER(void)
 {
 	timer_irq_handler(TIMER0_INDEX);
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /******************************************************************************
  * Local functions
@@ -118,7 +118,7 @@ void TIMER0_IRQ_HANDLER(void)
  */
 static void timer_irq_handler(const uint8_t _index)
 {
-	// the timer update event
+	/* the timer update event */
 	if (TIM_GetITStatus(g_handle[_index], TIM_IT_Update) != RESET)
 	{
 		TIM_ClearITPendingBit(g_handle[_index], TIM_IT_Update);

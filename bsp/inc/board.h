@@ -24,7 +24,7 @@ extern "C" {
  */
 #define PWR_MODE_SLEEP                          0
 #define PWR_MODE_DEEPSLEEP                      1
-/** @} */ // The power modes
+/** @} */ /* The power modes */
 
 /*******************************************************************************
  * Function prototypes
@@ -101,4 +101,4 @@ int32_t wdog_disable(void);
 }
 #endif
 
-#endif // __BOARD_H__
+#endif /* __BOARD_H__ */

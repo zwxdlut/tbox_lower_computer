@@ -14,7 +14,7 @@ extern void xPortSysTickHandler(void);
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-static uint32_t g_sys_tick_cnt = 0; // the SysTick count
+static uint32_t g_sys_tick_cnt = 0; /* the SysTick count */
 
 /*******************************************************************************
  * Local function prototypes
@@ -24,7 +24,7 @@ static uint32_t g_sys_tick_cnt = 0; // the SysTick count
  ******************************************************************************/
 int32_t sys_init(void)
 {
-	// setup the SysTick
+	/* setup the SysTick */
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock/1000);
 	return 0;
@@ -36,7 +36,7 @@ void gpio_init(void)
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	// initialize the LEDs
+	/* initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.GPIO_Pin   = LED0_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -52,7 +52,7 @@ void gpio_init(void)
 	GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	GPIO_WriteBit(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	// initialize the buttons
+	/* initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_InitStructure.GPIO_Pin  = BTN_PIN;
@@ -118,7 +118,7 @@ void sys_reset(void)
 void pwr_mode_trans(const uint8_t _mode)
 {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
-	// suspend the SysTick
+	/* suspend the SysTick */
 	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
 	switch(_mode)
@@ -133,14 +133,14 @@ void pwr_mode_trans(const uint8_t _mode)
 	}
 
 	SystemInit();
-	// resume the SysTick
+	/* resume the SysTick */
 	SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk); 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, DISABLE);
 }
 
 int32_t wdog_enable(void)
 {
-#if 0 // the individual watch dog
+#if 0 /* the individual watch dog */
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
 	IWDG_SetPrescaler(IWDOG_PRV);
 	IWDG_SetReload(IWDOG_RLV);
@@ -166,7 +166,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 // the individual watch dog
+#if 0 /* the individual watch dog */
 	IWDG_ReloadCounter();	
 #endif
 
@@ -191,7 +191,7 @@ int32_t wdog_disable(void)
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -222,7 +222,7 @@ void WWDG_IRQHandler(void)
 {
 	sys_reset();
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
  * Local functions

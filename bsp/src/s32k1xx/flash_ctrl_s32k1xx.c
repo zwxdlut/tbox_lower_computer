@@ -10,15 +10,15 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-// Declare a FLASH config struct which initialized by FlashInit, and will be used by all flash operations.
+/* Declare a FLASH config struct which initialized by FlashInit, and will be used by all flash operations. */
 static flash_ssd_config_t g_flash_ssd_cfg;
 
 /*******************************************************************************
  * Local function prototypes
  ******************************************************************************/
-// Function declarations
+/* Function declarations */
 void CCIF_Handler(void);
-// If target is flash, insert this macro to locate callback function into RAM.
+/* If target is flash, insert this macro to locate callback function into RAM. */
 START_FUNCTION_DECLARATION_RAMSECTION
 void CCIF_Callback(void)
 END_FUNCTION_DECLARATION_RAMSECTION
@@ -165,7 +165,7 @@ bool flash_ctrl_is_sector_aligned(const uint32_t _addr)
 	return (0 == (_addr - FLASH_BASE_ADDR) % FLASH_SECTOR_SIZE );
 }
 
-int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
     status_t ret;        /* Store the driver APIs return code */
 
@@ -178,7 +178,7 @@ int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uin
     return ret;
 }
 
-int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
     status_t ret;        /* Store the driver APIs return code */
     uint32_t fail_addr;
@@ -193,7 +193,7 @@ int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, co
     return ret;
 }
 
-int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
     status_t ret = STATUS_SUCCESS;        /* Store the driver APIs return code */
 

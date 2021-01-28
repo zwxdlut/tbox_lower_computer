@@ -22,7 +22,7 @@ extern "C" {
  * @{
  */
 #define I2C0_INDEX       		                0
-/** @} */ // The I2C channel indexes
+/** @} */ /* The I2C channel indexes */
 
 /** 
  * @name The EEPROM configuration
@@ -31,9 +31,9 @@ extern "C" {
  * 
  * @{
  */
-#define EEPROM_ADDR              			     0x50 ///< The device address, 7bit without R/W bit.
-#define EEPROM_PAGE_SIZE                         8 ///< the page size in bytes
-#define EEPROM_TOTAL_SIZE                        256 ///< the total size in bytes
+#define EEPROM_ADDR              			     0x50 /**< The device address, 7bit without R/W bit. */
+#define EEPROM_PAGE_SIZE                         8 /**< the page size in bytes */
+#define EEPROM_TOTAL_SIZE                        256 /**< the total size in bytes */
 #define EEPROM_ADDR_RESET_TYPE                   0x00
 #define EEPROM_SIZE_RESET_TYPE                   1
 #define EEPROM_ADDR_SSECUHWVN                    (EEPROM_ADDR_RESET_TYPE + EEPROM_SIZE_RESET_TYPE)
@@ -60,16 +60,16 @@ extern "C" {
 #define EEPROM_SIZE_DTC                          21
 #define EEPROM_ADDR_INIT                         EEPROM_TOTAL_SIZE - 1
 #define EEPROM_SIZE_INIT                         1
-/** @} */ // The EEPROM configuration
+/** @} */ /* The EEPROM configuration */
 
 /** 
- * @name the accelerometer configuration.
+ * @name the accelerometer configuration
  * 
  * 3-axis, 12-bit/8-bit digital accelerometer MMA8452Q.
  * 
  * @{
  */
-#define ACCR_ADDR                       		0x1C ///< the device address, 7bit without R/W bit.
+#define ACCR_ADDR                       		0x1C /**< the device address, 7bit without R/W bit. */
 #define ACCR_STATUS_REG	                        0x00
 #define ACCR_OUT_X_MSB_REG	                    0x01
 #define ACCR_OUT_X_LSB_REG	                    0x02
@@ -116,18 +116,18 @@ extern "C" {
 #define ACCR_OFF_Y_REG			                0x30
 #define ACCR_OFF_Z_REG			                0x31
 //#define ACCR_RESERVED_REG		                0x40-0x7F
-/** @} */ // the accelerometer configuration.
+/** @} */ /* the accelerometer configuration */
 
 /** 
- * @name The accelerometer system modes.
+ * @name The accelerometer system modes
  * @{
  */
 #define ACCR_SYSMOD_STANDBY                     0u
 #define ACCR_SYSMOD_ACTIVE                      1u
-/** @} */ // The accelerometer system modes.
+/** @} */ /* The accelerometer system modes */
 
 /** 
- * @name The accelerometer interrupt source mask.
+ * @name The accelerometer interrupt source mask
  * @{
  */
 #define ACCR_INT_NONE_MASK                      0x00
@@ -137,7 +137,7 @@ extern "C" {
 #define ACCR_INT_PULSE_MASK                     0x08
 #define ACCR_INT_FF_MT_MASK                     0x04
 #define ACCR_INT_DRDY_MASK                      0x01
-/** @} */ // The accelerometer interrupt source mask.
+/** @} */ /* The accelerometer interrupt source mask */
 
 /******************************************************************************
  * Function prototypes
@@ -170,19 +170,19 @@ int32_t i2c_master_deinit(const uint8_t _index);
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *const _buf, const uint16_t _size, const bool _stop);
+int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
- * Transmit data to the specified slave device.
+ * Send data to the specified slave device.
  *
  * @param [in] _index the I2C channel index
  * @param [in] _addr the slave device address(7 bit without R/W bit)
- * @param [in] _buf the buffer to transmit from
- * @param [in] _size the size to transmit
+ * @param [in] _buf the buffer to send from
+ * @param [in] _size the size to send
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const uint8_t *const _buf, const uint16_t _size, const bool _stop);
+int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
  * Read data from the EEPROM.
@@ -192,7 +192,7 @@ int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const ui
  * @param [in] _size the size to read
  * @return 0(success) or other values(failure)
  */
-int32_t eeprom_read(const uint8_t _addr, uint8_t *const _buf, const uint16_t _size);
+int32_t eeprom_read(const uint8_t _addr, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Write data to the EEPROM.
@@ -202,7 +202,7 @@ int32_t eeprom_read(const uint8_t _addr, uint8_t *const _buf, const uint16_t _si
  * @param [in] _size the size to write
  * @return 0(success) or other values(failure)
  */
-int32_t eeprom_write(const uint8_t _addr, const uint8_t *const _buf, const uint16_t _size);
+int32_t eeprom_write(const uint8_t _addr, const uint8_t _buf[], const uint16_t _size);
 
 /**
  * Reset the accelerometer.
@@ -252,10 +252,10 @@ uint8_t accr_get_int_src(void);
  * @param [in] _size the size to get
  * @return 0(success) or other values(failure)
  */
-int32_t accr_get_xyz_sample(uint8_t *const _buf, const uint8_t _size);
+int32_t accr_get_xyz_sample(uint8_t _buf[], const uint8_t _size);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __I2C_H__
+#endif /* __I2C_H__ */

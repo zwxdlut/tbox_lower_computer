@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; // the TX mutex
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; // the ring queue
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; // the ring queue head
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; // the ring queue tail
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; /* the ring queue */
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* the ring queue head */
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* the ring queue tail */
 
 typedef struct
 {
@@ -83,7 +83,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 
-	// initialize the RX ring queue
+	/* initialize the RX ring queue */
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 	
@@ -91,7 +91,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 	
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	UART_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].rx_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_PP;
@@ -103,7 +103,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	GPIO_InitStructure.Pull      = GPIO_NOPULL;
 	HAL_GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	// initialize the UART
+	/* initialize the UART */
 	UART_CLK_ENABLE(_index);
 	g_handle[_index].Init.BaudRate   = _baudrate;
 	g_handle[_index].Init.WordLength = _data_bits;
@@ -113,7 +113,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	LL_USART_EnableIT_RXNE(g_handle[_index].Instance);
 	LL_USART_EnableIT_ERROR(g_handle[_index].Instance);
 	
-	// initialize the NVIC
+	/* initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);
@@ -148,7 +148,7 @@ int32_t uart_deinit(const uint8_t _index)
 	return 0;
 }
 
-uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(UART1_INDEX >= _index && NULL != _buf);
 
@@ -171,7 +171,7 @@ uint16_t uart_transmit(const uint8_t _index, const uint8_t *const _buf, const ui
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /**
@@ -189,7 +189,7 @@ void UART1_IRQ_HANDLER(void)
 {
 	uart_irq_handler(UART1_INDEX);
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
  * Local functions
@@ -201,15 +201,15 @@ void UART1_IRQ_HANDLER(void)
  */
 static void uart_irq_handler(const uint8_t _index)
 {
-	// RXNE
+	/* RXNE */
 	if (0 != LL_USART_IsActiveFlag_RXNE(g_handle[_index].Instance) && 0 != LL_USART_IsEnabledIT_RXNE(g_handle[_index].Instance))
 	{
 		LL_USART_ClearFlag_RXNE(g_handle[_index].Instance);
 
-		// check if the RX queue is not full
+		/* check if the RX queue is not full */
 		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE)
 		{
-			// push the RX queue
+			/* push the RX queue */
 			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = LL_USART_ReceiveData8(g_handle[_index].Instance);
 			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE;
 		}		

@@ -24,15 +24,15 @@ volatile int exit_code = 0;
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
 /**
- * @brief   The main function for the project.
+ * @brief The main function for the project.
  *
  * @details The startup initialization sequence is the following:
- *          	- __start (startup asm routine)
- *          	- __init_hardware()
- *          	- main()
- *          	- PE_low_level_init()
- *          	- Common_Init()
- *		    	- Peripherals_Init()
+ *  - __start (startup asm routine)
+ *  - __init_hardware()
+ *  - main()
+ *   - PE_low_level_init()
+ *    - Common_Init()
+ *		- Peripherals_Init()
  */
 int main(void)
 {

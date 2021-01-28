@@ -104,7 +104,7 @@ bool flash_ctrl_is_sector_aligned(const uint32_t _addr)
 	return (0 == (_addr - FLASH_BASE_ADDR) % FLASH_SECTOR_SIZE );	
 }
 
-int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
 	assert(_addr >= FLASH_BASE_ADDR && (_addr + _size <= FLASH_BASE_ADDR + FLASH_TOTAL_SIZE) && NULL != _buf);
 	assert(0 == _size % 2);
@@ -139,7 +139,7 @@ int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uin
     return ret;
 }
 
-int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
 	assert(_addr >= FLASH_BASE_ADDR && (_addr + _size <= FLASH_BASE_ADDR + FLASH_TOTAL_SIZE) && NULL != _buf);
 
@@ -180,7 +180,7 @@ int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, co
     return ret;
 }
 
-int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t *const _buf)
+int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[])
 {
 	return 0;
 }

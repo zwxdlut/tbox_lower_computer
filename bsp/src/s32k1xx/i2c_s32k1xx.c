@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; // the RX/TX mutex
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* the RX/TX mutex */
 #endif
 
 typedef struct
@@ -68,7 +68,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].scl_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].sda_pin_, g_comm_config[_index].gpio_af_);
 
@@ -107,7 +107,7 @@ int32_t i2c_master_deinit(const uint8_t _index)
 	return 0;
 }
 
-int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *const _buf, const uint16_t _size, const bool _stop)
+int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 
@@ -131,7 +131,7 @@ int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t *
 	return 0;
 }
 
-int32_t i2c_master_transmit(const uint8_t _index, const uint16_t _addr, const uint8_t *const _buf, const uint16_t _size, const bool _stop)
+int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
 	assert(I2C0_INDEX >= _index && NULL != _buf);
 

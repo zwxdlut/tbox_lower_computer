@@ -9,80 +9,92 @@
 
 #include "ECanVci.h"
 
-/* CAN device type */
+/**
+ * @name The CAN device types
+ * @{
+ */
 #define USBCAN_I						        USBCAN1
 #define USBCAN_II                               USBCAN2
-										        
-/* CAN device index */					        
+ /** @} */ /* The CAN device types */
+
+/**
+ * @name The CAN device indexes
+ * @{
+ */
 #define CAN_DEV_IDX0					        0
 #define CAN_DEV_IDX1                            1
-										        
-/* CAN channel number */				        
+ /** @} */ /* The CAN device indexes */
+	
+/**
+ * @name The CAN channel numbers
+ * @{
+ */
 #define CAN_CHL0                                0
 #define CAN_CHL1                                1
+ /** @} */ /* The CAN channel numbers */
 
 /** 
- * @brief CAN comunication class.
+ * The CAN communication class.
  */
 class can
 {
 public:
 	/**
-	 * @brief  Constructor.
+	 * The constructor.
 	 *
-	 * @param  [in] _dev_type  Device type.
-	 * @param  [in] _dev_idx   Device index.
+	 * @param [in] _dev_type the device type
+	 * @param [in] _dev_idx the device index
 	 */
 	can(const uint8_t _dev_type, const uint8_t _dev_idx);
 
 	/** 
-	 * @brief Destructor. 
+	 * The destructor.
 	 */
 	~can(void);
 
 	/**
-	 * @brief  Open device.
+	 * Open the device.
 	 *
-	 * @return Success(0) or failure(other values).
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t open(void);
 
 	/**
-	 * @brief  Close device.
+	 * Close the device.
 	 *
-	 * @return Success(0) or failure(other values).
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t close(void);
 
 	/**
-	 * @brief  Initialize channel.
+	 * Initialize the CAN.
 	 *
-	 * @param  [in] _chl   Channel number.
-	 * @return Success(0) or failure(other values).
+	 * @param [in] _chl the CAN channel number
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t init(const uint8_t _chl);
 
 	/**
-	 * @brief  Receive frame.
+	 * Receive a CAN message.
 	 *
-	 * @param  [in]  _chl   Channel number.
-	 * @param  [out] _id    CAN ID.
-	 * @param  [out] _buf   Receive buffer.
-	 * @param  [in]  _size  Receive size.
-	 * @return Received size.
+	 * @param [in]  _index the CAN channel number
+	 * @param [out] _id the received CAN ID
+	 * @param [out] _buf the buffer to receive to
+	 * @param [in]  _size the size to receive
+	 * @return the received size
 	 */
-	uint8_t receive(const uint8_t _chl, uint32_t* const _id, uint8_t* const _buf, const uint8_t _size);
+	uint8_t receive(const uint8_t _chl, uint32_t* const _id, uint8_t _buf[], const uint8_t _size);
 
 	/**
-	 * @brief  Transmit frame.
+	 * Send a CAN message.
 	 *
-	 * @param  [in] _chl   Channel number.
-	 * @param  [in] _id    CAN ID.
-	 * @param  [in] _buf   Transmit buffer.
-	 * @param  [in] _size  Transmit size.
-	 * @return Transmitted size.
+	 * @param [in] _index the CAN channel number
+	 * @param [in] _id the sent CAN ID
+	 * @param [in] _buf the buffer to send from
+	 * @param [in] _size the size to send
+	 * @return the sent size
 	 */
-	uint8_t transmit(const uint8_t _chl, const uint32_t _id, const uint8_t *const _buf, const uint8_t _size);
+	uint8_t send(const uint8_t _chl, const uint32_t _id, const uint8_t _buf[], const uint8_t _size);
 
 private:
 	uint8_t    dev_type_;

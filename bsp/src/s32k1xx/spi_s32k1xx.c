@@ -89,7 +89,7 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 {
     spi_init(_index);
 
-	// initialize the master SPI
+	/* initialize the master SPI */
     g_master_config[_index]->bitsPerSec = _baudrate;
 	g_master_config[_index]->clkPolarity = (SPI_CPOL_LOW == _cpol ? LPSPI_SCK_ACTIVE_HIGH : LPSPI_SCK_ACTIVE_LOW);
 	g_master_config[_index]->clkPhase = (SPI_CPHA_1EDGE == _cpha ? LPSPI_CLOCK_PHASE_1ST_EDGE : LPSPI_CLOCK_PHASE_2ND_EDGE);
@@ -107,7 +107,7 @@ int32_t spi_master_deinit(const uint8_t _index)
 	return spi_deinit(_index);
 }
 
-int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
@@ -128,7 +128,7 @@ int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint
 	return 0;
 }
 
-int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
@@ -151,7 +151,7 @@ int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t 
 {
     spi_init(_index);
 
-	// initialize the slave SPI
+	/* initialize the slave SPI */
 	g_slave_config[_index]->clkPolarity = (SPI_CPOL_LOW == _cpol ? LPSPI_SCK_ACTIVE_HIGH : LPSPI_SCK_ACTIVE_LOW);
 	g_slave_config[_index]->clkPhase = (SPI_CPHA_1EDGE == _cpha ? LPSPI_CLOCK_PHASE_1ST_EDGE : LPSPI_CLOCK_PHASE_2ND_EDGE);
 	g_slave_config[_index]->bitcount = _data_bits;
@@ -167,7 +167,7 @@ int32_t spi_slave_deinit(const uint8_t _index)
 	return spi_deinit(_index);
 }
 
-int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
@@ -188,7 +188,7 @@ int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint1
 	return 0;
 }
 
-int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 
@@ -218,7 +218,7 @@ int32_t spi_init(const uint8_t _index)
 
     EDMA_DRV_Init(&dmaController1_State, &dmaController1_InitConfig0, edmaChnStateArray, edmaChnConfigArray, EDMA_CONFIGURED_CHANNELS_COUNT);
 
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sck_port_, g_comm_config[_index].sck_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdi_port_, g_comm_config[_index].sdi_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].sdo_port_, g_comm_config[_index].sdo_pin_, g_comm_config[_index].gpio_af_);

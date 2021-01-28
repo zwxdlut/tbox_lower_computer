@@ -28,13 +28,13 @@ int32_t spi_master_deinit(const uint8_t _index)
 	return 0;
 }
 
-int32_t spi_master_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);
 	return 0;
 }
 
-int32_t spi_master_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index && NULL != _buf);	
 	return 0;
@@ -52,13 +52,13 @@ int32_t spi_slave_deinit(const uint8_t _index)
 	return 0;
 }
 
-int32_t spi_slave_receive(const uint8_t _index, uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index);
 	return 0;
 }
 
-int32_t spi_slave_transmit(const uint8_t _index, const uint8_t *const _buf, const uint16_t _size)
+int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(SPI0_INDEX >= _index);
 	return 0;

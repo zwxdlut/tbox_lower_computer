@@ -8,7 +8,7 @@
 #include <mutex>
 
 /**
- * @defgroup Serial port data bits.
+ * @name The serial port data bits
  * @{
  */
 #define SP_DATA_BITS_4                            4
@@ -16,19 +16,19 @@
 #define SP_DATA_BITS_6                            6
 #define SP_DATA_BITS_7                            7
 #define SP_DATA_BITS_8                            8
- /** @} */ /* End of group Serial port data bits. */
+ /** @} */ /* The serial port data bits */
 
 /**
- * @defgroup Serial port stop bits.
+ * @name The serial port stop bits
  * @{
  */
 #define SP_STOP_BITS_1                            0
 #define SP_STOP_BITS_1_5                          1
 #define SP_STOP_BITS_2                            2
- /** @} */ /* End of group Serial port stop bits. */
+ /** @} */ /* The serial port stop bits */
 
 /**
- * @defgroup Serial port parity.
+ * @name The serial port parity
  * @{
  */
 #define SP_PARITY_MODE_NONE                       0
@@ -36,9 +36,9 @@
 #define SP_PARITY_MODE_EVEN                       2
 #define SP_PARITY_MODE_MARK                       3
 #define SP_PARITY_MODE_SPACE                      4
- /** @} */ /* End of group Serial port parity. */
+ /** @} */ /* The serial port parity */
 
-#define SERIAL_PORT_BUFFER_SIZE                   1024 /**< Serial port buffer size. */
+#define SERIAL_PORT_BUFFER_SIZE                   1024 ///< the serial port buffer size
 
 /*-----------------------------------------------------------------------------------
  * Header
@@ -52,92 +52,95 @@
 #define HEADER_SIZE  	                          4
 
 /** 
- * @brief Serial port communication class. 
+ * The serial port communication class.
+ * TODO: serial port channels management
  */
 class serial_port
 {
 public:
 	/** 
-	 * @brief Constructor. 
+	 * The constructor
 	 */
 	serial_port(void);
 
 	/** 
-	 * @brief Destructor. 
+	 * The destructor
 	 */
 	~serial_port(void);
 
 	/**
-	 * @brief  Open serial port.
+	 * Open the serial port.
 	 *
-	 * @param  [in] _com       UART number.
-	 * @param  [in] _baud_rate Baud rate.
-	 * @param  [in] _data_bits Data bits:
-	 *              @arg SP_DATA_BITS_4 4 bits data.
-	 *              @arg SP_DATA_BITS_5 5 bits data.
-	 *              @arg SP_DATA_BITS_6 6 bits data.
-     *              @arg SP_DATA_BITS_7 7 bits data.
-	 *              @arg SP_DATA_BITS_8 8 bits data.
-	 * @param  [in] _stop_bits Stop bits:
-	 *              @arg SP_STOP_BITS_1   1 stop bit.
-	 *              @arg SP_STOP_BITS_1_5 1.5 stop bits.
-	 *              @arg SP_STOP_BITS_2   2 stop bits.
-	 * @param  [in] _parity    Partiy:
-	 *              @arg SP_PARITY_MODE_NONE  No parity.
-	 *              @arg SP_PARITY_MODE_ODD   Odd parity.
-	 *              @arg SP_PARITY_MODE_EVEN  Even parity.
-	 *              @arg SP_PARITY_MODE_MARK  Mark parity.
-	 *              @arg SP_PARITY_MODE_SPACE Space parity.
-	 * @return Success(0) or failure(other values).
+	 * @param [in] _chl the serial port channel number
+	 * @param [in] _baudrate the baud rate
+	 * @param [in] _data_bits the data bits:
+	 * <ul>
+	 * <li>{@link SP_DATA_BITS_4} 4 bits data</li>
+	 * <li>{@link SP_DATA_BITS_5} 5 bits data</li>
+	 * <li>{@link SP_DATA_BITS_6} 6 bits data</li>
+     * <li>{@link SP_DATA_BITS_7} 7 bits data</li>
+	 * <li>{@link SP_DATA_BITS_8} 8 bits data</li>
+	 * </ul>
+	 * @param [in] _stop_bits the stop bits:
+	 * <ul>
+	 * <li>{@link SP_STOP_BITS_1} 1 stop bit</li>
+	 * <li>{@link SP_STOP_BITS_1_5} 1.5 stop bit</li>
+	 * <li>{@link SP_STOP_BITS_2} 2 stop bit</li>
+	 * </ul>
+	 * @param [in] _parity the partity:
+	 * <ul>
+	 * <li>{@link SP_PARITY_MODE_NONE} no parity</li>
+	 * <li>{@link SP_PARITY_MODE_ODD} even parity</li>
+	 * <li>{@link SP_PARITY_MODE_EVEN} odd parity</li>
+	 * <li>{@link SP_PARITY_MODE_MARK} mark parity</li>
+	 * <li>{@link SP_PARITY_MODE_SPACE} space parity</li>
+	 * </ul>
+	 * @return 0(success) or other values(failure)
 	 */
-	int32_t open(const std::string &_com,
-				 const uint32_t _baud_rate,
-				 const uint32_t _data_bits,
-				 const uint32_t _stop_bits,
-				 const uint32_t _parity);
+	int32_t open(const std::string &_chl, const uint32_t _baud_rate, const uint32_t _data_bits, const uint32_t _stop_bits, const uint32_t _parity);
 
 	/**
-	 * @brief  Close serial port.
+	 * Close the serial port.
 	 *
-	 * @return Success(0) or failure(other values).
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t close(void);
 
 	/**
-	 * @brief  Receive data.
-	 *
-	 * @param  [out] _buf   Receive buffer.
-	 * @param  [in]  _size  Receive size.
-	 * @return Received size.
-	 */
-	uint16_t receive(uint8_t *const _buf, const uint16_t _size);
+	* Receive data.
+	*
+	* @param [out] _buf the buffer to receive to
+	* @param [in]  _size the size to receive
+	* @return the received size
+	*/
+	uint16_t receive(uint8_t _buf[], const uint16_t _size);
 
 	/**
-	 * @brief  Receive data with header(0xAA55) in poll mode.
-	 *
-	 * @param  [out] _buf   Receive buffer.
-	 * @param  [in]  _size  Receive size.
-	 * @return Received size without header.
-	 */
-	uint16_t receive_with_header_poll(uint8_t* const _buf, const uint16_t _size);
+	* Receive data with header(0xAA55) in poll mode.
+	*
+	* @param [out] _buf the buffer to receive to
+	* @param [in]  _size the size to receive
+	* @return the received size without header
+	*/
+	uint16_t receive_with_header_poll(uint8_t _buf[], const uint16_t _size);
 
 	/**
-	 * @brief  Transmit data.
-	 *
-	 * @param  [in] _buf   Transmit buffer.
-	 * @param  [in] _size  Transmit size.
-	 * @return Transmitted size.
-	 */
-	uint16_t transmit(const uint8_t *const _buf, const uint16_t _size);
+	* Send data.
+	*
+	* @param [in] _buf the buffer to send from
+	* @param [in] _size the size to send
+	* @return the sent size
+	*/
+	uint16_t send(const uint8_t _buf[], const uint16_t _size);
 
 	/**
-	 * @brief  Send with header.
+	 * Send data with header.
 	 *
-	 * @param  [in] _buf   Send buffer.
-	 * @param  [in] _size  Send size.
-	 * @return Sent size.
+	 * @param [in] _buf the buffer to send from
+	 * @param [in] _size the size to send
+	 * @return the sent size
 	 */
-	uint16_t transmit_with_header(const uint8_t *const _buf, const uint16_t _size);
+	uint16_t send_with_header(const uint8_t *const _buf, const uint16_t _size);
 
 private:
 	HANDLE               handle_;

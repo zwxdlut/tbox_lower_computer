@@ -21,11 +21,11 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The timer indexes.
+ * @name The timer indexes
  * @{
  */
 #define TIMER0_INDEX                            0
-/** @} */ // The timer indexes.
+/** @} */ /* The timer indexes */
 																	  
 /******************************************************************************
  * Function prototypes
@@ -77,4 +77,4 @@ void timer_irq_callback(const uint8_t _index);
 }
 #endif
 
-#endif // __TIMER_H__
+#endif /* __TIMER_H__ */

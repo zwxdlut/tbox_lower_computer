@@ -65,7 +65,7 @@ void osek_nm_uninit(void)
 
 void presleep_state(void) 
 {
-		nm_state = NM_NORMAL_PREPSLEEP;
+	nm_state = NM_NORMAL_PREPSLEEP;
 }
 
 void reset_nm_state(void)
@@ -87,7 +87,7 @@ void reset_nm_state(void)
 void send_nm_message(const char address, const char opcode)
 {
 	uint8_t message[OSEKNM_DLC] = { address, opcode, 0, 0, 0, 0, 0, 0};
-	can_transmit(can_channel, TBOX_NM_ID_ADDRESS, message, OSEKNM_DLC);
+	can_send(can_channel, TBOX_NM_ID_ADDRESS, message, OSEKNM_DLC);
 }
 
 void send_alive_message(const char address, const char sleep)

@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1]; // the TX mutex
+SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1]; /* the TX mutex */
 #endif
 
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_BUFFER_SIZE]; // the RX ring queue
-uint8_t   g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; // the RX queue head
-uint8_t   g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; // the RX queue tail
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_BUFFER_SIZE]; /* the RX ring queue */
+uint8_t   g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* the RX queue head */
+uint8_t   g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* the RX queue tail */
 
 typedef struct
 {
@@ -70,7 +70,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 	}
 };
 
-// baudrate = APB1 clock(MHz) / prescaler /(1 + BS1 + BS2) = 0.5(500kbps)
+/* baudrate = APB1 clock(MHz) / prescaler /(1 + BS1 + BS2) = 0.5(500kbps) */
 static CanRxMsgTypeDef   g_rx_msg[CAN1_INDEX + 1];
 static CanTxMsgTypeDef   g_tx_msg[CAN1_INDEX + 1];
 static CAN_HandleTypeDef g_handle[CAN1_INDEX + 1] = 
@@ -125,7 +125,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	GPIO_InitTypeDef      GPIO_InitStructure;
 	CAN_FilterConfTypeDef CAN_FilterInitStructure;
 
-	// initialize the RX ring queue
+	/* initialize the RX ring queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 	
@@ -133,7 +133,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	g_can_tx_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 
-	// initialize the CAN Transceiver
+	/* initialize the CAN Transceiver */
 	CAN_TRANS_STB_N_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].trans_stb_n_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_OUTPUT_PP;
@@ -152,7 +152,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	HAL_NVIC_SetPriority(g_comm_config[_index].trans_inh_irq_, 0, 0);
     HAL_NVIC_EnableIRQ(g_comm_config[_index].trans_inh_irq_);
 
-	// initialize the GPIOs
+	/* initialize the GPIOs */
 	CAN_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].rx_pin_ | g_comm_config[_index].tx_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_PP;
@@ -160,12 +160,12 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
 	HAL_GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	// initialize the CAN
+	/* initialize the CAN */
 	CAN_CLK_ENABLE(_index);
 	HAL_CAN_Init(&g_handle[_index]);
 	__HAL_CAN_ENABLE_IT(&g_handle[_index], CAN_IT_FMP0 | CAN_IT_FF0 | CAN_IT_FOV0 | CAN_IT_EWG | CAN_IT_EPV | CAN_IT_BOF | CAN_IT_LEC | CAN_IT_ERR);
 
-	// initialize the CAN filter
+	/* initialize the CAN filter */
 	CAN_FilterInitStructure.FilterIdHigh         = 0;
 	CAN_FilterInitStructure.FilterIdLow          = 0;
 	CAN_FilterInitStructure.FilterMaskIdHigh     = 0;
@@ -208,7 +208,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 		}
 	}
 
-	// initialize the NVIC
+	/* initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);
@@ -245,7 +245,7 @@ int32_t can_deinit(const uint8_t _index)
 	return 0;
 }
 
-uint8_t can_transmit(const uint8_t _index, const uint32_t _id, const uint8_t *const _buf, const uint8_t _size)
+uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[], const uint8_t _size)
 {
 	assert(CAN1_INDEX >= _index && NULL != _buf);
 
@@ -296,7 +296,7 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 }
 
 /**
- * @name The IRQ handlers.
+ * @name The IRQ handlers
  * @{
  */
 /*
@@ -330,7 +330,7 @@ void CAN1_TRANS_INH_IRQ_HANDLER(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(CAN1_TRANS_INH_PIN);
 }
-/** @} */ // The IRQ handlers.
+/** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
  * Local functions
@@ -344,10 +344,10 @@ static void can_irq_handler(const uint8_t _index)
 {
 	assert(CAN1_INDEX >=  _index);
 
-	// FIFO 0 message pending
+	/* FIFO 0 message pending */
 	if (0 != __HAL_CAN_MSG_PENDING(&g_handle[_index], CAN_FIFO0) && RESET != __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_FMP0))
 	{
-		// get the ID
+		/* get the ID */
 		g_handle[_index].pRxMsg->IDE = (uint8_t)0x04 & g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RIR;
 
 		if (g_handle[_index].pRxMsg->IDE == CAN_ID_STD)
@@ -359,15 +359,15 @@ static void can_irq_handler(const uint8_t _index)
 			g_handle[_index].pRxMsg->ExtId = 0x1FFFFFFFU & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RIR >> 3U);
 		}
 
-		// get the RTR
+		/* get the RTR */
 		g_handle[_index].pRxMsg->RTR = (uint8_t)0x02 & g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RIR;
-		// get the DLC
+		/* get the DLC */
 		g_handle[_index].pRxMsg->DLC = (uint8_t)0x0F & g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDTR;
-		// get the FIFONumber
+		// get the FIFONumber */
 		g_handle[_index].pRxMsg->FIFONumber = CAN_FIFO0;
-		// get the FMI
+		/* get the FMI */
 		g_handle[_index].pRxMsg->FMI = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDTR >> 8U);
-		// get the data field
+		/* get the data field */
 		g_handle[_index].pRxMsg->Data[0] = (uint8_t)0xFF &  g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDLR;
 		g_handle[_index].pRxMsg->Data[1] = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDLR >> 8U);
 		g_handle[_index].pRxMsg->Data[2] = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDLR >> 16U);
@@ -377,13 +377,13 @@ static void can_irq_handler(const uint8_t _index)
 		g_handle[_index].pRxMsg->Data[6] = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDHR >> 16U);
 		g_handle[_index].pRxMsg->Data[7] = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDHR >> 24U);
 		
-		// release the FIFO0
+		/* release the FIFO0 */
 		__HAL_CAN_FIFO_RELEASE(&g_handle[_index], CAN_FIFO0);
 		
-		// check if the RX queue is not full
+		/* check if the RX queue is not full */
 		if (g_can_rx_queue_head[_index] != (g_can_rx_queue_tail[_index] + 1) % CAN_BUFFER_SIZE)
 		{
-			// push the RX queue
+			/* push the RX queue */
 			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].id_ = (CAN_ID_STD ==  g_handle[_index].pRxMsg->IDE) ?  g_handle[_index].pRxMsg->StdId :g_handle[_index].pRxMsg->ExtId;
 			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_ = g_handle[_index].pRxMsg->DLC > 8u ? 8u : g_handle[_index].pRxMsg->DLC;
 			memcpy(g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].data_, g_handle[_index].pRxMsg->Data, g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_);
@@ -391,10 +391,10 @@ static void can_irq_handler(const uint8_t _index)
 		}
 	}
 
-	// error warning
+	/* error warning */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_EWG) && RESET != __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_EWG)) {}
-	// error passive
+	/* error passive */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_EPV) && RESET != __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_EPV)) {}
-	// bus-off
+	/* bus-off */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_BOF) && RESET !=  __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_BOF)) {}
 }
