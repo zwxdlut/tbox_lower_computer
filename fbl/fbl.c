@@ -143,9 +143,9 @@ static void jump_to_app(uint32_t *_addr);
 //#pragma GCC push_options
 //#pragma GCC optimize("O0")
 /**
- * @brief   The main implement function for the project.
+ * The flash boot loader function for the project.
  */
-void main_impl(void)
+void fbl(void)
 {
 	uint8_t  reset_type = 0xFF;
 

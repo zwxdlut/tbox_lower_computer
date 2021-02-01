@@ -36,14 +36,14 @@
 			<locationURI>PARENT-2-PROJECT_LOC/bsp/src</locationURI>
 		</link>
 		<link>
+			<name>src/fbl.c</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/fbl.c</locationURI>
+		</link>
+		<link>
 			<name>src/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
-		</link>
-		<link>
-			<name>src/main_impl.c</name>
-			<type>1</type>
-			<locationURI>PARENT-2-PROJECT_LOC/fbl/main_impl.c</locationURI>
 		</link>
 		<link>
 			<name>src/middlewares</name>

@@ -797,14 +797,14 @@
           <GroupName>user</GroupName>
           <Files>
             <File>
-              <FileName>main_impl.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\main_impl.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>fbl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fbl.c</FilePath>
             </File>
           </Files>
         </Group>
