@@ -189,7 +189,7 @@ typedef struct
 #define FLASH_TOTAL_SIZE                        0x40000 /**< 256k */
 /** @} */ /* The flash configuration */
 #if defined CPATAIN_DESIGN
-#include "devb/stm32f10x_captain_design.h"
+#include "devb/stm32f105_captain_design.h"
 #else
 #error Board type not defined!!!
 #endif

@@ -285,7 +285,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -297,7 +297,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_adc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_adc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_adc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -309,7 +309,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_adc_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_adc_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_adc_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -321,7 +321,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_cortex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_cortex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_cortex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -333,7 +333,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_crc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_crc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_crc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -345,7 +345,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_cryp.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_cryp.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_cryp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -357,7 +357,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dac.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dac.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dac.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -369,7 +369,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dac_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dac_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dac_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -381,7 +381,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dcmi.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dcmi.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dcmi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -393,7 +393,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dcmi_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dcmi_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dcmi_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -405,7 +405,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dma.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dma.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dma.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -417,7 +417,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dma_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_dma_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_dma_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -429,7 +429,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_eth.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_eth.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_eth.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -441,7 +441,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_exti.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_exti.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_exti.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -453,7 +453,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_flash.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_flash.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_flash.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -465,7 +465,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_flash_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_flash_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_flash_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -477,7 +477,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_gpio.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_gpio.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -489,7 +489,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_hash.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_hash.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_hash.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -501,7 +501,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_hcd.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_hcd.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_hcd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -513,7 +513,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_i2c.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_i2c.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_i2c.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -525,7 +525,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_i2s.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_i2s.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_i2s.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -537,7 +537,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_irda.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_irda.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_irda.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -549,7 +549,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_iwdg.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_iwdg.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_iwdg.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -561,7 +561,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_mmc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_mmc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_mmc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -573,7 +573,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_nand.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_nand.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_nand.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -585,7 +585,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_nor.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_nor.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_nor.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -597,7 +597,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pccard.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pccard.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_pccard.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -609,7 +609,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pcd.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pcd.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_pcd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -621,7 +621,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pcd_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pcd_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_pcd_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -633,7 +633,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pwr.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pwr.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_pwr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -645,7 +645,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pwr_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_pwr_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_pwr_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -657,7 +657,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rcc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rcc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_rcc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -669,7 +669,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rcc_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rcc_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_rcc_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -681,7 +681,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rng.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rng.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_rng.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -693,7 +693,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rtc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rtc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_rtc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -705,7 +705,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rtc_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_rtc_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_rtc_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -717,7 +717,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_sd.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_sd.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_sd.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -729,7 +729,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_smartcard.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_smartcard.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_smartcard.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -741,7 +741,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_spi.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_spi.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_spi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -753,7 +753,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_sram.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_sram.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_sram.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -765,7 +765,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_tim.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_tim.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_tim.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -777,7 +777,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_tim_ex.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_tim_ex.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_tim_ex.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -789,7 +789,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_uart.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_uart.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_uart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -801,7 +801,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_usart.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_usart.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_usart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -813,7 +813,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_wwdg.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_hal_wwdg.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_wwdg.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -825,7 +825,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_adc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_adc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_adc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -837,7 +837,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_crc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_crc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_crc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -849,7 +849,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_dac.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_dac.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_dac.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -861,7 +861,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_dma.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_dma.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_dma.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -873,7 +873,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_exti.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_exti.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_exti.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -885,7 +885,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_fsmc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_fsmc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_fsmc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -897,7 +897,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_gpio.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_gpio.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_gpio.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -909,7 +909,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_i2c.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_i2c.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_i2c.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -921,7 +921,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_pwr.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_pwr.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_pwr.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -933,7 +933,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rcc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rcc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_rcc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -945,7 +945,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rng.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rng.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_rng.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -957,7 +957,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rtc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_rtc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_rtc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -969,7 +969,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_sdmmc.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_sdmmc.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_sdmmc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -981,7 +981,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_spi.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_spi.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_spi.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -993,7 +993,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_tim.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_tim.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_tim.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1005,7 +1005,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_usart.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_usart.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_usart.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1017,7 +1017,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_usb.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_usb.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_usb.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1029,7 +1029,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_utils.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\stm32f2xx_ll_utils.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_ll_utils.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1041,7 +1041,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\Legacy\stm32f2xx_hal_can.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Src\Legacy\stm32f2xx_hal_can.c</PathWithFileName>
       <FilenameWithoutPath>stm32f2xx_hal_can.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1061,7 +1061,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\croutine.c</PathWithFileName>
       <FilenameWithoutPath>croutine.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1073,7 +1073,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\event_groups.c</PathWithFileName>
       <FilenameWithoutPath>event_groups.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1085,7 +1085,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\list.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\list.c</PathWithFileName>
       <FilenameWithoutPath>list.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1097,7 +1097,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\queue.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\queue.c</PathWithFileName>
       <FilenameWithoutPath>queue.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1109,7 +1109,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\stream_buffer.c</PathWithFileName>
       <FilenameWithoutPath>stream_buffer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1121,7 +1121,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\tasks.c</PathWithFileName>
       <FilenameWithoutPath>tasks.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1133,7 +1133,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\timers.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\timers.c</PathWithFileName>
       <FilenameWithoutPath>timers.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1145,7 +1145,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_2.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\MemMang\heap_2.c</PathWithFileName>
       <FilenameWithoutPath>heap_2.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1157,7 +1157,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3\port.c</PathWithFileName>
+      <PathWithFileName>..\..\bsp\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3\port.c</PathWithFileName>
       <FilenameWithoutPath>port.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1258,7 +1258,7 @@
 
   <Group>
     <GroupName>libs</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>

@@ -9,7 +9,7 @@ Current supported borads are:
 * MX_TB(S32K144_64, STM32F205RE)
 * S32K144-EVB(S32K144_100)
 * FRDM-S32K144(S32K144_100)
-* Captain Design
+* Captain Design(STM32F105)
 
 ## Precompiled macro
 MCU type:
