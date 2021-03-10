@@ -41,19 +41,19 @@
 			<locationURI>PARENT-1-PROJECT_LOC/fbl.c</locationURI>
 		</link>
 		<link>
+			<name>src/libs</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/libs</locationURI>
+		</link>
+		<link>
 			<name>src/main.c</name>
 			<type>1</type>
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
-			<name>src/middlewares</name>
+			<name>src/libs/diag</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/middlewares</locationURI>
-		</link>
-		<link>
-			<name>src/middlewares/diag/isotp</name>
-			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/middlewares/diag/isotp</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/libs/diag</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
@@ -94,26 +94,26 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1610954679454</id>
-			<name>src/middlewares</name>
-			<type>25</type>
+			<id>1615341278322</id>
+			<name>src/libs</name>
+			<type>10</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-diag</arguments>
+				<arguments>1.0-name-matches-false-false-*</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1610954679459</id>
-			<name>src/middlewares</name>
-			<type>21</type>
+			<id>1615341278328</id>
+			<name>src/libs</name>
+			<type>6</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.c</arguments>
+				<arguments>1.0-name-matches-false-false-*.chm</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1610954717463</id>
-			<name>src/middlewares/diag/isotp</name>
+			<id>1615341410580</id>
+			<name>src/libs/diag</name>
 			<type>21</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>

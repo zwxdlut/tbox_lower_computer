@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F205xx,MX_TB,BOOT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\bsp\inc;..\..\middlewares;inc</IncludePath>
+              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\bsp\inc;..\..\libs;inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -769,27 +769,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>middlewares</GroupName>
+          <GroupName>libs</GroupName>
           <Files>
             <File>
               <FileName>diag.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag.c</FilePath>
+              <FilePath>..\..\libs\diag\diag.c</FilePath>
             </File>
             <File>
               <FileName>diag_client.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag_client.c</FilePath>
+              <FilePath>..\..\libs\diag\diag_client.c</FilePath>
             </File>
             <File>
               <FileName>diag_server.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag_server.c</FilePath>
+              <FilePath>..\..\libs\diag\diag_server.c</FilePath>
             </File>
             <File>
               <FileName>isotp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\isotp\isotp.c</FilePath>
+              <FilePath>..\..\libs\diag\isotp\isotp.c</FilePath>
             </File>
           </Files>
         </Group>

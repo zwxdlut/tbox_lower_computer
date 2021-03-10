@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F205xx,MX_TB,USING_OS_FREERTOS</Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\..\bsp\inc;..\..\middlewares;inc</IncludePath>
+              <IncludePath>..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\CMSIS\Device\ST\STM32F2xx\Include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Drivers\STM32F2xx_HAL_Driver\Inc;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\include;..\..\sdks\STM32Cube_FW_F2_V1.8.0\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM3;..\..\bsp\inc;..\..\libs;inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -809,57 +809,57 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>middlewares</GroupName>
+          <GroupName>libs</GroupName>
           <Files>
             <File>
               <FileName>8byte.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\bitfield\8byte.c</FilePath>
+              <FilePath>..\..\libs\bitfield\8byte.c</FilePath>
             </File>
             <File>
               <FileName>bitarray.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\bitfield\bitarray.c</FilePath>
+              <FilePath>..\..\libs\bitfield\bitarray.c</FilePath>
             </File>
             <File>
               <FileName>bitfield.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\bitfield\bitfield.c</FilePath>
+              <FilePath>..\..\libs\bitfield\bitfield.c</FilePath>
             </File>
             <File>
               <FileName>diag.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag.c</FilePath>
+              <FilePath>..\..\libs\diag\diag.c</FilePath>
             </File>
             <File>
               <FileName>diag_client.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag_client.c</FilePath>
+              <FilePath>..\..\libs\diag\diag_client.c</FilePath>
             </File>
             <File>
               <FileName>diag_server.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\diag_server.c</FilePath>
+              <FilePath>..\..\libs\diag\diag_server.c</FilePath>
             </File>
             <File>
               <FileName>isotp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\diag\isotp\isotp.c</FilePath>
+              <FilePath>..\..\libs\diag\isotp\isotp.c</FilePath>
             </File>
             <File>
               <FileName>osek_nm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\nm\osek_nm.c</FilePath>
+              <FilePath>..\..\libs\nm\osek_nm.c</FilePath>
             </File>
             <File>
               <FileName>gen_resolve.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\resolve\gen_resolve.c</FilePath>
+              <FilePath>..\..\libs\resolve\gen_resolve.c</FilePath>
             </File>
             <File>
               <FileName>resolve.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\middlewares\resolve\resolve.c</FilePath>
+              <FilePath>..\..\libs\resolve\resolve.c</FilePath>
             </File>
           </Files>
         </Group>

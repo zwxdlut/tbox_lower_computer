@@ -1257,7 +1257,7 @@
   </Group>
 
   <Group>
-    <GroupName>middlewares</GroupName>
+    <GroupName>libs</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
@@ -1269,7 +1269,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\bitfield\8byte.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\bitfield\8byte.c</PathWithFileName>
       <FilenameWithoutPath>8byte.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1281,7 +1281,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\bitfield\bitarray.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\bitfield\bitarray.c</PathWithFileName>
       <FilenameWithoutPath>bitarray.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1293,7 +1293,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\bitfield\bitfield.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\bitfield\bitfield.c</PathWithFileName>
       <FilenameWithoutPath>bitfield.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1305,7 +1305,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\diag\diag.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\diag\diag.c</PathWithFileName>
       <FilenameWithoutPath>diag.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1317,7 +1317,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\diag\diag_client.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\diag\diag_client.c</PathWithFileName>
       <FilenameWithoutPath>diag_client.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1329,7 +1329,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\diag\diag_server.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\diag\diag_server.c</PathWithFileName>
       <FilenameWithoutPath>diag_server.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1341,7 +1341,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\diag\isotp\isotp.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\diag\isotp\isotp.c</PathWithFileName>
       <FilenameWithoutPath>isotp.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1353,7 +1353,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\nm\osek_nm.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\nm\osek_nm.c</PathWithFileName>
       <FilenameWithoutPath>osek_nm.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1365,7 +1365,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\resolve\gen_resolve.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\resolve\gen_resolve.c</PathWithFileName>
       <FilenameWithoutPath>gen_resolve.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -1377,7 +1377,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\middlewares\resolve\resolve.c</PathWithFileName>
+      <PathWithFileName>..\..\libs\resolve\resolve.c</PathWithFileName>
       <FilenameWithoutPath>resolve.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
