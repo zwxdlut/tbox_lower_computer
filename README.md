@@ -32,3 +32,6 @@ OS type:
 
 ## Author
 * Wenxing Zhang zwx@meixing.com
+
+## License
+* Licensed under the GPL license.
