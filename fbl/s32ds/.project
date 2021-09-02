@@ -41,9 +41,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/fbl.c</locationURI>
 		</link>
 		<link>
-			<name>src/libs</name>
+			<name>src/lib</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/libs</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/lib</locationURI>
 		</link>
 		<link>
 			<name>src/main.c</name>
@@ -51,9 +51,29 @@
 			<locationURI>PARENT-2-PROJECT_LOC/main.c</locationURI>
 		</link>
 		<link>
-			<name>src/libs/diag</name>
+			<name>src/lib/bitfield</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/libs/diag</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/lib/bitfield</locationURI>
+		</link>
+		<link>
+			<name>src/lib/diag</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/lib/diag</locationURI>
+		</link>
+		<link>
+			<name>src/lib/nm</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/lib/nm</locationURI>
+		</link>
+		<link>
+			<name>src/lib/resolve</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/lib/resolve</locationURI>
+		</link>
+		<link>
+			<name>src/lib/diag/isotp</name>
+			<type>2</type>
+			<locationURI>PARENT-2-PROJECT_LOC/lib/diag/isotp</locationURI>
 		</link>
 	</linkedResources>
 	<filteredResources>
@@ -94,27 +114,54 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1615341278322</id>
-			<name>src/libs</name>
-			<type>10</type>
+			<id>1630547664068</id>
+			<name>src/lib</name>
+			<type>29</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*</arguments>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1615341278328</id>
-			<name>src/libs</name>
-			<type>6</type>
+			<id>1630547836129</id>
+			<name>src/lib/bitfield</name>
+			<type>29</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-name-matches-false-false-*.chm</arguments>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
 			</matcher>
 		</filter>
 		<filter>
-			<id>1615341410580</id>
-			<name>src/libs/diag</name>
-			<type>21</type>
+			<id>1630547892926</id>
+			<name>src/lib/diag</name>
+			<type>29</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1630547978272</id>
+			<name>src/lib/nm</name>
+			<type>29</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1630548032029</id>
+			<name>src/lib/resolve</name>
+			<type>29</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-*.c</arguments>
+			</matcher>
+		</filter>
+		<filter>
+			<id>1630547933781</id>
+			<name>src/lib/diag/isotp</name>
+			<type>29</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>
 				<arguments>1.0-name-matches-false-false-*.c</arguments>
