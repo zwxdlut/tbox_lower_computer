@@ -18,13 +18,13 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The power modes
+ * @name The system power modes
  * 
  * @{
  */
 #define PWR_MODE_SLEEP                          0
 #define PWR_MODE_DEEPSLEEP                      1
-/** @} */ /* The power modes */
+/** @} */ /* The system power modes */
 
 /*******************************************************************************
  * Function prototypes

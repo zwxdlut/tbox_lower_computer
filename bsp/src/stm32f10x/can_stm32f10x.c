@@ -23,6 +23,7 @@ typedef struct
 	GPIO_TypeDef *gpio_;
 	uint16_t     rx_pin_;
 	uint16_t     tx_pin_;
+	uint32_t     gpio_remap_;
 	IRQn_Type    irqs_[1];
 	uint8_t      start_filter_num_;
 } comm_config_t;
@@ -33,6 +34,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.gpio_             = CAN0_GPIO,
 		.rx_pin_           = CAN0_RX_PIN,
 		.tx_pin_           = CAN0_TX_PIN,
+		.gpio_remap_       = CAN0_GPIO_REMAP,
 		.irqs_             = {CAN0_RX_IRQ},
 		.start_filter_num_ = 0,
 	},
@@ -40,6 +42,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.gpio_             = CAN1_GPIO,
 		.rx_pin_           = CAN1_RX_PIN,
 		.tx_pin_           = CAN1_TX_PIN,
+		.gpio_remap_       = CAN1_GPIO_REMAP,
 		.irqs_             = {CAN1_RX_IRQ},
 		.start_filter_num_ = CAN_SLAVE_START_FILTER_BANK_NUM,
 	}
@@ -76,10 +79,10 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	/* initialize the GPIOs */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	CAN_GPIO_CLK_ENABLE(_index);
-
-	if (CAN1 == g_handle[_index])
+	
+	if (0 != g_comm_config[_index].gpio_remap_)
 	{
-		GPIO_PinRemapConfig(GPIO_Remap1_CAN1, ENABLE);
+		GPIO_PinRemapConfig(g_comm_config[_index].gpio_remap_, ENABLE);
 	}
 
 	GPIO_InitStructure.GPIO_Pin   = g_comm_config[_index].rx_pin_;
