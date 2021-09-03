@@ -19,29 +19,29 @@ extern "C" {
  * @name The LEDs configuration
  * @{
  */
-#define LED0_GPIO       					    GPIOC
-#define LED0_PIN            			        GPIO_PIN_2
+#define LED0_GPIO                               GPIOC
+#define LED0_PIN                                GPIO_PIN_2
 #define LED0_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED0_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
-#define LED1_GPIO       					    GPIOC
-#define LED1_PIN            			        GPIO_PIN_1
+#define LED1_GPIO                               GPIOC
+#define LED1_PIN                                GPIO_PIN_1
 #define LED1_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED1_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
-#define LED2_GPIO       					    GPIOC
-#define LED2_PIN            			        GPIO_PIN_0
+#define LED2_GPIO                               GPIOC
+#define LED2_PIN                                GPIO_PIN_0
 #define LED2_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED2_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
-#define LED_ON          					    GPIO_PIN_SET
-#define LED_OFF         					    GPIO_PIN_RESET
+#define LED_ON                                  GPIO_PIN_SET
+#define LED_OFF                                 GPIO_PIN_RESET
 /** @} */ /* The LEDs configuration */
  
 /** 
  * @name The buttons configuration
  * @{
  */                                       
-#define BTN_GPIO        					    GPIOC
-#define BTN_PIN         					    GPIO_PIN_3
-#define BTN_IRQ         				        EXTI3_IRQn
+#define BTN_GPIO                                GPIOC
+#define BTN_PIN                                 GPIO_PIN_3
+#define BTN_IRQ                                 EXTI3_IRQn
 #define BTN_IRQ_HANDLER                         EXTI3_IRQHandler
 #define BTN_GPIO_CLK_ENABLE()                   __HAL_RCC_GPIOC_CLK_ENABLE()
 #define BTN_GPIO_CLK_DISABLE()                  __HAL_RCC_GPIOC_CLK_DISABLE()
@@ -51,16 +51,16 @@ extern "C" {
  * @name The upper computer configuration
  * @{
  */
-#define UC_POWER_GPIO 					        GPIOC
-#define UC_POWER_PIN						    GPIO_PIN_5
+#define UC_POWER_GPIO                           GPIOC
+#define UC_POWER_PIN                            GPIO_PIN_5
 #define UC_POWER_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOC_CLK_ENABLE()
 #define UC_POWER_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOC_CLK_DISABLE()
-#define UC_WAKEUP_GPIO 					        GPIOB
-#define UC_WAKEUP_PIN						    GPIO_PIN_1
+#define UC_WAKEUP_GPIO                          GPIOB
+#define UC_WAKEUP_PIN                           GPIO_PIN_1
 #define UC_WAKEUP_GPIO_CLK_ENABLE()             __HAL_RCC_GPIOB_CLK_ENABLE()
 #define UC_WAKEUP_GPIO_CLK_DISABLE()            __HAL_RCC_GPIOB_CLK_DISABLE()
-#define UC_RESET_GPIO 					        GPIOB
-#define UC_RESET_PIN						    GPIO_PIN_0
+#define UC_RESET_GPIO                           GPIOB
+#define UC_RESET_PIN                            GPIO_PIN_0
 #define UC_RESET_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOB_CLK_ENABLE()
 #define UC_RESET_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOB_CLK_DISABLE()
 /** @} */ /* The upper computer configuration */
@@ -69,9 +69,9 @@ extern "C" {
  * @name The ignition configuration
  * @{
  */
-#define IGN_GPIO        					    GPIOC
-#define IGN_PIN         					    GPIO_PIN_4
-#define IGN_IRQ   					            EXTI4_IRQn
+#define IGN_GPIO                                GPIOC
+#define IGN_PIN                                 GPIO_PIN_4
+#define IGN_IRQ                                 EXTI4_IRQn
 #define IGN_IRQ_HANDLER                         EXTI4_IRQHandler
 #define IGN_GPIO_CLK_ENABLE()                   __HAL_RCC_GPIOC_CLK_ENABLE()
 #define IGN_GPIO_CLK_DISABLE()                  __HAL_RCC_GPIOC_CLK_DISABLE()
@@ -85,14 +85,14 @@ extern "C" {
 #define UART0_RX_PIN                            GPIO_PIN_3
 #define UART0_TX_PIN                            GPIO_PIN_2
 #define UART0_GPIO_AF                           GPIO_AF7_USART2
-#define UART0_INST     		                    USART2
+#define UART0_INST                              USART2
 #define UART0_IRQ                               USART2_IRQn
 #define UART0_IRQ_HANDLER                       USART2_IRQHandler
 #define UART1_GPIO                              GPIOA
 #define UART1_RX_PIN                            GPIO_PIN_10
 #define UART1_TX_PIN                            GPIO_PIN_9
 #define UART1_GPIO_AF                           GPIO_AF7_USART1
-#define UART1_INST     		                    USART1
+#define UART1_INST                              USART1
 #define UART1_IRQ                               USART1_IRQn
 #define UART1_IRQ_HANDLER                       USART1_IRQHandler
 #define UART_GPIO_CLK_ENABLE(INDEX)             do { if (0 == (INDEX)) { __HAL_RCC_GPIOA_CLK_ENABLE(); } else\
@@ -117,7 +117,7 @@ extern "C" {
 #define CAN0_RX_PIN                             GPIO_PIN_8
 #define CAN0_TX_PIN                             GPIO_PIN_9
 #define CAN0_GPIO_AF                            GPIO_AF9_CAN1
-#define CAN0_INST     		                    CAN1
+#define CAN0_INST                               CAN1
 #define CAN0_RX_IRQ                             CAN1_RX0_IRQn
 #define CAN0_RX_IRQ_HANDLER                     CAN1_RX0_IRQHandler
 #define CAN0_TRANS_STB_N_GPIO                   GPIOC
@@ -132,7 +132,7 @@ extern "C" {
 #define CAN1_RX_PIN                             GPIO_PIN_12
 #define CAN1_TX_PIN                             GPIO_PIN_13
 #define CAN1_GPIO_AF                            GPIO_AF9_CAN2
-#define CAN1_INST     		                    CAN2
+#define CAN1_INST                               CAN2
 #define CAN1_RX_IRQ                             CAN2_RX0_IRQn
 #define CAN1_RX_IRQ_HANDLER                     CAN2_RX0_IRQHandler	
 #define CAN1_TRANS_STB_N_GPIO                   GPIOB
@@ -178,7 +178,7 @@ extern "C" {
 #define I2C0_SCL_PIN                            GPIO_PIN_6
 #define I2C0_SDA_PIN                            GPIO_PIN_7
 #define I2C0_GPIO_AF                            GPIO_AF4_I2C1
-#define I2C0_INST     		                    I2C1
+#define I2C0_INST                               I2C1
 #define I2C0_EV_IRQ                             I2C1_EV_IRQn
 #define I2C0_EV_IRQ_HANDLER                     I2C1_EV_IRQHandler
 #define I2C0_ER_IRQ                             I2C1_ER_IRQn
@@ -210,7 +210,7 @@ extern "C" {
 #define SPI0_CS_GPIO                            GPIOA
 #define SPI0_CS_PIN                             GPIO_PIN_4
 #define SPI0_GPIO_AF                            GPIO_AF6_SPI3
-#define SPI0_INST     		                    SPI3
+#define SPI0_INST                               SPI3
 #define SPI0_IRQ                                SPI3_IRQn
 #define SPI0_IRQ_HANDLER                        SPI3_IRQHandler
 #define SPI0_RX_DMA_STREAM                      DMA1_Stream0
