@@ -14,9 +14,9 @@
 extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* the TX mutex */
 #endif
 
-extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; /* the ring queue */
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* the ring queue head */
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* the ring queue tail */
+extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* the RX queue */
+extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* the RX queue head */
+extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* the RX queue tail */
 
 /*******************************************************************************
  * Local function prototypes
@@ -35,7 +35,7 @@ uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size
 	{
 		/* pop the RX queue */
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
-		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_BUFFER_SIZE;
+		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
 	}
 
 	return i;
@@ -131,7 +131,7 @@ uint16_t uart_send_with_header(const uint8_t _index, const uint8_t _buf[], const
 
 void debug(const char* _info, ...)
 {
-#ifdef UDEBUG
+#ifdef _UDEBUG
 	va_list args;
 	va_start(args, _info);
 	vprintf(_info, args);
@@ -141,7 +141,7 @@ void debug(const char* _info, ...)
 
 void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], const uint16_t _size)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 #if defined USING_OS_FREERTOS
 	static SemaphoreHandle_t g_debug_mutex;
 	static bool init = false;
@@ -178,7 +178,7 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], co
 #include <sys/UART.h>
 UARTError InitializeUART(UARTBaudRate baudRate)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 	uart_init(UART1_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 #endif
 	return kUARTNoError;
@@ -186,7 +186,7 @@ UARTError InitializeUART(UARTBaudRate baudRate)
 
 UARTError ReadUARTN(void* bytes, unsigned long limit)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 	uint16_t  size = 0;
 
 	while (size < limit)
@@ -199,7 +199,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 
 UARTError WriteUARTN(const void * bytes, unsigned long length)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 	uart_send(UART1_INDEX, bytes, length);
 #endif
 	return kUARTNoError;
@@ -207,7 +207,7 @@ UARTError WriteUARTN(const void * bytes, unsigned long length)
 #elif defined __NEWLIB__
 int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 	static bool init = false;
 
 	if (!init)
@@ -243,7 +243,7 @@ FILE __stdout;
 
 int fputc(int ch, FILE *f)
 {
-#if defined UDEBUG
+#if defined _UDEBUG
 	static bool init = false;
 
 	if (!init)

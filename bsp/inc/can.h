@@ -33,7 +33,7 @@ extern "C" {
 #define CAN_PWR_MODE_RUN                        1
 /** @} */ /* The CAN power modes */
 
-#define CAN_BUFFER_SIZE                         10 /**< the CAN RX queue max size */
+#define CAN_MSG_RX_QUEUE_MAX_LENGTH             10 /**< the CAN RX queue max length */
 
 /**
  * The CAN message structure

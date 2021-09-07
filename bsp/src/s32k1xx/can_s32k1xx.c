@@ -10,7 +10,7 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_BUFFER_SIZE]; /* the RX ring queue */
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* the RX queue */
 uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* the RX queue head */
 uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* the RX queue tail */
 
@@ -146,7 +146,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 {
 	assert(CAN1_INDEX >= _index);
 
-	/* initialize the RX ring queue */
+	/* initialize the RX queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 
@@ -322,13 +322,13 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 	{
 		case FLEXCAN_EVENT_RXFIFO_COMPLETE:
 			/* check if the RX queue is not full */
-			if (g_can_rx_queue_head[index] != (g_can_rx_queue_tail[index] + 1) % CAN_BUFFER_SIZE)
+			if (g_can_rx_queue_head[index] != (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 			{
 	        	/* push the RX queue */
 				g_can_rx_queue[index][g_can_rx_queue_tail[index]].id_ = g_rx_buf[index].msgId;
 				g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_ = g_rx_buf[index].dataLen > 8 ? 8 : g_rx_buf[index].dataLen;
 				memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
-				g_can_rx_queue_tail[index] = (g_can_rx_queue_tail[index] + 1) % CAN_BUFFER_SIZE;
+				g_can_rx_queue_tail[index] = (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			}
 
 			break;

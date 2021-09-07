@@ -485,7 +485,7 @@ static void update_by_uart(void)
 	while(!g_finished)
 	{
 		static uint32_t addr = 0;
-		uint8_t         buf[UART_BUFFER_SIZE];
+		uint8_t         buf[UART_RX_BUFFER_SIZE];
 		uint16_t        size = 0;
 
 		/* Receive data from UART */

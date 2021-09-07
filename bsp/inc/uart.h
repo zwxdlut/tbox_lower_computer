@@ -25,7 +25,7 @@ extern "C" {
 #define UART1_INDEX       		                1
 /** @} */ /* The UART channel indexes */
 
-#define UART_BUFFER_SIZE                        1000 /**< the UART buffer size. */
+#define UART_RX_BUFFER_SIZE                     1000 /**< the UART RX buffer size. */
 
 /**
  * @name The UART data header definition

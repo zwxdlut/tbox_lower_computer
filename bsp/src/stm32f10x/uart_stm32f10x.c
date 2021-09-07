@@ -14,9 +14,9 @@
 SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_BUFFER_SIZE]; /* the ring queue */
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* the ring queue head */
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* the ring queue tail */
+uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* the RX queue */
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* the RX queue head */
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* the RX queue tail */
 
 typedef struct
 {
@@ -60,7 +60,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef  NVIC_InitStructure;
 
-	/* initialize the RX ring queue */
+	/* initialize the RX queue */
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 	
@@ -198,11 +198,11 @@ void uart_irq_handler(const uint8_t _index)
 		USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
 
 		/* check if the RX queue is not full */
-		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE)
+		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
 		{
 			/* push the RX queue */
 			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
-			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_BUFFER_SIZE;
+			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;
 		}		
     }
 }

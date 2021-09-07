@@ -14,7 +14,7 @@
 SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1]; /* the TX mutex */
 #endif
 
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_BUFFER_SIZE]; /* the RX ring queue */
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* the RX queue */
 uint8_t   g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* the RX queue head */
 uint8_t   g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* the RX queue tail */
 
@@ -125,7 +125,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	GPIO_InitTypeDef      GPIO_InitStructure;
 	CAN_FilterConfTypeDef CAN_FilterInitStructure;
 
-	/* initialize the RX ring queue */
+	/* initialize the RX queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 	
@@ -381,13 +381,13 @@ static void can_irq_handler(const uint8_t _index)
 		__HAL_CAN_FIFO_RELEASE(&g_handle[_index], CAN_FIFO0);
 		
 		/* check if the RX queue is not full */
-		if (g_can_rx_queue_head[_index] != (g_can_rx_queue_tail[_index] + 1) % CAN_BUFFER_SIZE)
+		if (g_can_rx_queue_head[_index] != (g_can_rx_queue_tail[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 		{
 			/* push the RX queue */
 			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].id_ = (CAN_ID_STD ==  g_handle[_index].pRxMsg->IDE) ?  g_handle[_index].pRxMsg->StdId :g_handle[_index].pRxMsg->ExtId;
 			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_ = g_handle[_index].pRxMsg->DLC > 8u ? 8u : g_handle[_index].pRxMsg->DLC;
 			memcpy(g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].data_, g_handle[_index].pRxMsg->Data, g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_);
-			g_can_rx_queue_tail[_index] = (g_can_rx_queue_tail[_index] + 1u) % CAN_BUFFER_SIZE;
+			g_can_rx_queue_tail[_index] = (g_can_rx_queue_tail[_index] + 1u) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 		}
 	}
 

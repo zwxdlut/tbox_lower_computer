@@ -392,7 +392,7 @@ static void can_receive_task( void *pvParameters )
  */
 static void downstream_receive_task( void *pvParameters )
 {
-	static uint8_t  buf[UART_BUFFER_SIZE];
+	static uint8_t  buf[UART_RX_BUFFER_SIZE];
 	uint16_t size = 0u;
 	uint32_t fw_size = 0;
 	uint32_t transfered_size = 0;
