@@ -7,10 +7,6 @@
 
 #include "board.h"
 
-#if defined USING_OS_FREERTOS
-extern void xPortSysTickHandler(void);
-#endif
-
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
@@ -113,12 +109,21 @@ void gpio_deinit(void)
 
 uint32_t sys_time(void)
 {
+#if defined USING_OS_FREERTOS
+	return xTaskGetTickCount();
+#else
 	return HAL_GetTick();
+#endif
+	
 }
 
 void delay(const uint32_t _ms)
 {
+#if defined USING_OS_FREERTOS
+	vTaskDelay(pdMS_TO_TICKS(_ms));
+#else
 	HAL_Delay(_ms);
+#endif
 }
 
 void sys_reset(void)
@@ -197,16 +202,15 @@ int32_t wdog_disable(void)
  * @name The IRQ handlers
  * @{
  */
+#if !defined USING_OS_FREERTOS
 /**
  * The system tick timer handler.
  */
 void SysTick_Handler(void)
 {
 	HAL_IncTick();
-#if defined USING_OS_FREERTOS
-	xPortSysTickHandler();
-#endif
 }
+#endif
 
 /**
  * The button IRQ handler.
