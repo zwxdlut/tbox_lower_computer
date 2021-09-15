@@ -41,7 +41,7 @@ uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size
 	return i;
 }
 
-uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], const uint16_t _size)
+uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[], const uint16_t _size)
 {
 	assert(NULL != _buf);
 
@@ -51,7 +51,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], co
 	/* receive 0xAA */
 	size = 1;
 
-	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
+	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (UART_HEADER_FLAG >> 8)) != _buf[0])
 	{
 		return 0;
 	}
@@ -68,13 +68,13 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], co
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
 
-	if ((HEADER_FLAG & 0xFF) != _buf[0])
+	if ((UART_HEADER_FLAG & 0xFF) != _buf[0])
 	{
 		return 0;
 	}
 
 	/* receive data length */
-	size = HEADER_SIZE - 2;
+	size = UART_HEADER_SIZE - 2;
 	out_size = 0;
 
 	while (out_size < size)
@@ -86,7 +86,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], co
 	}
 
 	/* receive data */
-	memcpy(&size, _buf, HEADER_SIZE - 2);
+	memcpy(&size, _buf, UART_HEADER_SIZE - 2);
 	size = _size > size ? size : _size;
 	out_size = 0;
 
@@ -101,7 +101,7 @@ uint16_t uart_receive_with_header_poll( const uint8_t _index, uint8_t _buf[], co
 	return size;
 }
 
-uint16_t uart_send_with_header(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
+uint16_t uart_send_with_format(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
 {
 	assert(UART1_INDEX >= _index && NULL != _buf);
 
@@ -111,13 +111,13 @@ uint16_t uart_send_with_header(const uint8_t _index, const uint8_t _buf[], const
 	xSemaphoreTakeRecursive( g_uart_tx_mutex[_index], portMAX_DELAY);
 #endif
 
-#if defined (HEADER_FLAG) && defined (HEADER_SIZE)
-	uint8_t	header[HEADER_SIZE];
-	header[0] = HEADER_FLAG >> 8;
-	header[1] = HEADER_FLAG & 0xFF;
+#if defined (UART_HEADER_FLAG) && defined (UART_HEADER_SIZE)
+	uint8_t	header[UART_HEADER_SIZE];
+	header[0] = UART_HEADER_FLAG >> 8;
+	header[1] = UART_HEADER_FLAG & 0xFF;
 	header[2] = _size;
 	header[3] = _size >> 8;
-	size = uart_send(_index, header, HEADER_SIZE);
+	size = uart_send(_index, header, UART_HEADER_SIZE);
 #endif
 
 	size += uart_send(_index, _buf, _size);
@@ -162,7 +162,7 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], co
 		printf("%02X ", _buf[i]);
 	}
 
-	printf("\n");
+	printf("\r\n");
 
 #if defined USING_OS_FREERTOS
 	xSemaphoreGive( g_debug_mutex );

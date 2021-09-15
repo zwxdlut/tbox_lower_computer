@@ -508,7 +508,7 @@ void diag_server_data_init(void)
 			{
 				g_debug_callback("%02X ", g_rw_did[i].did_.data_.buf_[k]);
 			}
-			g_debug_callback("\n");
+			g_debug_callback("\r\n");
 		}
 	}
 #if defined USING_OS_FREERTOS
@@ -521,7 +521,7 @@ void diag_server_data_init(void)
 	for(uint8_t i = 0; i < DTC_NUM; i++)
 	{
 		eeprom_read(EEPROM_ADDR_DTC + i, &g_dtc_info[i].status_,1);
-		g_debug_callback("EERPROM READ(0x%X,1): %02X\n", EEPROM_ADDR_DTC + i, g_dtc_info[i].status_);
+		g_debug_callback("EERPROM READ(0x%X,1): %02X\r\n", EEPROM_ADDR_DTC + i, g_dtc_info[i].status_);
 	}
 #if defined USING_OS_FREERTOS
 	xSemaphoreGive( g_dtc_mutex );

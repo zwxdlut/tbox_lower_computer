@@ -264,14 +264,14 @@ int isotp_send_with_id(IsoTpLink *link, uint32_t id, const uint8_t payload[], ui
     int ret;
 
     if (size > link->send_buf_size) {
-		link->debug_callback("Message size too large. Increase ISO_TP_MAX_MESSAGE_SIZE to set a larger buffer\n");
+		link->debug_callback("Message size too large. Increase ISO_TP_MAX_MESSAGE_SIZE to set a larger buffer\r\n");
         //char message[128];
-        //sprintf(&message[0], "Attempted to send %d bytes; max size is %d!\n", size, link->send_buf_size);
+        //sprintf(&message[0], "Attempted to send %d bytes; max size is %d!\r\n", size, link->send_buf_size);
         return ISOTP_RET_OVERFLOW;
     }
 
     if (ISOTP_SEND_STATUS_INPROGRESS == link->send_status) {
-		link->debug_callback("Abort previous message, transmission in progress.\n");
+		link->debug_callback("Abort previous message, transmission in progress.\r\n");
         return ISOTP_RET_INPROGRESS;
     }
 

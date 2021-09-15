@@ -226,11 +226,11 @@ void osek_nm_indication(const char id, const unsigned char* const buf)
 
 void insert_nm_node(unsigned char id) {
 	
-    //printf("insert nm node %d, %d.\n", id, current_counter);
+    //printf("insert nm node %d, %d.\r\n", id, current_counter);
 	int i = 0;
 	for (i = 0; i <= current_counter; i++) {
 		if (present_node[i] == 0) {
-			//printf("==0\n");
+			//printf("==0\r\n");
 			present_node[i] = id;
 			break;
 		} else {

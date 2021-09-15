@@ -217,7 +217,7 @@ static void daemon_task( void *pvParameters )
 		if(g_heartbeat_actived && (xTaskGetTickCount() * portTICK_PERIOD_MS - g_heartbeat_time >= HEARTBEAT_INTERVAL))
 		{
 #if defined MX_TB
-			debug("Reset upper computer!\n");
+			debug("Reset upper computer!\r\n");
 			GPIO_WRITE_PIN(UC_RESET_GPIO, UC_RESET_PIN, 1);
 			/* Delay 300ms */
 			for(uint8_t i = 0; i < 30; i++)
@@ -254,7 +254,7 @@ static void daemon_task( void *pvParameters )
 				}
 				sys_reset();
 			}
-			debug("Go to sleep...\n");
+			debug("Go to sleep...\r\n");
 			GPIO_WRITE_PIN(LED0_GPIO, LED0_PIN, LED_OFF);
 			GPIO_WRITE_PIN(LED1_GPIO, LED1_PIN, LED_OFF);
 			GPIO_WRITE_PIN(LED2_GPIO, LED2_PIN, LED_ON);
@@ -295,7 +295,7 @@ static void daemon_task( void *pvParameters )
 			xSemaphoreGive( g_sleep_mutex );
 			GPIO_WRITE_PIN(LED2_GPIO, LED2_PIN, LED_OFF);
 			wdog_refresh();
-			debug("Wake up\n");
+			debug("Wake up\r\n");
 			/* Reset transmit timer */
 			xSemaphoreTake( g_tx_timer_mutex, portMAX_DELAY );
 			xTimerReset(g_tx_timer, 0);
@@ -403,7 +403,7 @@ static void downstream_receive_task( void *pvParameters )
 	{
 		vTaskDelay(pdMS_TO_TICKS(1));
 
-		if(0 == (size = uart_receive_with_header_poll((uint32_t)pvParameters, buf, sizeof(buf))))
+		if(0 == (size = uart_receive_with_format_polling((uint32_t)pvParameters, buf, sizeof(buf))))
 			continue;
 		print_buf("UART RX", 0, buf, size);
 
@@ -420,7 +420,7 @@ static void downstream_receive_task( void *pvParameters )
 		else if(REQ_SW_NO_ID == *((uint16_t*)buf))
 		{
 			diag_server_read_data_by_id(SSECUSWVNDID, buf + ID_LENGTH, SSECUSWVN_LEN);
-			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + SSECUSWVN_LEN);
+			uart_send_with_format((uint32_t)pvParameters ,buf, ID_LENGTH + SSECUSWVN_LEN);
 			print_buf("UART TX", 0, buf, ID_LENGTH + SSECUSWVN_LEN);
 		}
 		else if(HEARTBEAT_ID == *((uint16_t*)buf))
@@ -491,11 +491,11 @@ static void downstream_receive_task( void *pvParameters )
 			bytesswap(buf + 5, 4);
 			*((uint32_t*)(buf + 9)) = CLIENT_FLASH_TOTAL_SIZE;
 			bytesswap(buf + 9, 4);
-			debug("Erasing...\n");
+			debug("Erasing...\r\n");
 			duration = xTaskGetTickCount() * portTICK_PERIOD_MS;
 			diag_client_request(&g_client_link, buf, 13);
 			diag_client_poll_response(&g_client_link, buf, sizeof(buf));
-			debug("Erase done(%d ms)!\n", (xTaskGetTickCount() * portTICK_PERIOD_MS - duration));
+			debug("Erase done(%d ms)!\r\n", (xTaskGetTickCount() * portTICK_PERIOD_MS - duration));
 
 			/* Request download */
 			buf[0] = UDS_SID_REQT_DOWNLOAD;
@@ -505,7 +505,7 @@ static void downstream_receive_task( void *pvParameters )
 			bytesswap(buf + 3, 4);
 			*((uint32_t*)(buf + 7)) = fw_size;
 			bytesswap(buf + 7, 4);
-			debug("Programing...\n");
+			debug("Programing...\r\n");
 			duration = xTaskGetTickCount() * portTICK_PERIOD_MS;
 			diag_client_request(&g_client_link, buf, 11);
 			diag_client_poll_response(&g_client_link, buf, sizeof(buf));
@@ -516,7 +516,7 @@ static void downstream_receive_task( void *pvParameters )
 			*((uint16_t*)buf) = UPDATE_ECU_NOTIFY_ID;
 			buf[ID_LENGTH] = 0;
 			*((uint16_t*)(buf + ID_LENGTH + ECU_TYPE0_BIT_LEN / 8)) = block_size;
-			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
+			uart_send_with_format((uint32_t)pvParameters ,buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
 			print_buf("UART TX", 0, buf, ID_LENGTH + ECU_TYPE0_BIT_LEN / 8 + 2);
 			transfered_size = 0;
 		}
@@ -538,7 +538,7 @@ static void downstream_receive_task( void *pvParameters )
 				diag_client_request(&g_client_link, buf, 1);
 				diag_client_poll_response(&g_client_link, buf, sizeof(buf));
 
-				debug("Programe done(%d ms)!\n", (xTaskGetTickCount() * portTICK_PERIOD_MS - duration));
+				debug("Programe done(%d ms)!\r\n", (xTaskGetTickCount() * portTICK_PERIOD_MS - duration));
 
 				/* Check program dependence */
 				buf[0] = UDS_SID_ROUTINE_CTRL;
@@ -568,7 +568,7 @@ static void downstream_receive_task( void *pvParameters )
 			buf[ID_LENGTH] = 0;
 			*((uint16_t*)(buf + ID_LENGTH + ECU_TYPE1_BIT_LEN / 8)) = block_count;
 			buf[ID_LENGTH + TRANSFER_ECU_DATA_LEN] = TRANSFER_ACK;
-			uart_send_with_header((uint32_t)pvParameters ,buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
+			uart_send_with_format((uint32_t)pvParameters ,buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
 			print_buf("UART TX", 0, buf, ID_LENGTH + TRANSFER_ECU_DATA_LEN + 1);
 		}
 		else if(REQ_ECU_SW_NO_ID == *((uint16_t*)buf))
@@ -583,7 +583,7 @@ static void downstream_receive_task( void *pvParameters )
 			/* ACK */
 			*((uint16_t*)buf) = REQ_ECU_SW_NO_ID;
 			buf[ID_LENGTH] = 0;
-			uart_send_with_header((uint32_t)pvParameters, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
+			uart_send_with_format((uint32_t)pvParameters, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
 			print_buf("UART TX", 0, buf, ID_LENGTH + REQ_ECU_SW_NO_LEN + SSECUSWVN_LEN);
 		}
 		else
@@ -670,7 +670,7 @@ static void normal_task( void *pvParameters )
 				temp = (2 * 1000 * temp) / 1024;
 				sprintf(info + strlen(info), "%d ", temp);
 			}
-			strcat(info, "\n");
+			strcat(info, "\r\n");
 			debug(info);
 		}
 #endif
@@ -712,8 +712,8 @@ static void timer_callback( TimerHandle_t xTimer )
     		if(0 == GPIO_READ_PIN(IGN_GPIO, IGN_PIN))
     			set_bitfield(0x01, CAR_STATUS_START_BIT, CAR_STATUS_BIT_LEN, buf + ID_LENGTH, GB32960_DATA_LEN);
 #endif
-    		uart_send_with_header(UART0_INDEX ,buf, ID_LENGTH + len);
-    		debug("UART TX GB32960 %d bytes\n", len);
+    		uart_send_with_format(UART0_INDEX ,buf, ID_LENGTH + len);
+    		debug("UART TX GB32960 %d bytes\r\n", len);
     		upstream_count = 0;
     	}
     	upstream_count++;

@@ -159,7 +159,7 @@ void fbl(void)
 	GPIO_WRITE_PIN(LED0_GPIO, LED0_PIN, LED_ON);
 	GPIO_WRITE_PIN(LED1_GPIO, LED1_PIN, LED_ON);
 	GPIO_WRITE_PIN(LED2_GPIO, LED2_PIN, LED_ON);
-	debug("FBL ENTRY\n");
+	debug("FBL ENTRY\r\n");
 
 	/* Check initialization flag */
 	eeprom_read(EEPROM_ADDR_INIT, &reset_type, EEPROM_SIZE_INIT);
@@ -236,7 +236,7 @@ void fbl(void)
 #endif
 	}
 
-	debug("FBL jump to application\n");
+	debug("FBL jump to application\r\n");
 	jump_to_app((uint32_t *)FLASH_APP_BASE_ADDR);
 }
 //#pragma GCC pop_options
@@ -473,13 +473,13 @@ static void update_by_uart(void)
 	/* Request update */
 	*((uint16_t*)g_code_buf) = UPDATE_NOTIFY_ID;
 	*((uint16_t*)(g_code_buf + ID_LENGTH)) = TRANSFER_BLOCK_SIZE;
-	uart_send_with_header(UART0_INDEX, g_code_buf, ID_LENGTH + 2);
+	uart_send_with_format(UART0_INDEX, g_code_buf, ID_LENGTH + 2);
 	print_buf("FBL UART TX", 0, g_code_buf, ID_LENGTH + 2);
 
 	/* Start waiting for transfer data */
 	address = FLASH_APP_BASE_ADDR;
 	memset(g_code_buf, 0xFF, sizeof(g_code_buf));
-	debug("FBL start waiting for transfer data...\n");
+	debug("FBL start waiting for transfer data...\r\n");
 	timer_start(TIMER0_INDEX);
 	
 	while(!g_finished)
@@ -489,9 +489,9 @@ static void update_by_uart(void)
 		uint16_t        size = 0;
 
 		/* Receive data from UART */
-		if(0 == (size = uart_receive_with_header_poll(UART0_INDEX, buf, sizeof(buf))))
+		if(0 == (size = uart_receive_with_format_polling(UART0_INDEX, buf, sizeof(buf))))
 			continue;
-		debug("FBL UART RX %d bytes\n", size);
+		debug("FBL UART RX %d bytes\r\n", size);
 
 		/* Check if the received data is transfer data */
 		if(TRANSFER_DATA_ID != *((uint16_t*)buf))
@@ -661,7 +661,7 @@ CONTINUE:
 		/* ACK */
 		*((uint16_t*)buf) = TRANSFER_DATA_ID;
 		buf[ID_LENGTH] = TRANSFER_ACK;
-		uart_send_with_header(UART0_INDEX, buf, ID_LENGTH + 1);
+		uart_send_with_format(UART0_INDEX, buf, ID_LENGTH + 1);
 		print_buf("FBL UART TX", 0, buf, ID_LENGTH + 1);
 	}
 	
