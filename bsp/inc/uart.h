@@ -93,16 +93,6 @@ int32_t uart_deinit(const uint8_t _index);
 uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size);
 
 /**
- * Receive data with format in polling mode.
- *
- * @param [in]  _index the UART channel index
- * @param [out] _buf the buffer to receive to
- * @param [in]  _size the size to receive
- * @return the received size without header
- */
-uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[], const uint16_t _size);
-
-/**
  * Send data.
  *
  * @param [in] _index the UART channel index
@@ -111,6 +101,16 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
  * @return the sent size
  */
 uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
+
+/**
+ * Receive data with format in polling mode.
+ *
+ * @param [in]  _index the UART channel index
+ * @param [out] _buf the buffer to receive to
+ * @param [in]  _size the size to receive
+ * @return the received size without header
+ */
+uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Send data with format.

@@ -1,7 +1,7 @@
 #include <string.h>
 #include <assert.h>
 
-#include "board.h"
+#include "system.h"
 #include "uart.h"
 #include "can.h"
 #include "i2c.h"
@@ -362,7 +362,7 @@ void timer_irq_callback(const uint8_t _index)
  */
 void diag_server_sys_reset_callback(void)
 {
-	sys_reset();
+	reset();
 }
 
 /**
@@ -684,11 +684,11 @@ static void update_by_can(void)
 	diag_server_init(&g_server_link_phy, SERVER_TX_ID, SERVER_RX_ID,
 			         g_server_tx_buf_phy, sizeof(g_server_tx_buf_phy),
 		             g_server_rx_buf_phy, sizeof(g_server_rx_buf_phy),
-			         transmit_callback, server_receive_callback, sys_time, debug);
+			         transmit_callback, server_receive_callback, clock, debug);
 	diag_server_init(&g_server_link_func, SERVER_TX_ID, FUNCTION_ID,
 			         g_server_tx_buf_func, sizeof(g_server_tx_buf_func),
 			         g_server_rx_buf_func, sizeof(g_server_rx_buf_func),
-			         transmit_callback, server_receive_callback, sys_time, debug);
+			         transmit_callback, server_receive_callback, clock, debug);
  	diag_server_data_init();
 
 	timer_start(TIMER0_INDEX);

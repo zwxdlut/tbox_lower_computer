@@ -5,7 +5,7 @@
  *      Author: Administrator
  */
 
-#include "board.h"
+#include "system.h"
 
 /*******************************************************************************
  * Definitions
@@ -91,7 +91,14 @@ void gpio_deinit(void)
 	BTN_GPIO_CLK_DISABLE();
 }
 
-uint32_t sys_time(void)
+/**
+ * Get the processor clock time since the program invocation.
+ *
+ * This is the implementation of the C standard library function.
+ *
+ * @return the processor clock time
+ */
+clock_t clock(void)
 {
 #if defined USING_OS_FREERTOS
 	return xTaskGetTickCount();
@@ -115,7 +122,7 @@ void delay(const uint32_t _ms)
 #endif
 }
 
-void sys_reset(void)
+void reset(void)
 {
 	__set_FAULTMASK(1);
 	NVIC_SystemReset();
@@ -225,7 +232,7 @@ void BTN_IRQ_HANDLER(void)
  */
 void WWDG_IRQHandler(void)
 {
-	sys_reset();
+	reset();
 }
 /** @} */ /* The IRQ handlers */
 

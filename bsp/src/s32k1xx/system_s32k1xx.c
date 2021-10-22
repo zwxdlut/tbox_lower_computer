@@ -5,7 +5,7 @@
  *      Author: Administrator
  */
 
-#include "board.h"
+#include "system.h"
 
 /*******************************************************************************
  * Definitions
@@ -105,7 +105,14 @@ void gpio_deinit(void)
 	PINS_DRV_SetMuxModeSel(BTN_PORT, BTN_PIN, PORT_PIN_DISABLED);
 }
 
-uint32_t sys_time(void)
+/**
+ * Get the processor clock time since the program invocation.
+ *
+ * This is the implementation of the C standard library function.
+ *
+ * @return the processor clock time
+ */
+clock_t clock(void)
 {
 	return OSIF_GetMilliseconds();
 }
@@ -115,7 +122,7 @@ void delay(const uint32_t _ms)
 	OSIF_TimeDelay(_ms);
 }
 
-void sys_reset(void)
+void reset(void)
 {
 	SystemSoftwareReset();
 }
@@ -257,5 +264,5 @@ static void pin_irq_handler(void)
  */
 static void wdog_irq_handler(void)
 {
-	sys_reset();
+	reset();
 }

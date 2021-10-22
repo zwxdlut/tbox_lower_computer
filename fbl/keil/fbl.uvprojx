@@ -737,11 +737,6 @@
               <FilePath>..\..\bsp\src\uart.c</FilePath>
             </File>
             <File>
-              <FileName>board_stm32f2xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\bsp\src\stm32f2xx\board_stm32f2xx.c</FilePath>
-            </File>
-            <File>
               <FileName>can_stm32f2xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\bsp\src\stm32f2xx\can_stm32f2xx.c</FilePath>
@@ -755,6 +750,11 @@
               <FileName>i2c_stm32f2xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\bsp\src\stm32f2xx\i2c_stm32f2xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>system_stm32f2xx.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\bsp\src\stm32f2xx\system_stm32f2xx.c</FilePath>
             </File>
             <File>
               <FileName>timer_stm32f2xx.c</FileName>

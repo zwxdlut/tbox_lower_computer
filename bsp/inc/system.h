@@ -5,8 +5,10 @@
  *      Author: Administrator
  */
 
-#ifndef __BOARD_H__
-#define __BOARD_H__
+#ifndef __SYSTEM_H__
+#define __SYSTEM_H__
+
+#include <time.h>
 
 #include "config.h"
 
@@ -47,13 +49,6 @@ void gpio_init(void);
 void gpio_deinit(void);
 
 /**
- * Get current system time since startup.
- *
- * @return current time in milliseconds
- */
-uint32_t sys_time(void);
-
-/**
  * Delay specified time in milliseconds.
  *
  * @param [in] _ms the time in milliseconds to delay 
@@ -63,7 +58,7 @@ void delay(const uint32_t _ms);
 /**
  * Reset the system.
  */
-void sys_reset(void);
+void reset(void);
 
 /**
  * Transfer the power mode.
@@ -101,4 +96,4 @@ int32_t wdog_disable(void);
 }
 #endif
 
-#endif /* __BOARD_H__ */
+#endif /* __SYSTEM_H__ */

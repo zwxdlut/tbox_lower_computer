@@ -7,7 +7,7 @@
 #include "task.h"
 #include "timers.h"
 
-#include "board.h"
+#include "system.h"
 #include "uart.h"
 #include "can.h"
 #include "i2c.h"
@@ -151,15 +151,15 @@ void rtos_start( void )
  * @{
  */
 /**
- * @brief Overwrite reset system callback。
+ * @brief Overwrite reset system callback.
  */
 void diag_server_sys_reset_callback(void)
 {
-	sys_reset();
+	reset();
 }
 
 /**
- * @brief  Overwrite get power voltage callback。
+ * @brief  Overwrite get power voltage callback.
  *
  * @return Power voltage in 0.1V.
  */
@@ -169,9 +169,9 @@ uint32_t diag_server_get_pwr_vol_callback(void)
 }
 
 /**
- * @brief  Overwrite get vehicle speed callback。
+ * @brief  Overwrite get vehicle speed callback.
  *
- * @return Vehicle speed in 0.1km/h。
+ * @return Vehicle speed in 0.1km/h.
  */
 uint32_t diag_server_get_vehicle_speed_callback(void)
 {
@@ -179,7 +179,7 @@ uint32_t diag_server_get_vehicle_speed_callback(void)
 }
 
 /**
- * @brief  Overwrite get car status callback。
+ * @brief  Overwrite get car status callback.
  *
  * @return Car status:
  * @retval CAR_STATUS_RUNNING: Running.
@@ -252,7 +252,7 @@ static void daemon_task( void *pvParameters )
 					vTaskDelay(pdMS_TO_TICKS(10));
 					wdog_refresh();
 				}
-				sys_reset();
+				reset();
 			}
 			debug("Go to sleep...\r\n");
 			GPIO_WRITE_PIN(LED0_GPIO, LED0_PIN, LED_OFF);
@@ -807,18 +807,18 @@ static void init( void )
 	diag_server_init(&g_server_link_phy, SERVER_TX_ID, SERVER_RX_ID,
 			         g_server_tx_buf_phy, sizeof(g_server_tx_buf_phy),
 		             g_server_rx_buf_phy, sizeof(g_server_rx_buf_phy),
-			         transmit_callback, server_receive_callback, sys_time, debug);
+			         transmit_callback, server_receive_callback, clock, debug);
 	diag_server_init(&g_server_link_func, SERVER_TX_ID, FUNCTION_ID,
 			         g_server_tx_buf_func, sizeof(g_server_tx_buf_func),
 			         g_server_rx_buf_func, sizeof(g_server_rx_buf_func),
-			         transmit_callback, server_receive_callback, sys_time, debug);
+			         transmit_callback, server_receive_callback, clock, debug);
 	g_server_rx_queue = xQueueCreate( 10, sizeof( can_msg_t ) );
 
 	/* Initialize diagnostic client */
 	diag_client_init(&g_client_link, CLIENT_TX_ID, CLIENT_RX_ID,
 			         g_client_tx_buf, sizeof(g_client_tx_buf),
 			         g_client_rx_buf, sizeof(g_client_rx_buf),
-			         transmit_callback, client_receive_callback, sys_time, debug);
+			         transmit_callback, client_receive_callback, clock, debug);
 	g_client_rx_queue = xQueueCreate( 10, sizeof( can_msg_t ) );
 
 	g_sleep_mutex = xSemaphoreCreateMutex();

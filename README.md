@@ -13,18 +13,18 @@ Current supported borads are:
 
 ## Precompiled macro
 MCU type:
- * S32K144
- * STM32F10X_CL
- * STM32F205xx
+* S32K144
+* STM32F10X_CL
+* STM32F205xx
 
 Board type:
- * MX_TB
- * EVB
- * FRDM
- * CPATAIN_DESIGN
+* MX_TB
+* EVB
+* FRDM
+* CPATAIN_DESIGN
  
 OS type:
- * USING_OS_FREERTOS
+* USING_OS_FREERTOS
 
 ## IDE
 * S32DS

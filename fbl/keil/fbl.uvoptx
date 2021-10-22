@@ -1078,18 +1078,6 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\bsp\src\stm32f2xx\board_stm32f2xx.c</PathWithFileName>
-      <FilenameWithoutPath>board_stm32f2xx.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>3</GroupNumber>
-      <FileNumber>71</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
       <PathWithFileName>..\..\bsp\src\stm32f2xx\can_stm32f2xx.c</PathWithFileName>
       <FilenameWithoutPath>can_stm32f2xx.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -1097,7 +1085,7 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>72</FileNumber>
+      <FileNumber>71</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1109,13 +1097,25 @@
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>73</FileNumber>
+      <FileNumber>72</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\..\bsp\src\stm32f2xx\i2c_stm32f2xx.c</PathWithFileName>
       <FilenameWithoutPath>i2c_stm32f2xx.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>73</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\..\bsp\src\stm32f2xx\system_stm32f2xx.c</PathWithFileName>
+      <FilenameWithoutPath>system_stm32f2xx.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -22,12 +22,15 @@ extern "C" {
 #define LED0_PORT       					    PORTD
 #define LED0_GPIO      						    PTD
 #define LED0_PIN          					    0
+
 #define LED1_PORT       					    PORTD
 #define LED1_GPIO       					    PTD
 #define LED1_PIN           					    16
+
 #define LED2_PORT       					    PORTD
 #define LED2_GPIO      						    PTD
 #define LED2_PIN           					    15
+
 #define LED_ON          					    0
 #define LED_OFF         					    1
 /** @} */ /* The LEDs configuration */
@@ -51,6 +54,7 @@ extern "C" {
 #define UART0_TX_PIN                            1
 #define UART0_GPIO_AF                           PORT_MUX_ALT2
 #define UART0_IRQ                               LPUART0_RxTx_IRQn
+
 #define UART1_PORT                              PORTC
 #define UART1_RX_PIN                            6
 #define UART1_TX_PIN                            7
@@ -71,6 +75,7 @@ extern "C" {
 #define CAN0_WAKEUP_IRQ                         CAN0_Wake_Up_IRQn
 #define CAN0_ORED_0_15_IRQ                      CAN0_ORed_0_15_MB_IRQn
 #define CAN0_ORED_16_31_IRQ                     CAN0_ORed_16_31_MB_IRQn
+	
 #define CAN1_PORT                               PORTC
 #define CAN1_RX_PIN                             16
 #define CAN1_TX_PIN                             17

@@ -23,14 +23,17 @@ extern "C" {
 #define LED0_PIN                                GPIO_PIN_2
 #define LED0_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED0_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
+
 #define LED1_GPIO                               GPIOC
 #define LED1_PIN                                GPIO_PIN_1
 #define LED1_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED1_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
+
 #define LED2_GPIO                               GPIOC
 #define LED2_PIN                                GPIO_PIN_0
 #define LED2_GPIO_CLK_ENABLE()                  __HAL_RCC_GPIOC_CLK_ENABLE()
 #define LED2_GPIO_CLK_DISABLE()                 __HAL_RCC_GPIOC_CLK_DISABLE()
+
 #define LED_ON                                  GPIO_PIN_SET
 #define LED_OFF                                 GPIO_PIN_RESET
 /** @} */ /* The LEDs configuration */
@@ -55,10 +58,12 @@ extern "C" {
 #define UC_POWER_PIN                            GPIO_PIN_5
 #define UC_POWER_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOC_CLK_ENABLE()
 #define UC_POWER_GPIO_CLK_DISABLE()             __HAL_RCC_GPIOC_CLK_DISABLE()
+
 #define UC_WAKEUP_GPIO                          GPIOB
 #define UC_WAKEUP_PIN                           GPIO_PIN_1
 #define UC_WAKEUP_GPIO_CLK_ENABLE()             __HAL_RCC_GPIOB_CLK_ENABLE()
 #define UC_WAKEUP_GPIO_CLK_DISABLE()            __HAL_RCC_GPIOB_CLK_DISABLE()
+
 #define UC_RESET_GPIO                           GPIOB
 #define UC_RESET_PIN                            GPIO_PIN_0
 #define UC_RESET_GPIO_CLK_ENABLE()              __HAL_RCC_GPIOB_CLK_ENABLE()
@@ -88,6 +93,7 @@ extern "C" {
 #define UART0_INST                              USART2
 #define UART0_IRQ                               USART2_IRQn
 #define UART0_IRQ_HANDLER                       USART2_IRQHandler
+
 #define UART1_GPIO                              GPIOA
 #define UART1_RX_PIN                            GPIO_PIN_10
 #define UART1_TX_PIN                            GPIO_PIN_9
@@ -95,16 +101,22 @@ extern "C" {
 #define UART1_INST                              USART1
 #define UART1_IRQ                               USART1_IRQn
 #define UART1_IRQ_HANDLER                       USART1_IRQHandler
+
 #define UART_GPIO_CLK_ENABLE(INDEX)             do { if (0 == (INDEX)) { __HAL_RCC_GPIOA_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOA_CLK_ENABLE(); }} while (0)
+
 #define UART_GPIO_CLK_DISABLE(INDEX)            do { if (0 == (INDEX)) { __HAL_RCC_GPIOA_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOA_CLK_DISABLE(); }} while (0)
+
 #define UART_CLK_ENABLE(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_USART2_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_USART1_CLK_ENABLE(); }} while (0)
+
 #define UART_CLK_DISABLE(INDEX)                 do { if (0 == (INDEX)) { __HAL_RCC_USART2_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_USART1_CLK_DISABLE(); }} while (0)
+
 #define UART_FORCE_RESET(INDEX)                 do { if (0 == (INDEX)) { __HAL_RCC_USART2_FORCE_RESET(); } else\
                                                                        { __HAL_RCC_USART1_FORCE_RESET(); }} while (0)
+
 #define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { __HAL_RCC_USART2_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_USART1_RELEASE_RESET(); }} while (0)
 /** @} */ /* The UART configuration */
@@ -128,6 +140,7 @@ extern "C" {
 #define CAN0_TRANS_INH_PIN                      GPIO_PIN_8
 #define CAN0_TRANS_INH_IRQ                      EXTI9_5_IRQn
 #define CAN0_TRANS_INH_IRQ_HANDLER              EXTI9_5_IRQHandler
+
 #define CAN1_GPIO                               GPIOB
 #define CAN1_RX_PIN                             GPIO_PIN_12
 #define CAN1_TX_PIN                             GPIO_PIN_13
@@ -143,30 +156,43 @@ extern "C" {
 #define CAN1_TRANS_INH_PIN                      GPIO_PIN_15
 #define CAN1_TRANS_INH_IRQ                      EXTI15_10_IRQn
 #define CAN1_TRANS_INH_IRQ_HANDLER              EXTI15_10_IRQHandler
+
 #define CAN_GPIO_CLK_ENABLE(INDEX)              do { if (0 == (INDEX)) { __HAL_RCC_GPIOB_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
+
 #define CAN_GPIO_CLK_DISABLE(INDEX)             do { if (0 == (INDEX)) { __HAL_RCC_GPIOB_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
+
 #define CAN_CLK_ENABLE(INDEX)                   do { if (0 == (INDEX)) { __HAL_RCC_CAN1_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_CAN2_CLK_ENABLE(); }} while (0)
+
 #define CAN_CLK_DISABLE(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_CAN1_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_CAN2_CLK_DISABLE(); }} while (0)
+
 #define CAN_FORCE_RESET(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_CAN1_FORCE_RESET(); } else\
                                                                        { __HAL_RCC_CAN2_FORCE_RESET(); }} while (0)
+
 #define CAN_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { __HAL_RCC_CAN1_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_CAN2_RELEASE_RESET(); }} while (0)
+
 #define CAN_TRANS_STB_N_GPIO_CLK_ENABLE(INDEX)  do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
+
 #define CAN_TRANS_STB_N_GPIO_CLK_DISABLE(INDEX) do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
+
 #define CAN_TRANS_EN_GPIO_CLK_ENABLE(INDEX)     do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
+
 #define CAN_TRANS_EN_GPIO_CLK_DISABLE(INDEX)    do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
+
 #define CAN_TRANS_INH_GPIO_CLK_ENABLE(INDEX)    do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
+
 #define CAN_TRANS_INH_GPIO_CLK_DISABLE(INDEX)   do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
+
 #define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< the slave CAN start filter bank number */
 /** @} */ /* The CAN configuration */
 
@@ -183,16 +209,22 @@ extern "C" {
 #define I2C0_EV_IRQ_HANDLER                     I2C1_EV_IRQHandler
 #define I2C0_ER_IRQ                             I2C1_ER_IRQn
 #define I2C0_ER_IRQ_HANDLER                     I2C1_ER_IRQHandler
+
 #define I2C_GPIO_CLK_ENABLE(INDEX)              do { if (0 == (INDEX)) { __HAL_RCC_GPIOB_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_ENABLE(); }} while (0)
+
 #define I2C_GPIO_CLK_DISABLE(INDEX)             do { if (0 == (INDEX)) { __HAL_RCC_GPIOB_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
+
 #define I2C_CLK_ENABLE(INDEX)                   do { if (0 == (INDEX)) { __HAL_RCC_I2C1_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_I2C1_CLK_ENABLE(); }} while (0)
+
 #define I2C_CLK_DISABLE(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_I2C1_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_I2C1_CLK_DISABLE(); }} while (0)
+
 #define I2C_FORCE_RESET(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_I2C1_FORCE_RESET(); } else\
                                                                        { __HAL_RCC_I2C1_FORCE_RESET(); }} while (0)
+
 #define I2C_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { __HAL_RCC_I2C1_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_I2C1_RELEASE_RESET(); }} while (0)
 /** @} */ /* The I2C configuration */
@@ -221,32 +253,46 @@ extern "C" {
 #define SPI0_RX_DMA_IRQ_HANDLER                 DMA1_Stream0_IRQHandler
 #define SPI0_TX_DMA_IRQ                         DMA1_Stream5_IRQn
 #define SPI0_TX_DMA_IRQ_HANDLER                 DMA1_Stream5_IRQHandler
+
 #define SPI_SCK_GPIO_CLK_ENABLE(INDEX)          do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_ENABLE(); }} while (0)
+
 #define SPI_SCK_GPIO_CLK_DISABLE(INDEX)         do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_DISABLE(); }} while (0)
+
 #define SPI_MISO_GPIO_CLK_ENABLE(INDEX)         do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_ENABLE(); }} while (0)
+
 #define SPI_MISO_GPIO_CLK_DISABLE(INDEX)        do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_DISABLE(); }} while (0)
+
 #define SPI_MOSI_GPIO_CLK_ENABLE(INDEX)         do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_ENABLE(); }} while (0)
+
 #define SPI_MOSI_GPIO_CLK_DISABLE(INDEX)        do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_DISABLE(); }} while (0)
+
 #define SPI_CS_GPIO_CLK_ENABLE(INDEX)           do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_ENABLE(); }} while (0)
+
 #define SPI_CS_GPIO_CLK_DISABLE(INDEX)          do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOC_CLK_DISABLE(); }} while (0)
+
 #define SPI_CLK_ENABLE(INDEX)                   do { if (0 == (INDEX)) { __HAL_RCC_SPI3_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_SPI3_CLK_ENABLE(); }} while (0)
+
 #define SPI_CLK_DISABLE(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_SPI3_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_SPI3_CLK_DISABLE(); }} while (0)
+
 #define SPI_FORCE_RESET(INDEX)                  do { if (0 == (INDEX)) { __HAL_RCC_SPI3_FORCE_RESET(); } else\
                                                                        { __HAL_RCC_SPI3_FORCE_RESET(); }} while (0)
+
 #define SPI_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { __HAL_RCC_SPI3_RELEASE_RESET(); } else\
                                                                        { __HAL_RCC_SPI3_RELEASE_RESET(); }} while (0)
+
 #define SPI_DMA_CLK_ENABLE(INDEX)               do { if (0 == (INDEX)) { __HAL_RCC_DMA1_CLK_ENABLE(); } else\
                                                                        { __HAL_RCC_DMA1_CLK_ENABLE(); }} while (0)
+                                                                       
 #define SPI_DMA_CLK_DISABLE(INDEX)              do { if (0 == (INDEX)) { __HAL_RCC_DMA1_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_DMA1_CLK_DISABLE(); }} while (0)
 /** @} */ /* The SPI configuration */
