@@ -63,7 +63,7 @@ void reset(void);
 /**
  * Transfer the power mode.
  *
- * @param [in] _mode the power mode to transfer to:
+ * @param [in] _mode the power mode to transfer:
  * <ul>
  * <li>{@link PWR_MODE_SLEEP} sleep</li>
  * <li>{@link PWR_MODE_DEEPSLEEP} deep sleep</li>

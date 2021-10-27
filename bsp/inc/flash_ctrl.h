@@ -65,7 +65,7 @@ bool flash_ctrl_is_sector_aligned(const uint32_t _addr);
  *
  * @param [in] _addr the start address to be programed
  * @param [in] _size the size to program
- * @param [in] _buf the buffer to program from
+ * @param [in] _buf the buffer to program
  * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[]);
@@ -83,9 +83,9 @@ int32_t flash_ctrl_program_verify(const uint32_t _addr, const uint32_t _size, co
 /**
  * Write data to the flash area which is partitioned as EEPROM.
  *
- * @param [in] _addr the start address to write to
+ * @param [in] _addr the start address to write
  * @param [in] _size the size to write
- * @param [in] _buf the buffer to write from
+ * @param [in] _buf the buffer to write
  * @return 0(success) or other values(failure)
  */
 int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const uint8_t _buf[]);

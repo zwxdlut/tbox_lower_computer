@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1]; /* the TX mutex */
+SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
 #endif
 
 can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* the RX queue */

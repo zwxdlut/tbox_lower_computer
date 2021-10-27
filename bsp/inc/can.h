@@ -70,8 +70,8 @@ int32_t can_deinit(const uint8_t _index);
  * Receive a CAN message.
  *
  * @param [in]  _index the CAN channel index
- * @param [out] _id the received CAN ID 
- * @param [out] _buf the buffer to receive to
+ * @param [out] _id the received CAN id 
+ * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return the received size
  */
@@ -81,8 +81,8 @@ uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t _buf[],  
  * Send a CAN message.
  *
  * @param [in] _index the CAN channel index
- * @param [in] _id the sent CAN ID
- * @param [in] _buf the buffer to send from
+ * @param [in] _id the sent CAN id
+ * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return the sent size
  */
@@ -92,7 +92,7 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
  * Transfer the CAN power mode.
  *
  * @param [in] _index the CAN channel index
- * @param [in] _mode the CAN power mode to transfer to:
+ * @param [in] _mode the CAN power mode to transfer:
  * <ul>
  * <li>{@link CAN_PWR_MODE_SLEEP} sleep</li>
  * <li>{@link CAN_PWR_MODE_RUN} run</li>

@@ -88,7 +88,7 @@ int32_t spi_master_deinit(const uint8_t _index);
  * Receive data.
  *
  * @param [in]  _index the SPI channel index
- * @param [out] _buf the buffer to receive to
+ * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return 0(success) or other values(failure)
  */
@@ -98,7 +98,7 @@ int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t 
  * Send data.
  *
  * @param [in] _index the SPI channel index
- * @param [in] _buf the buffer to send from
+ * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return 0(success) or other values(failure)
  */
@@ -140,7 +140,7 @@ int32_t spi_slave_deinit(const uint8_t _index);
  * Receive data.
  *
  * @param [in] _index the SPI channel index
- * @param [out] _buf the buffer to receive to
+ * @param [out] _buf the buffer to receive
  * @param [in] _size the size to be recieved
  * @return 0(success) or other values(failure)
  */
@@ -150,7 +150,7 @@ int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _
  * Send data.
  *
  * @param [in] _index the SPI channel index
- * @param [in] _buf the buffer to send from
+ * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return 0(success) or other values(failure)
  */

@@ -165,7 +165,7 @@ int32_t i2c_master_deinit(const uint8_t _index);
  *
  * @param [in] _index the I2C channel index
  * @param [in] _addr the slave device address(7 bit without R/W bit)
- * @param [out] _buf the buffer to receive to
+ * @param [out] _buf the buffer to receive
  * @param [in] _size the size to receive
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
@@ -177,7 +177,7 @@ int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _
  *
  * @param [in] _index the I2C channel index
  * @param [in] _addr the slave device address(7 bit without R/W bit)
- * @param [in] _buf the buffer to send from
+ * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
@@ -187,8 +187,8 @@ int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_
 /**
  * Read data from the EEPROM.
  *
- * @param [in] _addr the start address to read from
- * @param [out] _buf the buffer to read to
+ * @param [in] _addr the start address to read
+ * @param [out] _buf the buffer to read
  * @param [in] _size the size to read
  * @return 0(success) or other values(failure)
  */
@@ -197,8 +197,8 @@ int32_t eeprom_read(const uint8_t _addr, uint8_t _buf[], const uint16_t _size);
 /**
  * Write data to the EEPROM.
  *
- * @param [in] _addr the start address to write to
- * @param [in] _buf the buffer to write from
+ * @param [in] _addr the start address to write
+ * @param [in] _buf the buffer to write
  * @param [in] _size the size to write
  * @return 0(success) or other values(failure)
  */
@@ -229,7 +229,7 @@ int32_t accr_deinit(void);
 /**
  * Transfer the accelerometer system mode.
  *
- * @param [in] _mode the system mode to transfer to:
+ * @param [in] _mode the system mode to transfer:
  * <ul>
  * <li>{@link ACCR_SYSMOD_STANDBY} standby</li>
  * <li>{@link ACCR_SYSMOD_ACTIVE} active</li>
@@ -248,7 +248,7 @@ uint8_t accr_get_int_src(void);
 /**
  * Get the X, Y, Z-axis sample data(MSB).
  *
- * @param [in] _buf the buffer to get to
+ * @param [in] _buf the buffer to get
  * @param [in] _size the size to get
  * @return 0(success) or other values(failure)
  */
