@@ -313,14 +313,17 @@ static void can_irq_handler(const uint8_t _index)
 		/* receive the message */
 		CAN_Receive(g_handle[_index], CAN_FIFO0, &msg);
 	
-		/* check if the RX queue is not full */
-		if (g_can_rx_queue_head[_index] != (g_can_rx_queue_tail[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
+		/* check if the RX queue is full */
+		if (g_can_rx_queue_head[_index] == (g_can_rx_queue_tail[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 		{
-			/* push the RX queue */
-			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].id_ = (CAN_ID_STD ==  msg.IDE) ? msg.StdId : msg.ExtId;
-			g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_ = msg.DLC > 8u ? 8u : msg.DLC;
-			memcpy(g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].data_, msg.Data, g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_);
-			g_can_rx_queue_tail[_index] = (g_can_rx_queue_tail[_index] + 1u) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
+			/* dequeue */
+			g_can_rx_queue_head[_index] = (g_can_rx_queue_head[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 		}
+		
+		/* enqueue */
+		g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].id_ = (CAN_ID_STD ==  msg.IDE) ? msg.StdId : msg.ExtId;
+		g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_ = msg.DLC > 8u ? 8u : msg.DLC;
+		memcpy(g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].data_, msg.Data, g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_);
+		g_can_rx_queue_tail[_index] = (g_can_rx_queue_tail[_index] + 1u) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 	}
 }

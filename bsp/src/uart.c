@@ -30,10 +30,10 @@ uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size
 
 	uint16_t i = 0;
 
-	/* check if the RX queue is not empty */
+	/* check if the RX queue is empty */
 	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
 	{
-		/* pop the RX queue */
+		/* dequeue */
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
 		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
 	}

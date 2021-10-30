@@ -200,13 +200,16 @@ static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data
 
     if (UART_EVENT_RX_FULL == _event)
     {
-		/* check if the RX queue is not full */
-		if (g_uart_rx_queue_head[index] != (g_uart_rx_queue_tail[index] + 1) % UART_RX_BUFFER_SIZE)
+		/* check if the RX queue is full */
+		if (g_uart_rx_queue_head[index] == (g_uart_rx_queue_tail[index] + 1) % UART_RX_BUFFER_SIZE)
 		{
-			/* push the RX queue */
-			g_uart_rx_queue[index][g_uart_rx_queue_tail[index]] = g_rx_byte[index];
-			g_uart_rx_queue_tail[index] = (g_uart_rx_queue_tail[index] + 1) % UART_RX_BUFFER_SIZE;
+			/* dequeue */
+			g_uart_rx_queue_head[index] = (g_uart_rx_queue_head[index] + 1) % UART_RX_BUFFER_SIZE;
 		}
+
+		/* enqueue */
+		g_uart_rx_queue[index][g_uart_rx_queue_tail[index]] = g_rx_byte[index];
+		g_uart_rx_queue_tail[index] = (g_uart_rx_queue_tail[index] + 1) % UART_RX_BUFFER_SIZE;
 
 		/* update the RX buffer and trigger the next receiving */
 		LPUART_DRV_SetRxBuffer(g_handle[index], g_rx_byte + index, 1);

@@ -197,12 +197,15 @@ void uart_irq_handler(const uint8_t _index)
 	{		
 		USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
 
-		/* check if the RX queue is not full */
-		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
+		/* check if the RX queue is full */
+		if (g_uart_rx_queue_head[_index] == (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
 		{
-			/* push the RX queue */
-			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
-			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;
-		}		
+			/* dequeue */
+			g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
+		}
+		
+		/* enqueue */
+		g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
+		g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;	
     }
 }

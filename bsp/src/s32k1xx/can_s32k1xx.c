@@ -321,16 +321,18 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 	switch (_event_type)
 	{
 		case FLEXCAN_EVENT_RXFIFO_COMPLETE:
-			/* check if the RX queue is not full */
-			if (g_can_rx_queue_head[index] != (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
+			/* check if the RX queue is full */
+			if (g_can_rx_queue_head[index] == (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 			{
-	        	/* push the RX queue */
-				g_can_rx_queue[index][g_can_rx_queue_tail[index]].id_ = g_rx_buf[index].msgId;
-				g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_ = g_rx_buf[index].dataLen > 8 ? 8 : g_rx_buf[index].dataLen;
-				memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
-				g_can_rx_queue_tail[index] = (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
+				/* dequeue */
+				g_can_rx_queue_head[index] = (g_can_rx_queue_head[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			}
 
+			/* enqueue */
+			g_can_rx_queue[index][g_can_rx_queue_tail[index]].id_ = g_rx_buf[index].msgId;
+			g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_ = g_rx_buf[index].dataLen > 8 ? 8 : g_rx_buf[index].dataLen;
+			memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
+			g_can_rx_queue_tail[index] = (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			break;
 		case FLEXCAN_EVENT_TX_COMPLETE:
 		case FLEXCAN_EVENT_RXFIFO_WARNING:

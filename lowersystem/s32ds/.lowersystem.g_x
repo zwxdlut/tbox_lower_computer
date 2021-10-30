@@ -65,7 +65,7 @@
       <File Name="Generated_Code/extWdog.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119987" FileType="45637" CompNumb="15" />
       <File Name="SDK/rtos/FreeRTOS_S32K/Source/portable/MemMang/heap_2.c" FileDate="2020-03-06, 14:45:20" FileAge="1583477120041" FileType="1048576" CompNumb="16" />
       <File Name="SDK/platform/drivers/src/lpi2c/lpi2c_hw_access.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120023" FileType="1048576" CompNumb="14" />
-      <File Name="src/main.c" FileDate="2021-10-27, 17:49:28" FileAge="1635328168630" FileType="128" />
+      <File Name="src/main.c" FileDate="2021-10-30, 13:30:33" FileAge="1635571833914" FileType="128" />
       <File Name="Generated_Code/extWdog.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119987" FileType="45637" CompNumb="15" />
       <File Name="SDK/platform/drivers/src/flexcan/flexcan_driver.c" FileDate="2020-03-06, 14:45:20" FileAge="1583477120018" FileType="1048576" CompNumb="0" />
       <File Name="SDK/rtos/FreeRTOS_S32K/Source/include/mpu_wrappers.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120034" FileType="1048576" CompNumb="16" />
@@ -100,7 +100,7 @@
       <File Name="SDK/rtos/FreeRTOS_S32K/Source/include/timers.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120038" FileType="1048576" CompNumb="16" />
       <File Name="SDK/rtos/FreeRTOS_S32K/Source/include/semphr.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120036" FileType="1048576" CompNumb="16" />
       <File Name="SDK/rtos/FreeRTOS_S32K/Source/include/stream_buffer.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120037" FileType="1048576" CompNumb="16" />
-      <File Name="Documentation/lowersystem.txt" FileDate="2021-10-27, 17:49:28" FileAge="1635328168709" FileType="3072" />
+      <File Name="Documentation/lowersystem.txt" FileDate="2021-10-30, 13:30:33" FileAge="1635571833992" FileType="3072" />
       <File Name="SDK/platform/drivers/src/lpuart/lpuart_hw_access.c" FileDate="2020-03-06, 14:45:20" FileAge="1583477120025" FileType="1048576" CompNumb="0" />
       <File Name="SDK/platform/drivers/src/lpuart/lpuart_driver.c" FileDate="2020-03-06, 14:45:20" FileAge="1583477120024" FileType="1048576" CompNumb="0" />
       <File Name="Generated_Code/dmaController1.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119986" FileType="45637" CompNumb="8" />
@@ -149,5 +149,5 @@
       <File Name="SDK/platform/drivers/inc/flexcan_driver.h" FileDate="2020-03-06, 14:45:20" FileAge="1583477120008" FileType="1048576" CompNumb="0" />
     </GeneratedByPE>
   </GeneratedFilesList>
-  <CodeGenReference>429</CodeGenReference>
+  <CodeGenReference>434</CodeGenReference>
 </CodeGenerationInfo>

@@ -26,10 +26,10 @@ uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t _buf[],  
 
 	uint8_t size = 0;
 
-	/* check if the RX queue is not empty */
+	/* check if the RX queue is empty */
 	if (g_can_rx_queue_head[_index] != g_can_rx_queue_tail[_index])
 	{
-		/* pop the RX queue */
+		/* dequeue */
 		*_id = g_can_rx_queue[_index][g_can_rx_queue_head[_index]].id_;
 		size = _size > g_can_rx_queue[_index][g_can_rx_queue_head[_index]].dlc_ ? g_can_rx_queue[_index][g_can_rx_queue_head[_index]].dlc_ : _size;
 		memcpy(_buf, g_can_rx_queue[_index][g_can_rx_queue_head[_index]].data_, size);

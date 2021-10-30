@@ -206,12 +206,15 @@ static void uart_irq_handler(const uint8_t _index)
 	{
 		LL_USART_ClearFlag_RXNE(g_handle[_index].Instance);
 
-		/* check if the RX queue is not full */
-		if (g_uart_rx_queue_head[_index] != (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
+		/* check if the RX queue is full */
+		if (g_uart_rx_queue_head[_index] == (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
 		{
-			/* push the RX queue */
-			g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = LL_USART_ReceiveData8(g_handle[_index].Instance);
-			g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;
-		}		
+			/* dequeue */
+			g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
+		}
+		
+		/* enqueue */
+		g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = LL_USART_ReceiveData8(g_handle[_index].Instance);
+		g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;		
     }
 }
