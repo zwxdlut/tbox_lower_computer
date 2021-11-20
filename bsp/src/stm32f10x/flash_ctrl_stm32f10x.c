@@ -39,6 +39,7 @@ int32_t flash_ctrl_erase_sector(const uint32_t _addr, const uint32_t _size)
 	uint32_t end_sector_addr = get_sector_addr(get_sector(_addr + _size - 1));
 	
 	ret = FLASH_COMPLETE;
+
 	FLASH_Unlock();
 
 	while (FLASH_COMPLETE == ret && start_sector_addr <= end_sector_addr)
@@ -101,6 +102,7 @@ int32_t flash_ctrl_verify_sector(const uint32_t _addr, const uint32_t _size)
 bool flash_ctrl_is_sector_aligned(const uint32_t _addr)
 {
 	assert(_addr >= FLASH_BASE_ADDR && _addr <= FLASH_BASE_ADDR + FLASH_TOTAL_SIZE);
+
 	return (0 == (_addr - FLASH_BASE_ADDR) % FLASH_SECTOR_SIZE );	
 }
 
@@ -113,6 +115,7 @@ int32_t flash_ctrl_program(const uint32_t _addr, const uint32_t _size, const uin
 	uint32_t i = 0;
 	
 	ret = FLASH_COMPLETE;
+
 	FLASH_Unlock();
 
 	while (FLASH_COMPLETE == ret && i < _size)
@@ -196,7 +199,8 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
  */
 static uint32_t get_sector(const uint32_t _addr)
 {
-	assert(_addr >= FLASH_BASE_ADDR && _addr <= FLASH_BASE_ADDR + FLASH_TOTAL_SIZE);	
+	assert(_addr >= FLASH_BASE_ADDR && _addr <= FLASH_BASE_ADDR + FLASH_TOTAL_SIZE);
+
 	return ((_addr - FLASH_BASE_ADDR) / FLASH_SECTOR_SIZE);
 }
 
@@ -209,6 +213,7 @@ static uint32_t get_sector(const uint32_t _addr)
 static uint32_t get_sector_addr(const uint32_t _sector)
 {
 	assert(FLASH_TOTAL_SIZE / FLASH_SECTOR_SIZE -1 >= _sector);
+
 	return (FLASH_BASE_ADDR + _sector * FLASH_SECTOR_SIZE);
 }
 
@@ -221,5 +226,6 @@ static uint32_t get_sector_addr(const uint32_t _sector)
 static uint32_t get_sector_size(const uint32_t _sector)
 {
 	assert((FLASH_TOTAL_SIZE / FLASH_SECTOR_SIZE -1) >= _sector);
+	
 	return FLASH_SECTOR_SIZE;
 }

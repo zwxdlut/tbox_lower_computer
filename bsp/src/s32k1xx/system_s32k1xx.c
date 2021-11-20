@@ -167,7 +167,9 @@ void pwr_mode_trans(const uint8_t _mode)
 	    {
 	        //error
 	    }
+
 		break;
+		
 	default:
 		break;
 	}
@@ -187,6 +189,7 @@ int32_t wdog_enable(void)
 
 	/* install the IRQ handler */
 	INT_SYS_InstallHandler(WDOG_EWM_IRQn, wdog_irq_handler, (isr_t *)0);
+
     /* enable the IRQ */
     INT_SYS_EnableIRQ(WDOG_EWM_IRQn);
 
@@ -235,6 +238,7 @@ static void pin_irq_handler(void)
             case (1 << BTN_PIN):
                 PINS_DRV_ClearPinIntFlagCmd(BTN_PORT, BTN_PIN);
                 break;
+
             default:
                 PINS_DRV_ClearPortIntFlagCmd(BTN_PORT);
                 break;
@@ -251,6 +255,7 @@ static void pin_irq_handler(void)
             case (1 << IGN_PIN):
                 PINS_DRV_ClearPinIntFlagCmd(IGN_PORT, IGN_PIN);
                 break;
+
             default:
                 PINS_DRV_ClearPortIntFlagCmd(IGN_PORT);
                 break;

@@ -232,6 +232,7 @@ int32_t can_deinit(const uint8_t _index)
 	CAN_CLK_DISABLE(_index);
 	CAN_FORCE_RESET(_index);
 	CAN_RELEASE_RESET(_index);
+
 	HAL_GPIO_DeInit(g_comm_config[_index].gpio_, g_comm_config[_index].rx_pin_ | g_comm_config[_index].tx_pin_);
 	__HAL_GPIO_EXTI_CLEAR_IT(g_comm_config[_index].trans_inh_pin_);
 	HAL_GPIO_DeInit(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_);
@@ -284,10 +285,12 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 		HAL_CAN_Sleep(&g_handle[_index]);
 		HAL_GPIO_WritePin(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, GPIO_PIN_RESET);
 		break;
+
 	case CAN_PWR_MODE_RUN:	
 		HAL_GPIO_WritePin(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, GPIO_PIN_SET);
 		HAL_CAN_WakeUp(&g_handle[_index]);
 		break;
+
 	default:
 		break;
 	}
@@ -299,6 +302,7 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
  * @name The IRQ handlers
  * @{
  */
+
 /*
  * The CAN0 RX IRQ handler.
  */
@@ -330,6 +334,7 @@ void CAN1_TRANS_INH_IRQ_HANDLER(void)
 {
 	HAL_GPIO_EXTI_IRQHandler(CAN1_TRANS_INH_PIN);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
@@ -361,12 +366,16 @@ static void can_irq_handler(const uint8_t _index)
 
 		/* get the RTR */
 		g_handle[_index].pRxMsg->RTR = (uint8_t)0x02 & g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RIR;
+
 		/* get the DLC */
 		g_handle[_index].pRxMsg->DLC = (uint8_t)0x0F & g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDTR;
-		// get the FIFONumber */
+
+		/* get the FIFONumber */
 		g_handle[_index].pRxMsg->FIFONumber = CAN_FIFO0;
+
 		/* get the FMI */
 		g_handle[_index].pRxMsg->FMI = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDTR >> 8U);
+
 		/* get the data field */
 		g_handle[_index].pRxMsg->Data[0] = (uint8_t)0xFF &  g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDLR;
 		g_handle[_index].pRxMsg->Data[1] = (uint8_t)0xFF & (g_handle[_index].Instance->sFIFOMailBox[CAN_FIFO0].RDLR >> 8U);
@@ -396,8 +405,10 @@ static void can_irq_handler(const uint8_t _index)
 
 	/* error warning */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_EWG) && RESET != __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_EWG)) {}
+
 	/* error passive */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_EPV) && RESET != __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_EPV)) {}
+		
 	/* bus-off */
 	if (0 != __HAL_CAN_GET_FLAG(&g_handle[_index], CAN_FLAG_BOF) && RESET !=  __HAL_CAN_GET_IT_SOURCE(&g_handle[_index], CAN_IT_BOF)) {}
 }

@@ -111,6 +111,7 @@ int32_t uart_deinit(const uint8_t _index)
 	assert(UART1_INDEX >= _index);
 
 	NVIC_InitTypeDef  NVIC_InitStructure;
+
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
@@ -127,6 +128,7 @@ int32_t uart_deinit(const uint8_t _index)
 	USART_Cmd(g_handle[_index], DISABLE);
 	USART_ITConfig(g_handle[_index], USART_IT_RXNE, DISABLE);
 	USART_DeInit(g_handle[_index]);
+
 	UART_CLK_DISABLE(_index);
 	UART_FORCE_RESET(_index);
 	UART_RELEASE_RESET(_index);
@@ -165,6 +167,7 @@ uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _s
  * @name The IRQ handlers
  * @{
  */
+
 /**
  * The UART0 IRQ handler.
  */
@@ -180,6 +183,7 @@ void UART1_IRQ_HANDLER(void)
 {
 	uart_irq_handler(UART1_INDEX);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************

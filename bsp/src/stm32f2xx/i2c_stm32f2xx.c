@@ -145,6 +145,7 @@ int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_
  * @name The IRQ handlers
  * @{
  */
+
 /**
  * The I2C0 event IRQ handler.
  */
@@ -160,6 +161,7 @@ void I2C0_ER_IRQ_HANDLER(void)
 {
 	HAL_I2C_ER_IRQHandler(&g_handle[I2C0_INDEX]);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /******************************************************************************

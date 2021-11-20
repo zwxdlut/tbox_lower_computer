@@ -21,7 +21,6 @@ typedef struct
 	uint8_t      tx_pin_;
 	port_mux_t   gpio_af_;
 	IRQn_Type    irqs_[5];
-
 #if defined MX_TB
 	PORT_Type    *trans_stb_n_port_;
 	GPIO_Type    *trans_stb_n_gpio_;
@@ -44,7 +43,6 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.tx_pin_           = CAN0_TX_PIN,
 		.gpio_af_          = CAN0_GPIO_AF,
 		.irqs_             = {CAN0_ORED_IRQ, CAN0_ERROR_IRQ, CAN0_WAKEUP_IRQ, CAN0_ORED_0_15_IRQ, CAN0_ORED_16_31_IRQ},
-
 #if defined MX_TB
 		.trans_stb_n_port_ = CAN0_TRANS_STB_N_PORT,
 		.trans_stb_n_gpio_ = CAN0_TRANS_STB_N_GPIO,
@@ -65,7 +63,6 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.tx_pin_           = CAN1_TX_PIN,
 		.gpio_af_          = CAN1_GPIO_AF,
 		.irqs_             = {CAN1_ORED_IRQ, CAN1_ERROR_IRQ, CAN1_ORED_0_15_IRQ, NotAvail_IRQn, NotAvail_IRQn},
-
 #if defined MX_TB
 		.trans_stb_n_port_ = CAN1_TRANS_STB_N_PORT,
 		.trans_stb_n_gpio_ = CAN1_TRANS_STB_N_GPIO,
@@ -334,6 +331,7 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 			memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
 			g_can_rx_queue_tail[index] = (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			break;
+
 		case FLEXCAN_EVENT_TX_COMPLETE:
 		case FLEXCAN_EVENT_RXFIFO_WARNING:
 		case FLEXCAN_EVENT_RXFIFO_OVERFLOW:
@@ -361,6 +359,7 @@ static void pin_irq_handler(void)
             case (1 << CAN0_TRANS_INH_PIN):
                 PINS_DRV_ClearPinIntFlagCmd(CAN0_TRANS_INH_PORT, CAN0_TRANS_INH_PIN);
                 break;
+
             default:
                 PINS_DRV_ClearPortIntFlagCmd(CAN0_TRANS_INH_PORT);
                 break;
@@ -376,6 +375,7 @@ static void pin_irq_handler(void)
             case (1 << CAN1_TRANS_INH_PIN):
                 PINS_DRV_ClearPinIntFlagCmd(CAN1_TRANS_INH_PORT, CAN1_TRANS_INH_PIN);
                 break;
+
             default:
                 PINS_DRV_ClearPortIntFlagCmd(CAN1_TRANS_INH_PORT);
                 break;

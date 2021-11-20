@@ -136,6 +136,7 @@ int32_t uart_deinit(const uint8_t _index)
 	LL_USART_DisableIT_RXNE(g_handle[_index].Instance);
 	LL_USART_DisableIT_ERROR(g_handle[_index].Instance);
 	HAL_UART_DeInit(&g_handle[_index]);
+
 	UART_CLK_DISABLE(_index);
 	UART_FORCE_RESET(_index);
 	UART_RELEASE_RESET(_index);
@@ -174,6 +175,7 @@ uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _s
  * @name The IRQ handlers
  * @{
  */
+
 /**
  * The UART0 IRQ handler.
  */
@@ -189,6 +191,7 @@ void UART1_IRQ_HANDLER(void)
 {
 	uart_irq_handler(UART1_INDEX);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************

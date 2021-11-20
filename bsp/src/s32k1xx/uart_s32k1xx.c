@@ -90,7 +90,7 @@ static lpuart_state_t *g_state[UART1_INDEX + 1] =
 #endif
 };
 
-static uint8_t  g_rx_byte[UART1_INDEX + 1]; /* RX byte */
+static uint8_t  g_rx_byte[UART1_INDEX + 1]; /* the RX byte */
 
 /*******************************************************************************
  * Local function prototypes
@@ -124,11 +124,14 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_config[_index]->parityMode      = (lpuart_parity_mode_t)_parity;
 	LPUART_DRV_Init(g_handle[_index], g_state[_index], g_config[_index]);
 	LPUART_DRV_InstallRxCallback(g_handle[_index], uart_irq_handler, (void *)((uint32_t)_index));
+
 #if defined USING_OS_FREERTOS
 	/* The interrupt calls an interrupt safe API function - so its priority must
 	   be equal to or lower than configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_) && NotAvail_IRQn != g_comm_config[_index].irqs_[i]; i++)
+	{
 		INT_SYS_SetPriority( g_comm_config[_index].irqs_[i], configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+	}
 #endif
 
     /* trigger receiving */

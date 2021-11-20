@@ -87,20 +87,25 @@ void gpio_deinit(void)
 {
 	HAL_NVIC_DisableIRQ(IGN_IRQ);
 	__HAL_GPIO_EXTI_CLEAR_IT(IGN_PIN);
+
 	HAL_GPIO_DeInit(UC_POWER_GPIO, UC_POWER_PIN);
 	HAL_GPIO_DeInit(UC_WAKEUP_GPIO, UC_WAKEUP_PIN);
 	HAL_GPIO_DeInit(UC_RESET_GPIO, UC_RESET_PIN);
 	HAL_GPIO_DeInit(IGN_GPIO, IGN_PIN);
+
 	UC_POWER_GPIO_CLK_DISABLE();
 	UC_WAKEUP_GPIO_CLK_DISABLE();
 	UC_RESET_GPIO_CLK_DISABLE();
 	IGN_GPIO_CLK_DISABLE();
+
 	HAL_NVIC_DisableIRQ(BTN_IRQ);
 	__HAL_GPIO_EXTI_CLEAR_IT(BTN_PIN);
+
 	HAL_GPIO_DeInit(LED0_GPIO, LED0_PIN);
 	HAL_GPIO_DeInit(LED1_GPIO, LED1_PIN);
 	HAL_GPIO_DeInit(LED2_GPIO, LED2_PIN);
 	HAL_GPIO_DeInit(BTN_GPIO, BTN_PIN);
+
 	LED0_GPIO_CLK_DISABLE();
 	LED1_GPIO_CLK_DISABLE();
 	LED2_GPIO_CLK_DISABLE();
@@ -141,6 +146,7 @@ void reset(void)
 void pwr_mode_trans(const uint8_t _mode)
 {
 	__HAL_RCC_PWR_CLK_ENABLE();
+
 	/* Suspend Tick increment to prevent wakeup by Systick interrupt
 	   Otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
 	HAL_SuspendTick();
@@ -150,15 +156,20 @@ void pwr_mode_trans(const uint8_t _mode)
 	case PWR_MODE_SLEEP:
 		HAL_PWR_EnterSLEEPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
 		break;
+
 	case PWR_MODE_DEEPSLEEP:
 		HAL_PWR_EnterSTOPMode(PWR_LOWPOWERREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+		break;
+
 	default:
 		break;
 	}
 
 	sys_clk_config();
+
 	/* resume the tick interrupt if it is disabled prior to sleep mode entry */
 	HAL_ResumeTick();
+
 	__HAL_RCC_PWR_CLK_DISABLE();
 }
 
@@ -178,6 +189,7 @@ int32_t wdog_enable(void)
 	g_wdog_handle.Init.Counter   = WWDOG_RLV;
 	g_wdog_handle.Init.EWIMode   = WWDG_EWI_ENABLE;
 	HAL_WWDG_Init(&g_wdog_handle);
+
 	HAL_NVIC_SetPriority(WWDG_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(WWDG_IRQn);
 
@@ -208,6 +220,7 @@ int32_t wdog_disable(void)
  * @name The IRQ handlers
  * @{
  */
+
 #if !defined USING_OS_FREERTOS
 /**
  * The system tick timer handler.
@@ -247,6 +260,7 @@ void WWDG_IRQHandler(void)
 		reset();
 	}
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************

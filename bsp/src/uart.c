@@ -176,11 +176,13 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], co
  */
 #if defined __EWL__
 #include <sys/UART.h>
+
 UARTError InitializeUART(UARTBaudRate baudRate)
 {
 #if defined _UDEBUG
 	uart_init(UART1_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 #endif
+
 	return kUARTNoError;
 }
 
@@ -194,6 +196,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 		size += uart_receive(UART1_INDEX, bytes + size, limit - size);
 	}
 #endif
+
 	return kUARTNoError;
 }
 
@@ -202,8 +205,10 @@ UARTError WriteUARTN(const void * bytes, unsigned long length)
 #if defined _UDEBUG
 	uart_send(UART1_INDEX, bytes, length);
 #endif
+
 	return kUARTNoError;
 }
+
 #elif defined __NEWLIB__
 int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
@@ -221,6 +226,7 @@ int _write(int iFileHandle, char *pcBuffer, int iLength)
 	return 0;
 #endif
 }
+
 #elif defined __ARMCLIB_VERSION
 #pragma import(__use_no_semihosting)
 
@@ -254,6 +260,7 @@ int fputc(int ch, FILE *f)
 
 	uart_send(UART1_INDEX, (uint8_t*)(&ch), 1);
 #endif
+
 	return (ch);
 }
 #endif

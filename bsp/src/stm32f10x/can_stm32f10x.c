@@ -190,6 +190,7 @@ int32_t can_deinit(const uint8_t _index)
 	assert(CAN1_INDEX >= _index);
 	
 	NVIC_InitTypeDef  NVIC_InitStructure;
+
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
@@ -262,9 +263,11 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 	case CAN_PWR_MODE_SLEEP:
 		CAN_Sleep(g_handle[_index]);
 		break;
+
 	case CAN_PWR_MODE_RUN:	
 		CAN_WakeUp(g_handle[_index]);
 		break;
+
 	default:
 		break;
 	}
@@ -276,6 +279,7 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
  * @name The IRQ handlers
  * @{
  */
+
 /*
  * The CAN0 RX IRQ handler.
  */
@@ -291,6 +295,7 @@ void CAN1_RX_IRQ_HANDLER(void)
 {	
 	can_irq_handler(CAN1_INDEX);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************

@@ -16,8 +16,8 @@ static flash_ssd_config_t g_flash_ssd_cfg;
 /*******************************************************************************
  * Local function prototypes
  ******************************************************************************/
-/* Function declarations */
 void CCIF_Handler(void);
+
 /* If target is flash, insert this macro to locate callback function into RAM. */
 START_FUNCTION_DECLARATION_RAMSECTION
 void CCIF_Callback(void)
@@ -118,6 +118,7 @@ int32_t flash_ctrl_init(void)
 int32_t flash_ctrl_deinit(void)
 {
 	INT_SYS_DisableIRQ(FTFC_IRQn);
+    
 	return 0;
 }
 

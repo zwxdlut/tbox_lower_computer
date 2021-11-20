@@ -70,6 +70,7 @@ int32_t timer_start(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 	HAL_TIM_Base_Start_IT(&g_handle[_index]);
+
     return 0;
 }
 
@@ -77,6 +78,7 @@ int32_t timer_stop(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 	HAL_TIM_Base_Stop_IT(&g_handle[_index]);
+
 	return 0;
 }
 
@@ -89,6 +91,7 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
  * @name The IRQ handlers
  * @{
  */
+
 /**
  * The Timer0 IRQ handler.
  */
@@ -96,6 +99,7 @@ void TIMER0_IRQ_HANDLER(void)
 {
 	timer_irq_handler(TIMER0_INDEX);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /******************************************************************************

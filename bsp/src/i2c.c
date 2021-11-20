@@ -219,9 +219,11 @@ int32_t accr_sys_mode_trans(const uint8_t _mode)
 		case ACCR_SYSMOD_STANDBY:
 			buf[1] &= 0xFE;
 			break;
+
 		case ACCR_SYSMOD_ACTIVE:
 			buf[1] |= 0x01;
 			break;
+			
 		default:
 			break;
 		}

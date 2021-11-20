@@ -168,10 +168,12 @@ int32_t spi_master_deinit(const uint8_t _index)
 	HAL_DMA_DeInit(&g_rx_dma[_index]);
     HAL_DMA_DeInit(&g_tx_dma[_index]);
 	SPI_DMA_CLK_DISABLE(_index);
+
 	HAL_SPI_DeInit(&g_handle[_index]);
 	SPI_CLK_DISABLE(_index);
 	SPI_FORCE_RESET(_index);
 	SPI_RELEASE_RESET(_index);
+
 	HAL_GPIO_DeInit(g_comm_config[_index].sck_gpio_, g_comm_config[_index].sck_pin_);
 	HAL_GPIO_DeInit(g_comm_config[_index].miso_gpio_, g_comm_config[_index].miso_pin_);
 	HAL_GPIO_DeInit(g_comm_config[_index].mosi_gpio_, g_comm_config[_index].mosi_pin_);
@@ -233,6 +235,7 @@ int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_
  * @name The IRQ handlers
  * @{
  */
+
 /**
  * The SPI0 IRQ handler.
  */
@@ -256,6 +259,7 @@ void SPI0_TX_DMA_IRQ_HANDLER(void)
 {
 	HAL_DMA_IRQHandler(g_handle[SPI0_INDEX].hdmatx);
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************

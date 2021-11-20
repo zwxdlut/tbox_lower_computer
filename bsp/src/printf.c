@@ -46,5 +46,4 @@ int_t _EWL_CDECL printf(const char_t * _EWL_RESTRICT format, ...)
 
     return(result);
 }
-
 #endif /* _EWL_CONSOLE_SUPPORT */

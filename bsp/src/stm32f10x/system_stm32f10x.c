@@ -25,6 +25,7 @@ int32_t sys_init(void)
 	/* setup the SysTick */
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock/1000);
+
 	return 0;
 }
 
@@ -78,13 +79,16 @@ void gpio_deinit(void)
   	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
   	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
   	NVIC_Init(&NVIC_InitStructure);
+
 	EXTI_ClearITPendingBit(BTN_EXTI_LINE);
 	EXTI_DeInit();
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, DISABLE);
+
 	GPIO_DeInit(LED0_GPIO);
 	GPIO_DeInit(LED1_GPIO);
 	GPIO_DeInit(LED2_GPIO);
 	GPIO_DeInit(BTN_GPIO);
+
 	LED0_GPIO_CLK_DISABLE();
 	LED1_GPIO_CLK_DISABLE();
 	LED2_GPIO_CLK_DISABLE();
@@ -131,6 +135,7 @@ void reset(void)
 void pwr_mode_trans(const uint8_t _mode)
 {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+
 	/* suspend the SysTick */
 	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
@@ -139,15 +144,20 @@ void pwr_mode_trans(const uint8_t _mode)
 	case PWR_MODE_SLEEP:
 		PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);
 		break;
+
 	case PWR_MODE_DEEPSLEEP:
 	    PWR_EnterSTOPMode(PWR_Regulator_LowPower, PWR_STOPEntry_WFI);
+	    break;
+
 	default:
 		break;
 	}
 
 	SystemInit();
+
 	/* resume the SysTick */
-	SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk); 
+	SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
+
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, DISABLE);
 }
 
@@ -162,12 +172,14 @@ int32_t wdog_enable(void)
 #endif
 
 	NVIC_InitTypeDef NVIC_InitStructure;
+
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_WWDG, ENABLE);
 	WWDG_ClearFlag();
 	WWDG_SetPrescaler(WWDOG_PRV);
 	WWDG_SetWindowValue(WWDOG_WV);    
 	WWDG_Enable(WWDOG_RLV);
 	WWDG_EnableIT();
+
 	NVIC_InitStructure.NVIC_IRQChannel = WWDG_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
@@ -191,11 +203,13 @@ int32_t wdog_refresh(void)
 int32_t wdog_disable(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
+	
 	NVIC_InitStructure.NVIC_IRQChannel = WWDG_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE; 
 	NVIC_Init(&NVIC_InitStructure);
+
 	WWDG_ClearFlag();
 	WWDG_DeInit();
 	RCC_APB1PeriphResetCmd(RCC_APB1Periph_WWDG, DISABLE);
@@ -224,7 +238,9 @@ void SysTick_Handler(void)
 void BTN_IRQ_HANDLER(void)
 {
 	if (RESET != EXTI_GetITStatus(BTN_EXTI_LINE))
+	{
 		EXTI_ClearITPendingBit(BTN_EXTI_LINE);
+	}
 }
 
 /**
@@ -234,6 +250,7 @@ void WWDG_IRQHandler(void)
 {
 	reset();
 }
+
 /** @} */ /* The IRQ handlers */
 
 /*******************************************************************************
