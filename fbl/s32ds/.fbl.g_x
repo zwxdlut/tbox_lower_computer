@@ -53,7 +53,7 @@
       <File Name="SDK/platform/drivers/src/flexcan/flexcan_driver.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119946" FileType="1048576" CompNumb="12" />
       <File Name="SDK/platform/devices/device_registers.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119930" FileType="1048576" CompNumb="6" />
       <File Name="SDK/platform/drivers/src/pins/pins_port_hw_access.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119958" FileType="1048576" CompNumb="2" />
-      <File Name="src/main.c" FileDate="2021-11-20, 15:42:52" FileAge="1637394172570" FileType="128" />
+      <File Name="src/main.c" FileDate="2021-11-22, 10:35:19" FileAge="1637548519460" FileType="128" />
       <File Name="Generated_Code/lpTmr0.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119910" FileType="45637" CompNumb="15" />
       <File Name="Generated_Code/lpi2c0.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119911" FileType="45637" CompNumb="13" />
       <File Name="SDK/platform/drivers/inc/lpi2c_driver.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119935" FileType="1048576" CompNumb="13" />
@@ -96,15 +96,15 @@
       <File Name="Generated_Code/Flash.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119906" FileType="45637" CompNumb="14" />
       <File Name="Generated_Code/Cpu.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119905" FileType="45637" CompNumb="6" />
       <File Name="Generated_Code/Flash.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119905" FileType="45637" CompNumb="14" />
-      <File Name="SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119939" FileType="1048576" CompNumb="3" />
-      <File Name="SDK/platform/drivers/src/lpi2c/lpi2c_irq.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119952" FileType="1048576" CompNumb="13" />
-      <File Name="Generated_Code/Cpu.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119904" FileType="45637" CompNumb="6" />
       <File Name="SDK/platform/drivers/src/pins/pins_gpio_hw_access.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119958" FileType="1048576" CompNumb="2" />
-      <File Name="SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119938" FileType="1048576" CompNumb="3" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119904" FileType="45637" CompNumb="6" />
+      <File Name="SDK/platform/drivers/src/lpi2c/lpi2c_irq.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119952" FileType="1048576" CompNumb="13" />
+      <File Name="SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119939" FileType="1048576" CompNumb="3" />
       <File Name="SDK/platform/drivers/src/lpi2c/lpi2c_irq.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119952" FileType="1048576" CompNumb="13" />
+      <File Name="SDK/platform/drivers/src/clock/S32K1xx/clock_S32K1xx.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119938" FileType="1048576" CompNumb="3" />
       <File Name="SDK/platform/drivers/src/flexcan/flexcan_hw_access.h" FileDate="2020-03-06, 14:45:19" FileAge="1583477119948" FileType="1048576" CompNumb="12" />
       <File Name="SDK/platform/drivers/src/flexcan/flexcan_hw_access.c" FileDate="2020-03-06, 14:45:19" FileAge="1583477119947" FileType="1048576" CompNumb="12" />
     </GeneratedByPE>
   </GeneratedFilesList>
-  <CodeGenReference>140</CodeGenReference>
+  <CodeGenReference>142</CodeGenReference>
 </CodeGenerationInfo>

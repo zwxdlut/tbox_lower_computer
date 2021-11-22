@@ -189,7 +189,7 @@ int32_t can_deinit(const uint8_t _index)
 {
 	assert(CAN1_INDEX >= _index);
 	
-	NVIC_InitTypeDef  NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
@@ -220,11 +220,6 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
 	assert(CAN1_INDEX >= _index && NULL != _buf);
 
 	uint16_t size = 0;
-
-#if defined USING_OS_FREERTOS
-	xSemaphoreTake( g_can_tx_mutex[_index], portMAX_DELAY);
-#endif
-
 	CanTxMsg msg;
 	uint8_t  mailbox = 0;
 
@@ -234,6 +229,10 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
 	msg.RTR   = CAN_RTR_DATA;
 	msg.DLC   = _size >= 8 ? 8 : _size;
 	memcpy(msg.Data, _buf, msg.DLC);
+
+#if defined USING_OS_FREERTOS
+	xSemaphoreTake( g_can_tx_mutex[_index], portMAX_DELAY);
+#endif
 
 	if (CAN_TxStatus_NoMailBox != (mailbox = CAN_Transmit(g_handle[_index], &msg)))
 	{

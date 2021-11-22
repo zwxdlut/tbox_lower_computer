@@ -80,6 +80,7 @@ int32_t timer_deinit(const uint8_t _index)
 int32_t timer_start(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
+
 	TIM_Cmd(g_handle[_index], ENABLE);
 
     return 0;
@@ -88,6 +89,7 @@ int32_t timer_start(const uint8_t _index)
 int32_t timer_stop(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
+	
 	TIM_Cmd(g_handle[_index], DISABLE);
 	
 	return 0;
