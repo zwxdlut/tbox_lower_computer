@@ -1,7 +1,7 @@
 /*
  * uart_s32k1xx.c
  *
- *  Created on: 2018��10��16��
+ *  Created on: 2018年10月16日
  *      Author: Administrator
  */
 
@@ -11,20 +11,20 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* Sending mutex */
 #endif
 
-uint8_t  g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* the RX queue */
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* the RX queue head */
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* the RX queue tail */
+uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* Receiving queue */
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* Receiving queue head */
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* Receiving queue tail */
 
 typedef struct
 {
-	PORT_Type    *port_;
-	uint8_t      rx_pin_;
-	uint8_t      tx_pin_;
-	port_mux_t   gpio_af_;
-	IRQn_Type    irqs_[1];
+	PORT_Type *port_;
+	uint8_t rx_pin_;
+	uint8_t tx_pin_;
+	port_mux_t gpio_af_;
+	IRQn_Type irqs_[1];
 } comm_config_t;
 
 static comm_config_t g_comm_config[UART1_INDEX + 1] =
@@ -34,14 +34,14 @@ static comm_config_t g_comm_config[UART1_INDEX + 1] =
 		.rx_pin_  = UART0_RX_PIN,
 		.tx_pin_  = UART0_TX_PIN,
 		.gpio_af_ = UART0_GPIO_AF,
-		.irqs_    = {UART0_IRQ}
+		.irqs_    = {UART0_IRQ},
 	},
 	{
 		.port_    = UART1_PORT,
 		.rx_pin_  = UART1_RX_PIN,
 		.tx_pin_  = UART1_TX_PIN,
 		.gpio_af_ = UART1_GPIO_AF,
-		.irqs_    = {UART1_IRQ}
+		.irqs_    = {UART1_IRQ},
 	}
 };
 
@@ -90,7 +90,7 @@ static lpuart_state_t *g_state[UART1_INDEX + 1] =
 #endif
 };
 
-static uint8_t  g_rx_byte[UART1_INDEX + 1]; /* the RX byte */
+static uint8_t  g_rx_byte[UART1_INDEX + 1]; /* Receiving byte */
 
 /*******************************************************************************
  * Local function prototypes
@@ -104,7 +104,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 {
 	assert(UART1_INDEX >= _index);
 
-	/* initialize the RX queue */
+	/* Initialize the rx queue */
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 
@@ -112,12 +112,12 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 
-	/* initialize the GPIOs */
+	/* Initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetPullSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, PORT_INTERNAL_PULL_UP_ENABLED);
 
-	/* initialize the UART */
+	/* Initialize the UART */
 	g_config[_index]->baudRate        = _baudrate;
 	g_config[_index]->bitCountPerChar = (lpuart_bit_count_per_char_t)_data_bits;
 	g_config[_index]->stopBitCount    = (lpuart_stop_bit_count_t)_stop_bits;
@@ -134,7 +134,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	}
 #endif
 
-    /* trigger receiving */
+    /* Trigger receiving */
 	LPUART_DRV_ReceiveData( g_handle[_index], g_rx_byte + _index, 1);
 
 	return 0;
@@ -218,6 +218,6 @@ static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data
 		LPUART_DRV_SetRxBuffer(g_handle[index], g_rx_byte + index, 1);
     }
 
-    /* trigger receiving */
+    /* Trigger receiving */
     LPUART_DRV_ReceiveData( g_handle[index], g_rx_byte + index, 1);
 }

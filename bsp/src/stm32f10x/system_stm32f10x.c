@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
  #if !defined USING_OS_FREERTOS
-static uint32_t g_sys_tick_cnt = 0; /* the SysTick count */
+static uint32_t g_sys_tick_cnt = 0; /* The SysTick count */
 #endif
 
 /*******************************************************************************
@@ -22,7 +22,7 @@ static uint32_t g_sys_tick_cnt = 0; /* the SysTick count */
  ******************************************************************************/
 int32_t sys_init(void)
 {
-	/* setup the SysTick */
+	/* Setup the SysTick */
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock/1000);
 
@@ -35,38 +35,40 @@ void gpio_init(void)
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	/* initialize the LEDs */
+	/* Initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
-	GPIO_InitStructure.GPIO_Pin   = LED0_PIN;
+	GPIO_InitStructure.GPIO_Pin = LED0_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(LED0_GPIO, &GPIO_InitStructure);
 	GPIO_WriteBit(LED0_GPIO, LED0_PIN, LED_OFF);
+
 	LED1_GPIO_CLK_ENABLE();	
 	GPIO_InitStructure.GPIO_Pin = LED1_PIN; 
 	GPIO_Init(LED1_GPIO, &GPIO_InitStructure);
 	GPIO_WriteBit(LED1_GPIO, LED1_PIN, LED_OFF);
+	
 	LED2_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.GPIO_Pin = LED2_PIN;
 	GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	GPIO_WriteBit(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	/* initialize the buttons */
+	/* Initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
-	GPIO_InitStructure.GPIO_Pin  = BTN_PIN;
+	GPIO_InitStructure.GPIO_Pin = BTN_PIN;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(BTN_GPIO, &GPIO_InitStructure);
 	GPIO_EXTILineConfig(BTN_PORT_SRC, BTN_PIN_SRC);
-  	EXTI_InitStructure.EXTI_Line    = BTN_EXTI_LINE;
-  	EXTI_InitStructure.EXTI_Mode    = EXTI_Mode_Interrupt;	
+  	EXTI_InitStructure.EXTI_Line = BTN_EXTI_LINE;
+  	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;	
   	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
   	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   	EXTI_Init(&EXTI_InitStructure);
-   	NVIC_InitStructure.NVIC_IRQChannel                   = BTN_IRQ;
+   	NVIC_InitStructure.NVIC_IRQChannel = BTN_IRQ;
   	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; 
-  	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
-  	NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
+  	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   	NVIC_Init(&NVIC_InitStructure);
 }
 
@@ -74,10 +76,10 @@ void gpio_deinit(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	NVIC_InitStructure.NVIC_IRQChannel                   = BTN_IRQ;
+	NVIC_InitStructure.NVIC_IRQChannel = BTN_IRQ;
   	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; 
-  	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
-  	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
+  	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
   	NVIC_Init(&NVIC_InitStructure);
 
 	EXTI_ClearITPendingBit(BTN_EXTI_LINE);
@@ -100,7 +102,7 @@ void gpio_deinit(void)
  *
  * This is the implementation of the C standard library function.
  *
- * @return the processor clock time
+ * @return The processor clock time.
  */
 clock_t clock(void)
 {
@@ -136,7 +138,7 @@ void pwr_mode_trans(const uint8_t _mode)
 {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 
-	/* suspend the SysTick */
+	/* Suspend the SysTick */
 	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
 	switch(_mode)
@@ -155,7 +157,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 	SystemInit();
 
-	/* resume the SysTick */
+	/* Resume the SysTick */
 	SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, DISABLE);
@@ -163,7 +165,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 int32_t wdog_enable(void)
 {
-#if 0 /* the individual watch dog */
+#if 0 /* The individual watch dog */
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
 	IWDG_SetPrescaler(IWDOG_PRV);
 	IWDG_SetReload(IWDOG_RLV);
@@ -191,7 +193,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 /* the individual watch dog */
+#if 0 /* The individual watch dog */
 	IWDG_ReloadCounter();	
 #endif
 
@@ -218,13 +220,13 @@ int32_t wdog_disable(void)
 }
 
 /**
- * @name The IRQ handlers
+ * @name IRQ handlers
  * @{
  */
 
 #if !defined USING_OS_FREERTOS
 /**
- * The system tick timer handler.
+ * System tick timer handler.
  */
 void SysTick_Handler(void)
 {
@@ -233,7 +235,7 @@ void SysTick_Handler(void)
 #endif
 
 /**
- * The button IRQ handler.
+ * Button IRQ handler.
  */
 void BTN_IRQ_HANDLER(void)
 {
@@ -244,14 +246,14 @@ void BTN_IRQ_HANDLER(void)
 }
 
 /**
- * The window watch dog IRQ handler.
+ * Window watch dog IRQ handler.
  */
 void WWDG_IRQHandler(void)
 {
 	reset();
 }
 
-/** @} */ /* The IRQ handlers */
+/** @} */ /* IRQ handlers */
 
 /*******************************************************************************
  * Local functions

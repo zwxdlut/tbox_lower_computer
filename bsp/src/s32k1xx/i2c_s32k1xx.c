@@ -1,7 +1,7 @@
 /*
  * i2c_s32k1xx.c
  *
- *  Created on: 2019��1��9��
+ *  Created on: 2019年1月9日
  *      Author: Administrator
  */
 
@@ -11,16 +11,16 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* the RX/TX mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* Receiving/Sending mutex */
 #endif
 
 typedef struct
 {
-	PORT_Type    *port_;
-	uint8_t      scl_pin_;
-	uint8_t      sda_pin_;
-	port_mux_t   gpio_af_;
-	IRQn_Type    irqs_[1];
+	PORT_Type *port_;
+	uint8_t scl_pin_;
+	uint8_t sda_pin_;
+	port_mux_t gpio_af_;
+	IRQn_Type irqs_[1];
 } comm_config_t;
 
 static comm_config_t g_comm_config[I2C0_INDEX + 1] =
@@ -30,7 +30,7 @@ static comm_config_t g_comm_config[I2C0_INDEX + 1] =
 		.scl_pin_ = I2C0_SCL_PIN,
 		.sda_pin_ = I2C0_SDA_PIN,
 		.gpio_af_ = I2C0_GPIO_AF,
-		.irqs_    = {I2C0_IRQ}
+		.irqs_    = {I2C0_IRQ},
 	}
 };
 
@@ -68,7 +68,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 
-	/* initialize the GPIOs */
+	/* Initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].scl_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].sda_pin_, g_comm_config[_index].gpio_af_);
 

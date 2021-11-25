@@ -1,7 +1,7 @@
 /*
  * flash_ctrl_stm32f10x.c
  *
- *  Created on: 2018��10��17��
+ *  Created on: 2018年10月17日
  *      Author: Administrator
  */
 
@@ -194,8 +194,8 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 /**
  * Get the sector of a given address.
  *
- * @param [in] _addr the sector start address
- * @return the sector of the given address
+ * @param [in] _addr A sector start address
+ * @return The sector of the given address.
  */
 static uint32_t get_sector(const uint32_t _addr)
 {
@@ -207,8 +207,8 @@ static uint32_t get_sector(const uint32_t _addr)
 /**
  * Get the address of a given sector.
  *
- * @param [in] _sector the sector
- * @return the address of the given sector
+ * @param [in] _sector A sector
+ * @return The address of the given sector.
  */
 static uint32_t get_sector_addr(const uint32_t _sector)
 {
@@ -220,8 +220,8 @@ static uint32_t get_sector_addr(const uint32_t _sector)
 /**
  * Get a sector size.
  *
- * @param [in] _sector the sector
- * @return the size of the given sector.
+ * @param [in] _sector A sector
+ * @return The size of the given sector.
  */
 static uint32_t get_sector_size(const uint32_t _sector)
 {

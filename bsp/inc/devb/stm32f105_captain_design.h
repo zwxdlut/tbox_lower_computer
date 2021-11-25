@@ -1,7 +1,7 @@
 /*
  * stm32f10x_captain_design.h
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -16,7 +16,7 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The LEDs configuration
+ * @name LEDs configuration
  * @{
  */
 #define LED0_GPIO                               GPIOC
@@ -36,10 +36,10 @@ extern "C" {
 
 #define LED_ON                                  Bit_RESET
 #define LED_OFF                                 Bit_SET
-/** @} */ /* The LEDs configuration */
+/** @} */ /* LEDs configuration */
 
 /**
- * @name The buttons configuration
+ * @name Buttons configuration
  * @{
  */
 #define BTN_GPIO                                GPIOB
@@ -51,10 +51,10 @@ extern "C" {
 #define BTN_IRQ_HANDLER                         EXTI15_10_IRQHandler
 #define BTN_GPIO_CLK_ENABLE()                   RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE)
 #define BTN_GPIO_CLK_DISABLE()                  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE)
-/** @} */ /* The buttons configuration */
+/** @} */ /* Buttons configuration */
 
 /**
- * @name The UART configuration
+ * @name UART configuration
  * @{
  */
 #define UART0_GPIO                              GPIOA
@@ -88,10 +88,10 @@ extern "C" {
 
 #define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, DISABLE); } else\
                                                                        { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE); }} while (0)
-/** @} */ /* The UART configuration */
+/** @} */ /* UART configuration */
 
 /** 
- * @name The CAN configuration
+ * @name CAN configuration
  * @{
  */
 #define CAN0_GPIO                               GPIOB
@@ -128,11 +128,11 @@ extern "C" {
 #define CAN_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, DISABLE); } else\
                                                                        { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, DISABLE); }} while (0)
                                                                        
-#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< the slave CAN start filter bank number */
-/** @} */ /* The CAN configuration */
+#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< Slave CAN start filter bank number */
+/** @} */ /* CAN configuration */
 
 /** 
- * @name The I2C configuration
+ * @name I2C configuration
  * @{
  */
 #define I2C0_INST                               I2C1
@@ -140,7 +140,7 @@ extern "C" {
 #define I2C0_EV_IRQ_HANDLER                     I2C1_EV_IRQHandler
 #define I2C0_ER_IRQ                             I2C1_ER_IRQn
 #define I2C0_ER_IRQ_HANDLER                     I2C1_ER_IRQHandler
-/** @} */ /* The I2C configuration */
+/** @} */ /* I2C configuration */
 
 #ifdef __cplusplus
 }

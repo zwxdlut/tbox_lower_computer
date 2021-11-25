@@ -1,7 +1,7 @@
 /*
  * timer.h
  *
- *  Created on: 2018��10��23��
+ *  Created on: 2018年10月23日
  *      Author: Administrator
  */
 
@@ -21,11 +21,11 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The timer indexes
+ * @name Timer indexes
  * @{
  */
 #define TIMER0_INDEX                            0
-/** @} */ /* The timer indexes */
+/** @} */ /* Timer indexes */
 																	  
 /******************************************************************************
  * Function prototypes
@@ -33,9 +33,9 @@ extern "C" {
 /**
  * Initialize the timer.
  *
- * @param [in] _index the timer index
- * @param [in] _period the timer period in milliseconds
- * @return 0(success) or other values(failure)
+ * @param [in] _index The timer index
+ * @param [in] _period The timer period in milliseconds
+ * @return 0(success) or other values(failure).
  */
 
 int32_t timer_init(const uint8_t _index, const uint32_t _period);
@@ -43,33 +43,33 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period);
 /**
  * Deinitialize the timer.
  *
- * @param [in] _index the timer index
- * @return 0(success) or other values(failure)
+ * @param [in] _index The timer index
+ * @return 0(success) or other values(failure).
  */
 int32_t timer_deinit(const uint8_t _index);
 
 /**
  * Start the timer.
  *
- * @param [in] _index the timer index
- * @return 0(success) or other values(failure)
+ * @param [in] _index The timer index
+ * @return 0(success) or other values(failure).
  */
 int32_t timer_start(const uint8_t _index);
 
 /**
  * Stop the timer.
  *
- * @param [in] _index the timer index
- * @return 0(success) or other values(failure)
+ * @param [in] _index The timer index
+ * @return 0(success) or other values(failure).
  */
 int32_t timer_stop(const uint8_t _index);
 
 /**
- * The timer IRQ callback.
+ * Timer IRQ callback.
  *
  * This function can be implemented by user, default implemention is "weak".
  *
- * @param [in] _index the timer index
+ * @param [in] _index Timer index
  */
 void timer_irq_callback(const uint8_t _index);
 

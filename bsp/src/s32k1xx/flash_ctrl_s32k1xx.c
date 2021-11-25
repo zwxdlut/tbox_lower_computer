@@ -1,7 +1,7 @@
 /*
  * flash_ctrl_s32k1xx.c
  *
- *  Created on: 2018��10��17��
+ *  Created on: 2018年10月17日
  *      Author: Administrator
  */
 

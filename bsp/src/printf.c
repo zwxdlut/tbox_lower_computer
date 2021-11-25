@@ -1,5 +1,5 @@
 /*
- * Copyright � 2008 Freescale Corporation.  All rights reserved.
+ * Copyright (C) 2008 Freescale Corporation.  All rights reserved.
  *
  */
 

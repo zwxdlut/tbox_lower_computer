@@ -1,7 +1,7 @@
 /*
  * board.h
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -20,13 +20,13 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The system power modes
+ * @name System power modes
  * 
  * @{
  */
 #define PWR_MODE_SLEEP                          0
 #define PWR_MODE_DEEPSLEEP                      1
-/** @} */ /* The system power modes */
+/** @} */ /* System power modes */
 
 /*******************************************************************************
  * Function prototypes
@@ -34,7 +34,7 @@ extern "C" {
 /**
  * Initialize the clocks, etc...
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t sys_init(void);
 
@@ -44,14 +44,14 @@ int32_t sys_init(void);
 void gpio_init(void);
 
 /**
- * De-initialize the GPIOs.
+ * De-Initialize the GPIOs.
  */
 void gpio_deinit(void);
 
 /**
  * Delay specified time in milliseconds.
  *
- * @param [in] _ms the time in milliseconds to delay 
+ * @param [in] _ms The time to delay in milliseconds
  */
 void delay(const uint32_t _ms);
 
@@ -61,12 +61,12 @@ void delay(const uint32_t _ms);
 void reset(void);
 
 /**
- * Transfer the power mode.
+ * Transfer the system power mode.
  *
- * @param [in] _mode the power mode to transfer:
+ * @param [in] _mode The system power mode is transfered to:
  * <ul>
- * <li>{@link PWR_MODE_SLEEP} sleep</li>
- * <li>{@link PWR_MODE_DEEPSLEEP} deep sleep</li>
+ * <li>{@link PWR_MODE_SLEEP}</li>
+ * <li>{@link PWR_MODE_DEEPSLEEP}</li>
  * </ul>
  */
 void pwr_mode_trans(const uint8_t _mode);
@@ -74,21 +74,21 @@ void pwr_mode_trans(const uint8_t _mode);
 /**
  * Enable the watch dog.
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t wdog_enable(void);
 
 /**
  * Refresh the watch dog.
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t wdog_refresh(void);
 
 /**
  * Disable the watch dog.
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t wdog_disable(void);
 

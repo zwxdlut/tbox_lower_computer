@@ -1,7 +1,7 @@
 /*
  * timer_s32k1xx.c
  *
- *  Created on: 2018��10��23��
+ *  Created on: 2018年10月23日
  *      Author: Administrator
  */
 
@@ -48,10 +48,10 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	   - counter disabled */
 	LPTMR_DRV_Init(g_handle[_index], g_config[_index], false);
 
-	/* install the IRQ handler for LPTMR interrupt */
+	/* Install the IRQ handler for LPTMR interrupt */
 	INT_SYS_InstallHandler(g_timer_irq[_index], timer_irq_handler, (isr_t *)0);
 
-	/* enable the IRQ for LPTMR */
+	/* Enable the IRQ for LPTMR */
 	INT_SYS_EnableIRQ(g_timer_irq[_index]);
 
     return 0;
@@ -72,7 +72,7 @@ int32_t timer_start(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 
-    /* start the LPTMR counter */
+    /* Start the LPTMR counter */
     LPTMR_DRV_StartCounter(g_handle[_index]);
 
     return 0;
@@ -82,7 +82,7 @@ int32_t timer_stop(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 
-    /* stop the LPTMR counter */
+    /* Stop the LPTMR counter */
 	LPTMR_DRV_StopCounter(g_handle[_index]);
 
 	return 0;
@@ -97,16 +97,16 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
  * Local functions
  ******************************************************************************/
 /**
- * The timer IRQ handler.
+ * Timer IRQ handler.
  */
 static void timer_irq_handler(void)
 {
 	for (uint8_t i = TIMER0_INDEX; i < TIMER0_INDEX + 1; i++)
 	{
-		/* check the compare flag */
+		/* Check the compare flag */
 		while (LPTMR_DRV_GetCompareFlag(g_handle[i]))
 		{
-		    /* clear the compare flag */
+		    /* Clear the compare flag */
 			LPTMR_DRV_ClearCompareFlag(g_handle[i]);
 			
 			timer_irq_callback(i);

@@ -1,7 +1,7 @@
 /*
  * i2c.h
  *
- *  Created on: 2019��1��9��
+ *  Created on: 2019年1月9日
  *      Author: Administrator
  */
 
@@ -18,22 +18,22 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name The I2C channel indexes
+ * @name I2C channel indexes
  * @{
  */
 #define I2C0_INDEX       		                0
-/** @} */ /* The I2C channel indexes */
+/** @} */ /* I2C channel indexes */
 
 /** 
- * @name The EEPROM configuration
+ * @name EEPROM configuration
  * 
  * Two-wire serial EEPROM AT24C02 2K(256 * 8 bit) 32 pages of 8 bytes each.
  * 
  * @{
  */
 #define EEPROM_ADDR              			     0x50 /**< The device address, 7bit without R/W bit. */
-#define EEPROM_PAGE_SIZE                         8 /**< the page size in bytes */
-#define EEPROM_TOTAL_SIZE                        256 /**< the total size in bytes */
+#define EEPROM_PAGE_SIZE                         8 /**< The page size of the device in bytes */
+#define EEPROM_TOTAL_SIZE                        256 /**< The total size of the device in bytes */
 #define EEPROM_ADDR_RESET_TYPE                   0x00
 #define EEPROM_SIZE_RESET_TYPE                   1
 #define EEPROM_ADDR_SSECUHWVN                    (EEPROM_ADDR_RESET_TYPE + EEPROM_SIZE_RESET_TYPE)
@@ -60,16 +60,16 @@ extern "C" {
 #define EEPROM_SIZE_DTC                          21
 #define EEPROM_ADDR_INIT                         EEPROM_TOTAL_SIZE - 1
 #define EEPROM_SIZE_INIT                         1
-/** @} */ /* The EEPROM configuration */
+/** @} */ /* EEPROM configuration */
 
 /** 
- * @name the accelerometer configuration
+ * @name Accelerometer configuration
  * 
  * 3-axis, 12-bit/8-bit digital accelerometer MMA8452Q.
  * 
  * @{
  */
-#define ACCR_ADDR                       		0x1C /**< the device address, 7bit without R/W bit. */
+#define ACCR_ADDR                       		0x1C /**< The device address, 7bit without R/W bit. */
 #define ACCR_STATUS_REG	                        0x00
 #define ACCR_OUT_X_MSB_REG	                    0x01
 #define ACCR_OUT_X_LSB_REG	                    0x02
@@ -116,18 +116,18 @@ extern "C" {
 #define ACCR_OFF_Y_REG			                0x30
 #define ACCR_OFF_Z_REG			                0x31
 //#define ACCR_RESERVED_REG		                0x40-0x7F
-/** @} */ /* the accelerometer configuration */
+/** @} */ /* Accelerometer configuration */
 
 /** 
- * @name The accelerometer system modes
+ * @name Accelerometer system modes
  * @{
  */
 #define ACCR_SYSMOD_STANDBY                     0u
 #define ACCR_SYSMOD_ACTIVE                      1u
-/** @} */ /* The accelerometer system modes */
+/** @} */ /* Accelerometer system modes */
 
 /** 
- * @name The accelerometer interrupt source mask
+ * @name Accelerometer interrupt source mask
  * @{
  */
 #define ACCR_INT_NONE_MASK                      0x00
@@ -137,120 +137,120 @@ extern "C" {
 #define ACCR_INT_PULSE_MASK                     0x08
 #define ACCR_INT_FF_MT_MASK                     0x04
 #define ACCR_INT_DRDY_MASK                      0x01
-/** @} */ /* The accelerometer interrupt source mask */
+/** @} */ /* Accelerometer interrupt source mask */
 
 /******************************************************************************
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize the I2C bus controller as master.
+ * Initialize the I2C master mode.
  *
- * @param [in] _index the I2C channel index
- * @param [in] _baudrate the baud rate
- * @param [in] _is_10bit_addr if 7-bit or 10-bit slave address
- * @return 0(success) or other values(failure)
+ * @param [in] _index The I2C channel index
+ * @param [in] _baudrate The baud rate of the I2C bus
+ * @param [in] _is_10bit_addr If 7-bit or 10-bit slave address
+ * @return 0(success) or other values(failure).
  */
 int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bool _is_10bit_addr);
 
 /**
- * De-initialize the I2C bus controller as master.
+ * De-initialize the I2C master mode.
  *
- * @param [in] _index the I2C channel index
- * @return 0(success) or other values(failure)
+ * @param [in] _index The I2C channel index
+ * @return 0(success) or other values(failure).
  */
 int32_t i2c_master_deinit(const uint8_t _index);
 
 /**
- * Receive data from the specified slave device.
+ * Receive data from a specified slave device.
  *
- * @param [in] _index the I2C channel index
- * @param [in] _addr the slave device address(7 bit without R/W bit)
- * @param [out] _buf the buffer to receive
- * @param [in] _size the size to receive
- * @param [in] _stop if generate stop condition after sending
- * @return 0(success) or other values(failure)
+ * @param [in] _index The I2C channel index
+ * @param [in] _addr The slave device address(7 bit without R/W bit)
+ * @param [out] _buf The buffer to receive
+ * @param [in] _size The size to receive
+ * @param [in] _stop If generate stop condition after sending
+ * @return 0(success) or other values(failure).
  */
 int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
- * Send data to the specified slave device.
+ * Send data to a specified slave device.
  *
- * @param [in] _index the I2C channel index
- * @param [in] _addr the slave device address(7 bit without R/W bit)
- * @param [in] _buf the buffer to send
- * @param [in] _size the size to send
- * @param [in] _stop if generate stop condition after sending
- * @return 0(success) or other values(failure)
+ * @param [in] _index The I2C channel index
+ * @param [in] _addr The slave device address(7 bit without R/W bit)
+ * @param [in] _buf The buffer to send
+ * @param [in] _size The size to send
+ * @param [in] _stop If generate stop condition after sending
+ * @return 0(success) or other values(failure).
  */
 int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
  * Read data from the EEPROM.
  *
- * @param [in] _addr the start address to read
- * @param [out] _buf the buffer to read
- * @param [in] _size the size to read
- * @return 0(success) or other values(failure)
+ * @param [in] _addr The start address of the EEPROM to read
+ * @param [out] _buf The buffer to read
+ * @param [in] _size The size to read
+ * @return 0(success) or other values(failure).
  */
 int32_t eeprom_read(const uint8_t _addr, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Write data to the EEPROM.
  *
- * @param [in] _addr the start address to write
- * @param [in] _buf the buffer to write
- * @param [in] _size the size to write
- * @return 0(success) or other values(failure)
+ * @param [in] _addr The start address of the EEPROM to write
+ * @param [in] _buf The buffer to write
+ * @param [in] _size The size to write
+ * @return 0(success) or other values(failure).
  */
 int32_t eeprom_write(const uint8_t _addr, const uint8_t _buf[], const uint16_t _size);
 
 /**
  * Reset the accelerometer.
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t accr_reset(void);
 
 /**
- * Initialize the accelerometer
+ * Initialize the accelerometer.
  *
- * @param [in] _int_src the interrupt source which which "OR" operation by ACCR_INT_XXX_MASK
- * @return 0(success) or other values(failure)
+ * @param [in] _int_src The interrupt source which which "OR" operation by ACCR_INT_XXX_MASK
+ * @return 0(success) or other values(failure).
  */
 int32_t accr_init(const uint8_t _int_src);
 
 /**
  * De-initialize the accelerometer.
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t accr_deinit(void);
 
 /**
  * Transfer the accelerometer system mode.
  *
- * @param [in] _mode the system mode to transfer:
+ * @param [in] _mode The system mode to transfer:
  * <ul>
- * <li>{@link ACCR_SYSMOD_STANDBY} standby</li>
- * <li>{@link ACCR_SYSMOD_ACTIVE} active</li>
+ * <li>{@link ACCR_SYSMOD_STANDBY}</li>
+ * <li>{@link ACCR_SYSMOD_ACTIVE}</li>
  * </ul>
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 int32_t accr_sys_mode_trans(const uint8_t _mode);
 
 /**
  * Get the interrupt source.
  *
- * @return the interrupt source which combination of ACCR_INT_XXX
+ * @return The interrupt source which combination of ACCR_INT_XXX.
  */
 uint8_t accr_get_int_src(void);
 
 /**
  * Get the X, Y, Z-axis sample data(MSB).
  *
- * @param [in] _buf the buffer to get
- * @param [in] _size the size to get
- * @return 0(success) or other values(failure)
+ * @param [in] _buf The buffer to get
+ * @param [in] _size The size to get
+ * @return 0(success) or other values(failure).
  */
 int32_t accr_get_xyz_sample(uint8_t _buf[], const uint8_t _size);
 

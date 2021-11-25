@@ -1,7 +1,7 @@
 /*
  * spi_stm32f2xx.c
  *
- *  Created on: 2018��10��16��
+ *  Created on: 2018年10月16日
  *      Author: Administrator
  */
 
@@ -13,15 +13,15 @@
 typedef struct
 {
 	GPIO_TypeDef *sck_gpio_;
-	uint16_t     sck_pin_;
+	uint16_t sck_pin_;
     GPIO_TypeDef *miso_gpio_;
-	uint16_t     miso_pin_;
+	uint16_t miso_pin_;
 	GPIO_TypeDef *mosi_gpio_;
-	uint16_t     mosi_pin_;
+	uint16_t mosi_pin_;
     GPIO_TypeDef *cs_gpio_;
-	uint16_t     cs_pin_;
-	uint8_t      gpio_af_;
-	IRQn_Type    irqs_[3];
+	uint16_t cs_pin_;
+	uint8_t gpio_af_;
+	IRQn_Type irqs_[3];
 } comm_config_t;
 
 static comm_config_t g_comm_config[SPI0_INDEX + 1] =
@@ -36,7 +36,7 @@ static comm_config_t g_comm_config[SPI0_INDEX + 1] =
 		.cs_gpio_   = SPI0_CS_GPIO,
 		.cs_pin_    = SPI0_CS_PIN,
 		.gpio_af_   = SPI0_GPIO_AF,
-		.irqs_      = {SPI0_IRQ, SPI0_RX_DMA_IRQ, SPI0_TX_DMA_IRQ}
+		.irqs_      = {SPI0_IRQ, SPI0_RX_DMA_IRQ, SPI0_TX_DMA_IRQ},
 	}
 };
 
@@ -54,7 +54,7 @@ static SPI_HandleTypeDef g_handle[SPI0_INDEX + 1] =
 		.Init.FirstBit          = SPI_FIRSTBIT_MSB,
 		.Init.TIMode            = SPI_TIMODE_DISABLE,
 		.Init.CRCCalculation    = SPI_CRCCALCULATION_DISABLE,
-		.Init.CRCPolynomial     = 7
+		.Init.CRCPolynomial     = 7,
 	}
 };
 
@@ -73,7 +73,7 @@ static DMA_HandleTypeDef g_rx_dma[SPI0_INDEX + 1] =
 		.Init.PeriphDataAlignment = DMA_PDATAALIGN_BYTE,
 		.Init.MemDataAlignment    = DMA_MDATAALIGN_BYTE,
 		.Init.Mode                = DMA_NORMAL,
-		.Init.Priority            = DMA_PRIORITY_HIGH
+		.Init.Priority            = DMA_PRIORITY_HIGH,
 	}
 };
 
@@ -108,7 +108,7 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 {
 	uint32_t psr = 0;
 	
-	/* calculate the prescaler */
+	/* Calculate the prescaler */
 	if (SPI1 == g_handle[_index].Instance)
 	{
 		psr = HAL_RCC_GetPCLK2Freq() / _baudrate;
@@ -232,12 +232,12 @@ int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_
 }
 
 /**
- * @name The IRQ handlers
+ * @name IRQ handlers
  * @{
  */
 
 /**
- * The SPI0 IRQ handler.
+ * SPI0 IRQ handler.
  */
 void SPI0_IRQ_HANDLER(void)
 {	
@@ -245,7 +245,7 @@ void SPI0_IRQ_HANDLER(void)
 }
 
 /**
- * The SPI0 RX DMA IRQ handler.
+ * SPI0 RX DMA IRQ handler.
  */
 void SPI0_RX_DMA_IRQ_HANDLER(void)
 {
@@ -253,14 +253,14 @@ void SPI0_RX_DMA_IRQ_HANDLER(void)
 }
 
 /**
- * The SPI0 TX DMA IRQ handler.
+ * SPI0 TX DMA IRQ handler.
  */
 void SPI0_TX_DMA_IRQ_HANDLER(void)
 {
 	HAL_DMA_IRQHandler(g_handle[SPI0_INDEX].hdmatx);
 }
 
-/** @} */ /* The IRQ handlers */
+/** @} */ /* IRQ handlers */
 
 /*******************************************************************************
  * Local functions
@@ -271,25 +271,28 @@ int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha,
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	
-	/* initialize the GPIOs */
+	/* Initialize the GPIOs */
 	SPI_SCK_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin       = g_comm_config[_index].sck_pin_;
-	GPIO_InitStructure.Mode      = GPIO_MODE_AF_PP;
-	GPIO_InitStructure.Pull      = GPIO_NOPULL;
-	GPIO_InitStructure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+	GPIO_InitStructure.Pin = g_comm_config[_index].sck_pin_;
+	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStructure.Pull = GPIO_NOPULL;
+	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
 	HAL_GPIO_Init(g_comm_config[_index].sck_gpio_, &GPIO_InitStructure);
+
 	SPI_MISO_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin       = g_comm_config[_index].miso_pin_;
+	GPIO_InitStructure.Pin = g_comm_config[_index].miso_pin_;
 	HAL_GPIO_Init(g_comm_config[_index].miso_gpio_, &GPIO_InitStructure);
+
 	SPI_MOSI_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin       = g_comm_config[_index].mosi_pin_;
+	GPIO_InitStructure.Pin = g_comm_config[_index].mosi_pin_;
 	HAL_GPIO_Init(g_comm_config[_index].mosi_gpio_, &GPIO_InitStructure);
+
 	SPI_CS_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin       = g_comm_config[_index].cs_pin_;
+	GPIO_InitStructure.Pin = g_comm_config[_index].cs_pin_;
 	HAL_GPIO_Init(g_comm_config[_index].cs_gpio_, &GPIO_InitStructure);
 
-	/* initialize the SPI */
+	/* Initialize the SPI */
 	SPI_CLK_ENABLE(_index);
 	g_handle[_index].Init.CLKPolarity = (SPI_CPOL_LOW == _cpol ? SPI_POLARITY_LOW : SPI_POLARITY_HIGH);
 	g_handle[_index].Init.CLKPhase    = (SPI_CPHA_1EDGE == _cpha ? SPI_PHASE_1EDGE : SPI_PHASE_2EDGE);
@@ -297,14 +300,14 @@ int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha,
 	g_handle[_index].Init.FirstBit    = _lsb_first ? SPI_FIRSTBIT_LSB : SPI_FIRSTBIT_MSB;
 	HAL_SPI_Init(&g_handle[_index]);
 	
-    /* initialize the DMA */
+    /* Initialize the DMA */
 	SPI_DMA_CLK_ENABLE(_index);
 	HAL_DMA_Init(&g_rx_dma[_index]);
     __HAL_LINKDMA(&g_handle[_index], hdmarx, g_rx_dma[_index]);
     HAL_DMA_Init(&g_tx_dma[_index]);
     __HAL_LINKDMA(&g_handle[_index], hdmatx, g_tx_dma[_index]);
 	
-	/* initialize the NVIC */
+	/* Initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);

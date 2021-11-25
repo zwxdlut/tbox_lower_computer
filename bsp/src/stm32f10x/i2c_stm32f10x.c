@@ -1,7 +1,7 @@
 /*
  * i2c_stm32f10x.c
  *
- *  Created on: 2019��1��9��
+ *  Created on: 2019年1月9日
  *      Author: Administrator
  */
 
@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* the RX/TX mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* Receiving/Sending mutex */
 #endif
 
 /******************************************************************************
@@ -49,21 +49,21 @@ int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_
 }
 
 /**
- * @name The IRQ handlers
+ * @name IRQ handlers
  * @{
  */
 
 /**
- * The I2C0 event IRQ handler.
+ * I2C0 event IRQ handler.
  */
 void I2C0_EV_IRQ_HANDLER(void) {}
 
 /**
- * The I2C0 error IRQ handler.
+ * I2C0 error IRQ handler.
  */
 void I2C0_ER_IRQ_HANDLER(void) {}
 
-/** @} */ /* The IRQ handlers */
+/** @} */ /* IRQ handlers */
 
 /******************************************************************************
  * Local functions

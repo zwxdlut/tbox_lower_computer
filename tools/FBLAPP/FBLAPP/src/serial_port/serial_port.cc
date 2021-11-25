@@ -15,17 +15,17 @@ serial_port::~serial_port()
 
 int32_t serial_port::open(const std::string& _chl, const uint32_t _baud_rate, const uint32_t _data_bits, const uint32_t _stop_bits, const uint32_t _parity)
 {
-	// open the serial port
+	// Open the serial port
 	std::wstring wstr;
 	wstr.assign(_chl.begin(), _chl.end());
 	handle_ = CreateFile(wstr.c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
 	if (handle_ == INVALID_HANDLE_VALUE)
 	{
-		printf("serial_port::open: open the serial port(%s) failed!\n", _chl.c_str());
+		printf("serial_port::open: Open the serial port(%s) failed!\n", _chl.c_str());
 		return -1;
 	}
 
-	// get and set the communication parameters
+	// Get and set the communication parameters
 	DCB dcb;
 	GetCommState(handle_, &dcb);
 	dcb.BaudRate = _baud_rate;
@@ -34,17 +34,17 @@ int32_t serial_port::open(const std::string& _chl, const uint32_t _baud_rate, co
 	dcb.StopBits = _stop_bits;
 	if (!SetCommState(handle_, &dcb))
 	{
-		printf("serial_port::open: set the serial port(%s) params failed!\n", _chl.c_str());
+		printf("serial_port::open: Set the serial port(%s) params failed!\n", _chl.c_str());
 		return -1;
 	}
 
-	// set the R/W buffer
+	// Set the R/W buffer
 	SetupComm(handle_, SERIAL_PORT_BUFFER_SIZE, SERIAL_PORT_BUFFER_SIZE);
 
-	// clear
+	// Clear
 	PurgeComm(handle_, PURGE_TXABORT | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_RXCLEAR);
 
-	// set the R/W time
+	// Set the R/W time
 	COMMTIMEOUTS time_out;
 	GetCommTimeouts(handle_, &time_out);
 	time_out.ReadIntervalTimeout = MAXDWORD;
@@ -55,7 +55,7 @@ int32_t serial_port::open(const std::string& _chl, const uint32_t _baud_rate, co
 
 	if (!SetCommTimeouts(handle_, &time_out))
 	{
-		printf("serial_port::open: set the serial port(%s) timeouts failed!\n", _chl.c_str());
+		printf("serial_port::open: Set the serial port(%s) timeouts failed!\n", _chl.c_str());
 		return -1;
 	}
 
@@ -65,7 +65,9 @@ int32_t serial_port::open(const std::string& _chl, const uint32_t _baud_rate, co
 int32_t serial_port::close()
 {
 	if (INVALID_HANDLE_VALUE != handle_)
+	{
 		CloseHandle(handle_);
+	}
 
 	return 0;
 }
@@ -82,7 +84,23 @@ uint16_t serial_port::receive(uint8_t _buf[], const uint16_t _size)
 		unsigned long error_flag;
 
 		ClearCommError(handle_, &error_flag, &com_state);
-		printf("serial_port::receive: read data failed!(_size = %d, out size = %d, cbInQue = %d)\n", _size, size, com_state.cbInQue);
+		printf("serial_port::receive: Read data failed!(_size = %d, out size = %d, cbInQue = %d)\n", _size, size, com_state.cbInQue);
+	}
+
+	return (uint16_t)size;
+}
+
+uint16_t serial_port::send(const uint8_t _buf[], const uint16_t _size)
+{
+	assert(NULL != _buf);
+
+	DWORD size = 0;
+
+	std::lock_guard<std::recursive_mutex> guard(tx_mutex_);
+
+	if (!WriteFile(handle_, _buf, _size, &size, NULL) || size != _size)
+	{
+		printf("serial_port::send: Write data failed!(_size = %d, sent size = %d)\n", _size, size);
 	}
 
 	return (uint16_t)size;
@@ -95,35 +113,44 @@ uint16_t serial_port::receive_with_header_poll(uint8_t _buf[], const uint16_t _s
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
-	// receive 0xAA
+	// Receive 0xAA
 	size = 1;
-	if (size != receive(_buf, size) || (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
-		return 0;
 
-	// receive 0x55
+	if (size != receive(_buf, size) || (0xFF & (HEADER_FLAG >> 8)) != _buf[0])
+	{
+		return 0;
+	}
+
+	// Receive 0x55
 	size = 1;
 	out_size = 0;
+
 	while (out_size < size)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		out_size += receive(_buf + out_size, size - out_size);
 	}
-	if ((HEADER_FLAG & 0xFF) != _buf[0])
-		return 0;
 
-	// receive data size
+	if ((HEADER_FLAG & 0xFF) != _buf[0])
+	{
+		return 0;
+	}
+
+	// Receive data size
 	size = HEADER_SIZE - 2;
 	out_size = 0;
+
 	while (out_size < size)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 		out_size += receive(_buf + out_size, size - out_size);
 	}
 		
-	// receive data
+	// Receive data
 	memcpy(&size, _buf, 2);
 	size = _size > size ? size : _size;
 	out_size = 0;
+
 	while (out_size < size)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds(1));
@@ -131,19 +158,6 @@ uint16_t serial_port::receive_with_header_poll(uint8_t _buf[], const uint16_t _s
 	}
 	
 	return size;
-}
-
-uint16_t serial_port::send(const uint8_t _buf[], const uint16_t _size)
-{
-	assert(NULL != _buf);
-
-	DWORD size = 0;
-
-	std::lock_guard<std::recursive_mutex> guard(tx_mutex_);
-	if (!WriteFile(handle_, _buf, _size, &size, NULL) || size != _size)
-		printf("serial_port::send: write data failed!(_size = %d, sent size = %d)\n", _size, size);
-
-	return (uint16_t)size;
 }
 
 uint16_t serial_port::send_with_header(const uint8_t _buf[], const uint16_t _size)

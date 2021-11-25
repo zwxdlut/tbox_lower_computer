@@ -1,7 +1,7 @@
 /*
  * can_s32k1xx.c
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -10,28 +10,28 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* the RX queue */
-uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* the RX queue head */
-uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* the RX queue tail */
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* Receiving queue */
+uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue head */
+uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue tail */
 
 typedef struct
 {
-	PORT_Type    *port_;
-	uint8_t      rx_pin_;
-	uint8_t      tx_pin_;
-	port_mux_t   gpio_af_;
-	IRQn_Type    irqs_[5];
+	PORT_Type *port_;
+	uint8_t rx_pin_;
+	uint8_t tx_pin_;
+	port_mux_t gpio_af_;
+	IRQn_Type irqs_[5];
 #if defined MX_TB
-	PORT_Type    *trans_stb_n_port_;
-	GPIO_Type    *trans_stb_n_gpio_;
-	uint8_t      trans_stb_n_pin_;
-	PORT_Type    *trans_en_port_;
-	GPIO_Type    *trans_en_gpio_;
-	uint8_t      trans_en_pin_;
-	PORT_Type    *trans_inh_port_;
-	GPIO_Type    *trans_inh_gpio_;
-	uint8_t      trans_inh_pin_;
-	IRQn_Type    trans_inh_irq_;
+	PORT_Type *trans_stb_n_port_;
+	GPIO_Type *trans_stb_n_gpio_;
+	uint8_t trans_stb_n_pin_;
+	PORT_Type *trans_en_port_;
+	GPIO_Type *trans_en_gpio_;
+	uint8_t trans_en_pin_;
+	PORT_Type *trans_inh_port_;
+	GPIO_Type *trans_inh_gpio_;
+	uint8_t trans_inh_pin_;
+	IRQn_Type trans_inh_irq_;
 #endif
 } comm_config_t;
 
@@ -53,7 +53,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.trans_inh_port_   = CAN0_TRANS_INH_PORT,
 		.trans_inh_gpio_   = CAN0_TRANS_INH_GPIO,
 		.trans_inh_pin_    = CAN0_TRANS_INH_PIN,
-		.trans_inh_irq_    = CAN0_TRANS_INH_IRQ
+		.trans_inh_irq_    = CAN0_TRANS_INH_IRQ,
 #endif
 	},
 
@@ -73,7 +73,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.trans_inh_port_   = CAN1_TRANS_INH_PORT,
 		.trans_inh_gpio_   = CAN1_TRANS_INH_GPIO,
 		.trans_inh_pin_    = CAN1_TRANS_INH_PIN,
-		.trans_inh_irq_    = CAN1_TRANS_INH_IRQ
+		.trans_inh_irq_    = CAN1_TRANS_INH_IRQ,
 #endif
 	}
 };
@@ -123,9 +123,9 @@ static flexcan_state_t *g_state[CAN1_INDEX + 1] =
 #endif
 };
 
-static flexcan_msgbuff_t g_rx_buf[CAN1_INDEX + 1]; /* RX buffer */
-static int8_t g_tx_mailbox[CAN1_INDEX + 1] = {31, 15}; /* Tx mailboxes */
-static mutex_t g_tx_mutex[CAN1_INDEX + 1]; /* the TX mutex */
+static flexcan_msgbuff_t g_rx_buf[CAN1_INDEX + 1]; /* Receiving buffer */
+static int8_t g_tx_mailbox[CAN1_INDEX + 1] = {31, 15}; /* Sending mailboxes */
+static mutex_t g_tx_mutex[CAN1_INDEX + 1]; /* Sending mutex */
 
 /*******************************************************************************
  * Local function prototypes
@@ -143,7 +143,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 {
 	assert(CAN1_INDEX >= _index);
 
-	/* initialize the RX queue */
+	/* Initialize the rx queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 
@@ -155,7 +155,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	   - Bus clock as peripheral engine clock */
 	FLEXCAN_DRV_Init(g_handle[_index], g_state[_index], g_config[_index]);
 
-	/* initialize the CAN filter */
+	/* Initialize the CAN filter */
 	if (NULL == _filter_id_list || 0 == _filter_id_num)
 	{
 		/* set receiving all id messages */
@@ -181,7 +181,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	   received and read into the specified buffer */
 	FLEXCAN_DRV_InstallEventCallback(g_handle[_index], can_irq_handler, (void *)((uint32_t)_index));
 
-	/* initialize the GPIOs */
+	/* Initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, g_comm_config[_index].gpio_af_);
 
@@ -195,13 +195,15 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 #endif
 
 #if defined MX_TB
-	/* initialize the CAN transceiver */
+	/* Initialize the CAN transceiver */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].trans_stb_n_port_, g_comm_config[_index].trans_stb_n_pin_, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, 1);
+
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].trans_en_port_, g_comm_config[_index].trans_en_pin_, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(g_comm_config[_index].trans_en_gpio_, g_comm_config[_index].trans_en_pin_, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(g_comm_config[_index].trans_en_gpio_, g_comm_config[_index].trans_en_pin_, 1);
+
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].trans_inh_port_, g_comm_config[_index].trans_inh_pin_, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(g_comm_config[_index].trans_inh_gpio_, g_comm_config[_index].trans_inh_pin_, GPIO_INPUT_DIRECTION);
 	PINS_DRV_SetPinIntSel(g_comm_config[_index].trans_inh_port_, g_comm_config[_index].trans_inh_pin_, PORT_INT_RISING_EDGE);
@@ -216,7 +218,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 #endif
 #endif
 
-	/* trigger receiving */
+	/* Trigger receiving */
 	FLEXCAN_DRV_RxFifo(g_handle[_index], &g_rx_buf[_index]);
 
 	return 0;
@@ -265,7 +267,7 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
 
 	OSIF_MutexLock(&g_tx_mutex[_index], OSIF_WAIT_FOREVER);
 
-	/* configure the TX message buffer with index, message_id and g_tx_mailbox[_inst] */
+	/* Configure the TX message buffer with index, message_id and g_tx_mailbox[_inst]. */
 	FLEXCAN_DRV_ConfigTxMb(g_handle[_index], g_tx_mailbox[_index], &dataInfo, _id);
 
 	if (STATUS_SUCCESS == FLEXCAN_DRV_Send(g_handle[_index], g_tx_mailbox[_index], &dataInfo, _id, _buf))
@@ -302,12 +304,12 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
  * Local functions
  ******************************************************************************/
 /**
- * The CAN IRQ handler.
+ * CAN IRQ handler.
  *
- * @param [in] _inst the CAN instance
- * @param [in] _event_type the event type
- * @param [in] _buf_index the message buffer index
- * @param [in] _state the driver state
+ * @param [in] _inst CAN instance
+ * @param [in] _event_type Event type
+ * @param [in] _buf_index Message buffer index
+ * @param [in] _state Driver state
  */
 static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uint32_t _buf_index, flexcan_state_t *_state)
 {
@@ -318,14 +320,14 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 	switch (_event_type)
 	{
 		case FLEXCAN_EVENT_RXFIFO_COMPLETE:
-			/* check if the RX queue is full */
+			/* Check if the rx queue is full */
 			if (g_can_rx_queue_head[index] == (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 			{
-				/* dequeue */
+				/* Dequeue */
 				g_can_rx_queue_head[index] = (g_can_rx_queue_head[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			}
 
-			/* enqueue */
+			/* Enqueue */
 			g_can_rx_queue[index][g_can_rx_queue_tail[index]].id_ = g_rx_buf[index].msgId;
 			g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_ = g_rx_buf[index].dataLen > 8 ? 8 : g_rx_buf[index].dataLen;
 			memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
@@ -340,13 +342,13 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 			break;
 	}
 
-	/* trigger receiving */
+	/* Trigger receiving */
 	FLEXCAN_DRV_RxFifo(_inst, &g_rx_buf[index]);
 }
 
 #if defined MX_TB
 /**
- * The pin IRQ handler.
+ * Pin IRQ handler.
  */
 static void pin_irq_handler(void)
 {

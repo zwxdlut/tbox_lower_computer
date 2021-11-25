@@ -1,7 +1,7 @@
 /*
  * s32k144_mx_tb.h
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -16,7 +16,7 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /** 
- * @name The LEDs configuration
+ * @name LEDs configuration
  * @{
  */
 #define LED0_PORT       					    PORTE
@@ -33,20 +33,20 @@ extern "C" {
 
 #define LED_ON          					    1
 #define LED_OFF         					    0
-/** @} */ /* The LEDs configuration */
+/** @} */ /* LEDs configuration */
  
 /** 
- * @name The buttons configuration
+ * @name Buttons configuration
  * @{
  */                                       
 #define BTN_PORT        					    PORTA
 #define BTN_GPIO        					    PTA
 #define BTN_PIN         					    0
 #define BTN_IRQ                                 PORTA_IRQn
-/** @} */ /* The buttons configuration */
+/** @} */ /* Buttons configuration */
 
 /**
- * @name The upper computer configuration
+ * @name Upper computer configuration
  * @{
  */
 #define UC_POWER_PORT						    PORTE
@@ -60,20 +60,20 @@ extern "C" {
 #define UC_RESET_PORT						    PORTA
 #define UC_RESET_GPIO 					        PTA
 #define UC_RESET_PIN						    13
-/** @} */ /* The upper computer configuration */
+/** @} */ /* Upper computer configuration */
 
 /**
- * @name The ignition configuration
+ * @name Ignition configuration
  * @{
  */
 #define IGN_PORT        					    PORTD
 #define IGN_GPIO        					    PTD
 #define IGN_PIN         					    16
 #define IGN_IRQ                                 PORTD_IRQn
-/** @} */ /* The ignition configuration */
+/** @} */ /* Ignition configuration */
 
 /**
- * @name The UART configuration
+ * @name UART configuration
  * @{
  */
 #define UART0_PORT                              PORTB
@@ -87,10 +87,10 @@ extern "C" {
 #define UART1_TX_PIN                            7
 #define UART1_GPIO_AF                           PORT_MUX_ALT2
 #define UART1_IRQ                               LPUART2_RxTx_IRQn
-/** @} */ /* The UART configuration */
+/** @} */ /* UART configuration */
 
 /** 
- * @name The CAN configuration
+ * @name CAN configuration
  * @{
  */
 #define CAN0_PORT                               PORTE
@@ -130,10 +130,10 @@ extern "C" {
 #define CAN1_TRANS_INH_GPIO    			        PTB
 #define CAN1_TRANS_INH_PIN					    2
 #define CAN1_TRANS_INH_IRQ  		            PORTB_IRQn
-/** @} */ /* The CAN configuration */
+/** @} */ /* CAN configuration */
 
 /** 
- * @name The I2C configuration
+ * @name I2C configuration
  * @{
  */
 #define I2C0_PORT                               PORTA
@@ -141,10 +141,10 @@ extern "C" {
 #define I2C0_SDA_PIN                            2
 #define I2C0_GPIO_AF                            PORT_MUX_ALT3
 #define I2C0_IRQ                                LPI2C0_Master_IRQn
-/** @} */ /* The I2C configuration */
+/** @} */ /* I2C configuration */
 
 /**
- * @name The SPI configuration
+ * @name SPI configuration
  * @{
  */
 #define SPI0_SCK_PORT                           PORTB
@@ -157,7 +157,7 @@ extern "C" {
 #define SPI0_CS_PIN                             3
 #define SPI0_GPIO_AF                            PORT_MUX_ALT3
 #define SPI0_IRQ                                LPSPI1_IRQn
-/** @} */ /* The SPI configuration */
+/** @} */ /* SPI configuration */
 
 #ifdef __cplusplus
 }

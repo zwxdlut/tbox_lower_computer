@@ -1,7 +1,7 @@
 /*
  * spi_stm32f10x.c
  *
- *  Created on: 2018��10��16��
+ *  Created on: 2018年10月16日
  *      Author: Administrator
  */
 

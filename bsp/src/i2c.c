@@ -1,14 +1,14 @@
 /*
  * i2c.c
  *
- *  Created on: 2019��1��9��
+ *  Created on: 2019年1月9日
  *      Author: Administrator
  */
 
 #include "i2c.h"
 
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1]; /* the RX/TX mutex */
+extern SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1]; /* Receiving/Sending mutex */
 #endif
 
 /******************************************************************************
@@ -32,7 +32,7 @@ int32_t eeprom_read(const uint8_t _addr, uint8_t _buf[], const uint16_t _size)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* sequential read */
+	/* Sequential read */
 	ret = i2c_master_read(EEPROM_ADDR, _addr, _buf, _size);
 
 #if defined USING_OS_FREERTOS
@@ -56,7 +56,7 @@ int32_t eeprom_write(const uint8_t _addr, const uint8_t _buf[], const uint16_t _
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* page write */
+	/* Page write */
 	while (0 == ret && 0 < size)
 	{
 		n = 8 - addr % 8;
@@ -84,7 +84,7 @@ int32_t accr_reset(void)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* write the ACTIVE bit to the desired system mode */
+	/* Write the ACTIVE bit to the desired system mode */
 	buf[0] = ACCR_CTRL_REG2_REG;
 
 	if (0 == (ret = i2c_master_read(ACCR_ADDR, buf[0], buf + 1, 1)))
@@ -109,12 +109,12 @@ int32_t accr_init(const uint8_t _int_src)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* configure XYZ data */
+	/* Configure XYZ data */
 	buf[0] = ACCR_XYZ_DATA_CFG_REG;
 	buf[1] = 0x01;
 	ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 
-	/* configure data rate 100HZ */
+	/* Configure data rate 100HZ */
 	buf[0] = ACCR_CTRL_REG1_REG;
 
 	if (0 == ret && 0 == (ret = i2c_master_read(ACCR_ADDR, buf[0], buf + 1, 1)))
@@ -131,7 +131,7 @@ int32_t accr_init(const uint8_t _int_src)
 		buf[1] = 0x7F;
 		ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 
-		/* set x threshold to 32 counts or 2g */
+		/* Set x threshold to 32 counts or 2g */
 		buf[0] = ACCR_PULSE_THSX_REG;
 		buf[1] = 0x20;
 		if (0 == ret)
@@ -147,7 +147,7 @@ int32_t accr_init(const uint8_t _int_src)
 			ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 		}
 
-		/* set z threshold to 48 counts or 3g */
+		/* Set z threshold to 48 counts or 3g */
 		buf[0] = ACCR_PULSE_THSZ_REG;
 		buf[1] = 0x30;
 		if (0 == ret)
@@ -155,7 +155,7 @@ int32_t accr_init(const uint8_t _int_src)
 			ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 		}
 
-		/* set the pulse time limit to 30 ms at 100Hz ODR in normal mode without LPF: 30 ms/2.5 ms = 12 counts */
+		/* Set the pulse time limit to 30 ms at 100Hz ODR in normal mode without LPF: 30 ms/2.5 ms = 12 counts */
 		buf[0] = ACCR_PULSE_TMLT_REG;
 		buf[1] = 0x0C;
 		if (0 == ret)
@@ -163,7 +163,7 @@ int32_t accr_init(const uint8_t _int_src)
 			ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 		}
 
-		/* set the pulse latency timer to 200ms, 100Hz ODR in normal mode without LPF: 200 ms/5.0 ms = 40 counts */
+		/* Set the pulse latency timer to 200ms, 100Hz ODR in normal mode without LPF: 200 ms/5.0 ms = 40 counts */
 		buf[0] = ACCR_PULSE_LTCY_REG;
 		buf[1] = 0x28;
 		if (0 == ret)
@@ -171,7 +171,7 @@ int32_t accr_init(const uint8_t _int_src)
 			ret = i2c_master_send(I2C0_INDEX, ACCR_ADDR, buf, 2, true);
 		}
 
-		/* set the pulse window to 300 ms, 800Hz ODR in normal mode, without LPF: 300 ms/5 ms = 60 counts */
+		/* Set the pulse window to 300 ms, 800Hz ODR in normal mode, without LPF: 300 ms/5 ms = 60 counts */
 		buf[0] = ACCR_PULSE_WIND_REG;
 		buf[1] = 0x3C;
 		if (0 == ret)
@@ -180,7 +180,7 @@ int32_t accr_init(const uint8_t _int_src)
 		}
 	}
 
-	/* enable the interrupt */
+	/* Enable the interrupt */
 	buf[0] = ACCR_CTRL_REG4_REG;
 	buf[1] = _int_src;
 	if (0 == ret)
@@ -209,7 +209,7 @@ int32_t accr_sys_mode_trans(const uint8_t _mode)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* write the ACTIVE bit to the desired system mode */
+	/* Write the ACTIVE bit to the desired system mode */
 	buf[0] = ACCR_CTRL_REG1_REG;
 
 	if (0 == (ret = i2c_master_read(ACCR_ADDR, buf[0], buf + 1, 1)))
@@ -249,7 +249,7 @@ uint8_t accr_get_int_src(void)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* read the interrupt source register */
+	/* Read the interrupt source register */
 	i2c_master_read(ACCR_ADDR, ACCR_INT_SOURCE_REG, &ret, 1);
 
 #if defined USING_OS_FREERTOS
@@ -269,7 +269,7 @@ int32_t accr_get_xyz_sample(uint8_t _buf[], const uint8_t _size)
 	xSemaphoreTake( g_i2c_mutex[I2C0_INDEX], portMAX_DELAY);
 #endif
 
-	/* read the X, Y, Z-axis sample data */
+	/* Read the X, Y, Z-axis sample data */
 	ret = i2c_master_read(ACCR_ADDR, ACCR_OUT_X_MSB_REG, _buf, _size);
 
 #if defined USING_OS_FREERTOS
@@ -285,11 +285,11 @@ int32_t accr_get_xyz_sample(uint8_t _buf[], const uint8_t _size)
 /**
  * Read data from the specified slave device memory.
  *
- * @param [in] _dev_addr the slave device address
- * @param [in] _mem_addr the slave device memory address
- * @param [in] _buf the buffer to read to
- * @param [in] _size the size to read
- * @return 0(success) or other values(failure)
+ * @param [in] _dev_addr The slave device address
+ * @param [in] _mem_addr The slave device memory address
+ * @param [in] _buf The buffer to read to
+ * @param [in] _size The size to read
+ * @return 0(success) or other values(failure).
  */
 static int32_t i2c_master_read(const uint16_t _dev_addr, const uint8_t _mem_addr, uint8_t *const _buf, const uint16_t _size)
 {

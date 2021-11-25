@@ -1,7 +1,7 @@
 /*
  * can_stm32f10x.c
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -11,21 +11,21 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1] = {NULL, NULL}; /* the TX mutex */
+SemaphoreHandle_t g_can_tx_mutex[CAN1_INDEX + 1] = {NULL, NULL}; /* Sending mutex */
 #endif
 
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* the RX queue */
-uint8_t   g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* the RX queue head */
-uint8_t   g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* the RX queue tail */
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* Receiving queue */
+uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue head */
+uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue tail */
 
 typedef struct
 {
 	GPIO_TypeDef *gpio_;
-	uint16_t     rx_pin_;
-	uint16_t     tx_pin_;
-	uint32_t     gpio_remap_;
-	IRQn_Type    irqs_[1];
-	uint8_t      start_filter_num_;
+	uint16_t rx_pin_;
+	uint16_t tx_pin_;
+	uint32_t gpio_remap_;
+	IRQn_Type irqs_[1];
+	uint8_t start_filter_num_;
 } comm_config_t;
 
 static comm_config_t g_comm_config[CAN1_INDEX + 1] =
@@ -38,6 +38,7 @@ static comm_config_t g_comm_config[CAN1_INDEX + 1] =
 		.irqs_             = {CAN0_RX_IRQ},
 		.start_filter_num_ = 0,
 	},
+
 	{
 		.gpio_             = CAN1_GPIO,
 		.rx_pin_           = CAN1_RX_PIN,
@@ -63,12 +64,12 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 {
 	assert(CAN1_INDEX >= _index);
 		
-	GPIO_InitTypeDef      GPIO_InitStructure;
-	CAN_InitTypeDef       CAN_InitStructure;
+	GPIO_InitTypeDef GPIO_InitStructure;
+	CAN_InitTypeDef CAN_InitStructure;
 	CAN_FilterInitTypeDef CAN_FilterInitStructure;	
-	NVIC_InitTypeDef      NVIC_InitStructure;
+	NVIC_InitTypeDef NVIC_InitStructure;
 
-	/* initialize the RX queue */
+	/* Initialize the rx queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 	
@@ -76,7 +77,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	g_can_tx_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 	
-	/* initialize the GPIOs */
+	/* Initialize the GPIOs */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	CAN_GPIO_CLK_ENABLE(_index);
 	
@@ -85,42 +86,42 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 		GPIO_PinRemapConfig(g_comm_config[_index].gpio_remap_, ENABLE);
 	}
 
-	GPIO_InitStructure.GPIO_Pin   = g_comm_config[_index].rx_pin_;
+	GPIO_InitStructure.GPIO_Pin = g_comm_config[_index].rx_pin_;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_IPU;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
 	GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
-	GPIO_InitStructure.GPIO_Pin   = g_comm_config[_index].tx_pin_;
-	GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_AF_PP;
+	GPIO_InitStructure.GPIO_Pin = g_comm_config[_index].tx_pin_;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	/* initialize the CAN */
+	/* Initialize the CAN */
 	CAN_CLK_ENABLE(_index);
 	CAN_DeInit(g_handle[_index]);
 	CAN_StructInit(&CAN_InitStructure);
-	CAN_InitStructure.CAN_TTCM      = DISABLE;
-	CAN_InitStructure.CAN_ABOM      = DISABLE;
-	CAN_InitStructure.CAN_AWUM      = DISABLE;
-	CAN_InitStructure.CAN_NART      = DISABLE;
-	CAN_InitStructure.CAN_RFLM      = DISABLE;
-	CAN_InitStructure.CAN_TXFP      = DISABLE;
-	CAN_InitStructure.CAN_Mode      = CAN_Mode_Normal;
-	CAN_InitStructure.CAN_SJW       = CAN_SJW_1tq;
-	CAN_InitStructure.CAN_BS1       = CAN_BS1_3tq;
-	CAN_InitStructure.CAN_BS2       = CAN_BS2_2tq;
+	CAN_InitStructure.CAN_TTCM = DISABLE;
+	CAN_InitStructure.CAN_ABOM = DISABLE;
+	CAN_InitStructure.CAN_AWUM = DISABLE;
+	CAN_InitStructure.CAN_NART = DISABLE;
+	CAN_InitStructure.CAN_RFLM = DISABLE;
+	CAN_InitStructure.CAN_TXFP = DISABLE;
+	CAN_InitStructure.CAN_Mode = CAN_Mode_Normal;
+	CAN_InitStructure.CAN_SJW = CAN_SJW_1tq;
+	CAN_InitStructure.CAN_BS1 = CAN_BS1_3tq;
+	CAN_InitStructure.CAN_BS2 = CAN_BS2_2tq;
 	CAN_InitStructure.CAN_Prescaler = 12;
 	CAN_Init(g_handle[_index], &CAN_InitStructure);
     CAN_ITConfig(g_handle[_index], CAN_IT_FMP0, ENABLE);
 
-	/* initialize the CAN filter */
+	/* Initialize the CAN filter */
 	CAN_SlaveStartBank(CAN_SLAVE_START_FILTER_BANK_NUM);
-	CAN_FilterInitStructure.CAN_FilterIdHigh         = 0;
-	CAN_FilterInitStructure.CAN_FilterIdLow          = 0;
-	CAN_FilterInitStructure.CAN_FilterMaskIdHigh     = 0;
-	CAN_FilterInitStructure.CAN_FilterMaskIdLow      = 0;
+	CAN_FilterInitStructure.CAN_FilterIdHigh = 0;
+	CAN_FilterInitStructure.CAN_FilterIdLow = 0;
+	CAN_FilterInitStructure.CAN_FilterMaskIdHigh = 0;
+	CAN_FilterInitStructure.CAN_FilterMaskIdLow = 0;
 	CAN_FilterInitStructure.CAN_FilterFIFOAssignment = CAN_Filter_FIFO0;
-	CAN_FilterInitStructure.CAN_FilterNumber         = g_comm_config[_index].start_filter_num_;
-	CAN_FilterInitStructure.CAN_FilterScale          = CAN_FilterScale_16bit;
-	CAN_FilterInitStructure.CAN_FilterActivation     = ENABLE;
+	CAN_FilterInitStructure.CAN_FilterNumber = g_comm_config[_index].start_filter_num_;
+	CAN_FilterInitStructure.CAN_FilterScale = CAN_FilterScale_16bit;
+	CAN_FilterInitStructure.CAN_FilterActivation = ENABLE;
 
 	if (NULL == _filter_id_list || 0 == _filter_id_num)
 	{
@@ -138,12 +139,12 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 		{
 			if (i < _filter_id_num)
 			{
-				CAN_FilterInitStructure.CAN_FilterIdHigh     = (uint16_t)(_filter_id_list[i++] << 5);
+				CAN_FilterInitStructure.CAN_FilterIdHigh = (uint16_t)(_filter_id_list[i++] << 5);
 			}
 
 			if (i < _filter_id_num)
 			{
-				CAN_FilterInitStructure.CAN_FilterIdLow      = (uint16_t)(_filter_id_list[i++] << 5);
+				CAN_FilterInitStructure.CAN_FilterIdLow = (uint16_t)(_filter_id_list[i++] << 5);
 			}
 
 			if (i < _filter_id_num)
@@ -164,17 +165,17 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 			}
 
 			CAN_FilterInitStructure.CAN_FilterNumber++;
-			CAN_FilterInitStructure.CAN_FilterIdHigh     = 0;
-			CAN_FilterInitStructure.CAN_FilterIdLow      = 0;
+			CAN_FilterInitStructure.CAN_FilterIdHigh = 0;
+			CAN_FilterInitStructure.CAN_FilterIdLow = 0;
 			CAN_FilterInitStructure.CAN_FilterMaskIdHigh = 0;
-			CAN_FilterInitStructure.CAN_FilterMaskIdLow  = 0;
+			CAN_FilterInitStructure.CAN_FilterMaskIdLow = 0;
 		}
 	}
 	
-	/* initialize the NVIC */
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; 
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0; 
-	NVIC_InitStructure.NVIC_IRQChannelCmd                = ENABLE;
+	/* Initialize the NVIC */
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
@@ -192,8 +193,8 @@ int32_t can_deinit(const uint8_t _index)
 	NVIC_InitTypeDef NVIC_InitStructure;
 
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority        = 0;
-	NVIC_InitStructure.NVIC_IRQChannelCmd                = DISABLE;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
 	NVIC_Init(&NVIC_InitStructure);
 
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
@@ -225,9 +226,9 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
 
 	msg.StdId = _id;
 	msg.ExtId = 0;
-	msg.IDE   = CAN_ID_STD;
-	msg.RTR   = CAN_RTR_DATA;
-	msg.DLC   = _size >= 8 ? 8 : _size;
+	msg.IDE = CAN_ID_STD;
+	msg.RTR = CAN_RTR_DATA;
+	msg.DLC = _size >= 8 ? 8 : _size;
 	memcpy(msg.Data, _buf, msg.DLC);
 
 #if defined USING_OS_FREERTOS
@@ -275,12 +276,12 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 }
 
 /**
- * @name The IRQ handlers
+ * @name IRQ handlers
  * @{
  */
 
 /*
- * The CAN0 RX IRQ handler.
+ * CAN0 RX IRQ handler.
  */
 void CAN0_RX_IRQ_HANDLER(void)
 {	
@@ -288,22 +289,22 @@ void CAN0_RX_IRQ_HANDLER(void)
 }
 
 /**
- * The CAN1 RX IRQ handler.
+ * CAN1 RX IRQ handler.
  */
 void CAN1_RX_IRQ_HANDLER(void)
 {	
 	can_irq_handler(CAN1_INDEX);
 }
 
-/** @} */ /* The IRQ handlers */
+/** @} */ /* IRQ handlers */
 
 /*******************************************************************************
  * Local functions
  ******************************************************************************/
 /**
- * The CAN IRQ handler.
+ * CAN IRQ handler.
  *
- * @param [in] _index the CAN index
+ * @param [in] _index CAN channel index
  */
 static void can_irq_handler(const uint8_t _index)
 {
@@ -314,17 +315,17 @@ static void can_irq_handler(const uint8_t _index)
 	{		
 		CanRxMsg msg;
 	
-		/* receive the message */
+		/* Receive the message */
 		CAN_Receive(g_handle[_index], CAN_FIFO0, &msg);
 	
-		/* check if the RX queue is full */
+		/* Check if the rx queue is full */
 		if (g_can_rx_queue_head[_index] == (g_can_rx_queue_tail[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 		{
-			/* dequeue */
+			/* Dequeue */
 			g_can_rx_queue_head[_index] = (g_can_rx_queue_head[_index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 		}
 		
-		/* enqueue */
+		/* Enqueue */
 		g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].id_ = (CAN_ID_STD ==  msg.IDE) ? msg.StdId : msg.ExtId;
 		g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_ = msg.DLC > 8u ? 8u : msg.DLC;
 		memcpy(g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].data_, msg.Data, g_can_rx_queue[_index][g_can_rx_queue_tail[_index]].dlc_);

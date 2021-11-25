@@ -1,7 +1,7 @@
 /*
  * board_stm32f2xx.c
  *
- *  Created on: 2018��8��21��
+ *  Created on: 2018年8月21日
  *      Author: Administrator
  */
 
@@ -32,50 +32,54 @@ void gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	/* initialize the LEDs */
+	/* Initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
-	GPIO_InitStructure.Pin   = LED0_PIN;
-	GPIO_InitStructure.Mode  = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStructure.Pin = LED0_PIN;
+	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH; 
 	HAL_GPIO_Init(LED0_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED0_GPIO, LED0_PIN, LED_OFF);
+
 	LED1_GPIO_CLK_ENABLE();	
 	GPIO_InitStructure.Pin = LED1_PIN;
 	HAL_GPIO_Init(LED1_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED1_GPIO, LED1_PIN, LED_OFF);
+
 	LED2_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = LED2_PIN;  
 	HAL_GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	/* initialize the buttons */
+	/* Initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
-	GPIO_InitStructure.Pin  = BTN_PIN;
+	GPIO_InitStructure.Pin = BTN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
 	GPIO_InitStructure.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(BTN_GPIO, &GPIO_InitStructure);
 	HAL_NVIC_SetPriority(BTN_IRQ, 0, 0);
     HAL_NVIC_EnableIRQ(BTN_IRQ);
 	
-	/* initialize the upper computer */
+	/* Initialize the upper computer */
 	UC_POWER_GPIO_CLK_ENABLE();
-	GPIO_InitStructure.Pin  = UC_POWER_PIN;
+	GPIO_InitStructure.Pin = UC_POWER_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;	
 	HAL_GPIO_Init(UC_POWER_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_POWER_GPIO, UC_POWER_PIN, GPIO_PIN_RESET);
+
 	UC_WAKEUP_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = UC_WAKEUP_PIN; 
 	HAL_GPIO_Init(UC_WAKEUP_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, GPIO_PIN_RESET);
+
 	UC_RESET_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = UC_RESET_PIN;
 	HAL_GPIO_Init(UC_RESET_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_RESET_GPIO, UC_RESET_PIN, GPIO_PIN_RESET);
 	
-    /* initialize the ignition */
+    /* Initialize the ignition */
 	IGN_GPIO_CLK_ENABLE();
-	GPIO_InitStructure.Pin  = IGN_PIN;
+	GPIO_InitStructure.Pin = IGN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
 	GPIO_InitStructure.Pull = GPIO_PULLUP;
 	HAL_GPIO_Init(IGN_GPIO, &GPIO_InitStructure);
@@ -117,7 +121,7 @@ void gpio_deinit(void)
  *
  * This is the implementation of the C standard library function.
  *
- * @return the processor clock time
+ * @return The processor clock time.
  */
 clock_t clock(void)
 {
@@ -167,7 +171,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 	sys_clk_config();
 
-	/* resume the tick interrupt if it is disabled prior to sleep mode entry */
+	/* Resume the tick interrupt if it is disabled prior to sleep mode entry */
 	HAL_ResumeTick();
 
 	__HAL_RCC_PWR_CLK_DISABLE();
@@ -175,7 +179,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 int32_t wdog_enable(void)
 {
-#if 0 /* the individual watch dog */
+#if 0 /* The individual watch dog */
 	g_wdog_handle.Instance       = IWDG;
 	g_wdog_handle.Init.Prescaler = IWDOG_PRV;
 	g_wdog_handle.Init.Reload    = IWDOG_RLV;
@@ -198,7 +202,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 /* the individual watch dog */
+#if 0 /* The individual watch dog */
 	HAL_IWDG_Refresh(&g_wdog_handle);
 #endif
 
@@ -217,13 +221,13 @@ int32_t wdog_disable(void)
 }
 
 /**
- * @name The IRQ handlers
+ * @name IRQ handlers
  * @{
  */
 
 #if !defined USING_OS_FREERTOS
 /**
- * The system tick timer handler.
+ * System tick timer handler.
  */
 void SysTick_Handler(void)
 {
@@ -232,7 +236,7 @@ void SysTick_Handler(void)
 #endif
 
 /**
- * The button IRQ handler.
+ * Button IRQ handler.
  */
 void BTN_IRQ_HANDLER(void)
 {
@@ -240,7 +244,7 @@ void BTN_IRQ_HANDLER(void)
 }
 
 /**
- * The ignition IRQ handler.
+ * Ignition IRQ handler.
  */
 void IGN_IRQ_HANDLER(void)
 {
@@ -248,7 +252,7 @@ void IGN_IRQ_HANDLER(void)
 }
 
 /**
- * The window watch dog IRQ handler.
+ * Window watch dog IRQ handler.
  */
 void WWDG_IRQHandler(void)
 {
@@ -261,15 +265,15 @@ void WWDG_IRQHandler(void)
 	}
 }
 
-/** @} */ /* The IRQ handlers */
+/** @} */ /* IRQ handlers */
 
 /*******************************************************************************
  * Local functions
  ******************************************************************************/
 /**
- * System Clock Configuration.
+ * System clock configuration.
  *
- * The system Clock is configured as follow: 
+ * The system clock is configured as follow: 
  *          - System Clock source            = PLL (HSE)
  *          - SYSCLK(Hz)                     = 120000000
  *          - HCLK(Hz)                       = 120000000
@@ -284,14 +288,14 @@ void WWDG_IRQHandler(void)
  *          - VDD(V)                         = 3.3
  *          - Flash Latency(WS)              = 3
  *
- * @return 0(success) or other values(failure)
+ * @return 0(success) or other values(failure).
  */
 static int32_t sys_clk_config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	
-	/* enable the HSE oscillator and activate PLL with HSE as source */
+	/* Enable the HSE oscillator and activate PLL with HSE as source */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
