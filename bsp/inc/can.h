@@ -18,7 +18,7 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name CAN channel index
+ * @name CAN channel indexes
  * @{
  */
 #define CAN0_INDEX                              0

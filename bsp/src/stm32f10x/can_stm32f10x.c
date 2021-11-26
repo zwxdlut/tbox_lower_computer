@@ -304,7 +304,7 @@ void CAN1_RX_IRQ_HANDLER(void)
 /**
  * CAN IRQ handler.
  *
- * @param [in] _index CAN channel index
+ * @param [in] _index The CAN channel index
  */
 static void can_irq_handler(const uint8_t _index)
 {

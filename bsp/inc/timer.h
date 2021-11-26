@@ -69,7 +69,7 @@ int32_t timer_stop(const uint8_t _index);
  *
  * This function can be implemented by user, default implemention is "weak".
  *
- * @param [in] _index Timer index
+ * @param [in] _index The Timer index
  */
 void timer_irq_callback(const uint8_t _index);
 

@@ -306,10 +306,10 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 /**
  * CAN IRQ handler.
  *
- * @param [in] _inst CAN instance
- * @param [in] _event_type Event type
- * @param [in] _buf_index Message buffer index
- * @param [in] _state Driver state
+ * @param [in] _inst The CAN instance
+ * @param [in] _event_type The CAN event type
+ * @param [in] _buf_index The message buffer index
+ * @param [in] _state The driver state
  */
 static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uint32_t _buf_index, flexcan_state_t *_state)
 {

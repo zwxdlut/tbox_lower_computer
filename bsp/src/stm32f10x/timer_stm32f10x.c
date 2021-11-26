@@ -121,7 +121,7 @@ void TIMER0_IRQ_HANDLER(void)
 /**
  * Timer IRQ handler.
  *
- * @param [in] _index Timer index
+ * @param [in] _index The timer index
  */
 static void timer_irq_handler(const uint8_t _index)
 {

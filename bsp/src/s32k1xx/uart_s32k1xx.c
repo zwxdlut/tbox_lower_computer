@@ -189,11 +189,11 @@ uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _s
  * Local functions
  ******************************************************************************/
 /**
- * The UART IRQ handler.
+ * UART IRQ handler.
  *
- * @param [in] _state the driver state
- * @param [in] _event the event type
- * @param [in] _user_data the callback parameter
+ * @param [in] _state The driver state
+ * @param [in] _event The UART event type
+ * @param [in] _user_data The user data passed to this function
  */
 static void uart_irq_handler(void *_state, uart_event_t _event, void *_user_data)
 {

@@ -17,6 +17,7 @@ SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* Receiving/Sending mut
 /******************************************************************************
  * Local function prototypes
  ******************************************************************************/
+
 /******************************************************************************
  * Functions
  ******************************************************************************/
@@ -56,12 +57,18 @@ int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_
 /**
  * I2C0 event IRQ handler.
  */
-void I2C0_EV_IRQ_HANDLER(void) {}
+void I2C0_EV_IRQ_HANDLER(void)
+{
+
+}
 
 /**
  * I2C0 error IRQ handler.
  */
-void I2C0_ER_IRQ_HANDLER(void) {}
+void I2C0_ER_IRQ_HANDLER(void)
+{
+	
+}
 
 /** @} */ /* IRQ handlers */
 

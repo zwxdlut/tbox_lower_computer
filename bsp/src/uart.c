@@ -7,9 +7,6 @@
 
 #include "uart.h"
 
-/*******************************************************************************
- * Definitions
- ******************************************************************************/
 #if defined USING_OS_FREERTOS
 extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* Sending mutex */
 #endif
@@ -19,8 +16,13 @@ extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* Receiving queue head *
 extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* Receiving queue tail */
 
 /*******************************************************************************
+ * Definitions
+ ******************************************************************************/
+
+/*******************************************************************************
  * Local function prototypes
  ******************************************************************************/
+
 /*******************************************************************************
  * Functions
  ******************************************************************************/
@@ -180,7 +182,7 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], co
 UARTError InitializeUART(UARTBaudRate baudRate)
 {
 #if defined _UDEBUG
-	uart_init(UART1_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
+	uart_init(UART0_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 #endif
 
 	return kUARTNoError;
@@ -193,7 +195,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 
 	while (size < limit)
 	{
-		size += uart_receive(UART1_INDEX, bytes + size, limit - size);
+		size += uart_receive(UART0_INDEX, bytes + size, limit - size);
 	}
 #endif
 
@@ -203,7 +205,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 UARTError WriteUARTN(const void * bytes, unsigned long length)
 {
 #if defined _UDEBUG
-	uart_send(UART1_INDEX, bytes, length);
+	uart_send(UART0_INDEX, bytes, length);
 #endif
 
 	return kUARTNoError;
@@ -213,15 +215,7 @@ UARTError WriteUARTN(const void * bytes, unsigned long length)
 int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
 #if defined _UDEBUG
-	static bool init = false;
-
-	if (!init)
-	{
-		uart_init(UART1_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
-		init = true;
-	}
-
-	return uart_send(UART1_INDEX, (uint8_t*)pcBuffer, iLength);
+	return uart_send(UART0_INDEX, (uint8_t*)pcBuffer, iLength);
 #else
 	return 0;
 #endif
@@ -250,15 +244,7 @@ FILE __stdout;
 int fputc(int ch, FILE *f)
 {
 #if defined _UDEBUG
-	static bool init = false;
-
-	if (!init)
-	{
-		uart_init(UART1_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
-		init = true;
-	}
-
-	uart_send(UART1_INDEX, (uint8_t*)(&ch), 1);
+	uart_send(UART0_INDEX, (uint8_t*)(&ch), 1);
 #endif
 
 	return (ch);

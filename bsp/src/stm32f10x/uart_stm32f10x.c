@@ -89,8 +89,8 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 	USART_Init(g_handle[_index], &USART_InitStructure);
 	USART_ITConfig(g_handle[_index], USART_IT_RXNE, ENABLE);
-	USART_Cmd(g_handle[_index], ENABLE);
 	USART_ClearFlag(g_handle[_index], USART_FLAG_TC);
+	USART_Cmd(g_handle[_index], ENABLE);
 	
 	/* Initialize the NVIC */
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
@@ -193,7 +193,7 @@ void UART1_IRQ_HANDLER(void)
 /**
  * UART IRQ handler.
  *
- * @param [in] _index UART channel index
+ * @param [in] _index The UART channel index
  */
 void uart_irq_handler(const uint8_t _index)
 {

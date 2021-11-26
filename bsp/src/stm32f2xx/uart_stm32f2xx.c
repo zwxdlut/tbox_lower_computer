@@ -200,7 +200,7 @@ void UART1_IRQ_HANDLER(void)
 /**
  * UART IRQ handler.
  *
- * @param [in] _index UART channel index
+ * @param [in] _index The UART channel index
  */
 static void uart_irq_handler(const uint8_t _index)
 {
