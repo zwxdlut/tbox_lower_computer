@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* Receiving/Sending mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* receiving/sending mutex */
 #endif
 
 typedef struct
@@ -68,7 +68,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 
-	/* Initialize the GPIOs */
+	/* initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].scl_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].sda_pin_, g_comm_config[_index].gpio_af_);
 

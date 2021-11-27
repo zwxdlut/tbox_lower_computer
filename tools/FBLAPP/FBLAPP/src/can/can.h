@@ -15,7 +15,7 @@
  */
 #define USBCAN_I						        USBCAN1
 #define USBCAN_II                               USBCAN2
- /** @} */ /* CAN device types */
+ /** @} */ // CAN device types
 
 /**
  * @name CAN device indexes
@@ -23,7 +23,7 @@
  */
 #define CAN_DEV_IDX0					        0
 #define CAN_DEV_IDX1                            1
- /** @} */ /* CAN device indexes */
+ /** @} */ // CAN device indexes
 	
 /**
  * @name CAN channel numbers
@@ -31,7 +31,7 @@
  */
 #define CAN_CHL0                                0
 #define CAN_CHL1                                1
- /** @} */ /* CAN channel numbers */
+ /** @} */ // CAN channel numbers
 
 /** 
  * CAN communication class.
@@ -42,8 +42,8 @@ public:
 	/**
 	 * Constructor.
 	 *
-	 * @param [in] _dev_type Device type
-	 * @param [in] _dev_idx Device index
+	 * @param [in] _dev_type device type
+	 * @param [in] _dev_idx device index
 	 */
 	can(const uint8_t _dev_type, const uint8_t _dev_idx);
 
@@ -55,33 +55,33 @@ public:
 	/**
 	 * Open the device.
 	 *
-	 * @return 0(success) or other values(failure).
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t open(void);
 
 	/**
 	 * Close the device.
 	 *
-	 * @return 0(success) or other values(failure).
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t close(void);
 
 	/**
 	 * Initialize the CAN.
 	 *
-	 * @param [in] _chl The CAN channel number
-	 * @return 0(success) or other values(failure).
+	 * @param [in] _chl the CAN channel number
+	 * @return 0(success) or other values(failure)
 	 */
 	int32_t init(const uint8_t _chl);
 
 	/**
 	 * Receive a CAN message.
 	 *
-	 * @param [in]  _index The CAN channel number
-	 * @param [out] _id The received CAN id
-	 * @param [out] _buf The buffer to receive to
-	 * @param [in]  _size The size to receive
-	 * @return The received CAN data size.
+	 * @param [in]  _index the CAN channel number
+	 * @param [out] _id the received CAN id
+	 * @param [out] _buf the buffer to receive to
+	 * @param [in]  _size the size to receive
+	 * @return the received CAN data size
 	 */
 	uint8_t receive(const uint8_t _chl, uint32_t* const _id, uint8_t _buf[], const uint8_t _size);
 
@@ -92,7 +92,7 @@ public:
 	 * @param [in] _id the sent CAN id
 	 * @param [in] _buf the buffer to send from
 	 * @param [in] _size the size to send
-	 * @return The sent CAN data size.
+	 * @return the sent CAN data size
 	 */
 	uint8_t send(const uint8_t _chl, const uint32_t _id, const uint8_t _buf[], const uint8_t _size);
 

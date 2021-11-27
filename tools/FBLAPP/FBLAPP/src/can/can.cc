@@ -20,7 +20,7 @@ int32_t can::open(void)
 {
 	if (STATUS_OK != OpenDevice(dev_type_, dev_idx_, 0))
 	{
-		printf("can::open: Open the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
+		printf("can::open: open the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
 		return -1;
 	}
 		
@@ -31,7 +31,7 @@ int32_t can::close(void)
 {
 	if (STATUS_OK != CloseDevice(dev_type_, dev_idx_))
 	{
-		printf("can::close: Close the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
+		printf("can::close: close the CAN device(%d, %d) failed!\n", dev_type_, dev_idx_);
 		return -1;
 	}
 
@@ -50,13 +50,13 @@ int32_t can::init(const uint8_t _chl)
 
 	if (STATUS_OK != InitCAN(dev_type_, dev_idx_, _chl, &cfg))
 	{
-		printf("can::init: Initialize the CAN(%d) failed!\n", _chl);
+		printf("can::init: initialize the CAN(%d) failed!\n", _chl);
 		return -1;
 	}
 		
 	if (STATUS_OK != StartCAN(dev_type_, dev_idx_, _chl))
 	{
-		printf("can::init: Start the CAN(%d) failed!\n", _chl);
+		printf("can::init: start the CAN(%d) failed!\n", _chl);
 		return -1;
 	}
 		
@@ -96,7 +96,7 @@ uint8_t can::send(const uint8_t _chl, const uint32_t _id, const uint8_t _buf[], 
 	std::lock_guard<std::mutex> guard(tx_mutex_);
 	if (1 != Transmit(dev_type_, dev_idx_, _chl, &frame, 1))
 	{
-		printf("can::send: Transmit failed!\n");
+		printf("can::send: transmit failed!\n");
 		return 0;
 	}
 

@@ -37,10 +37,10 @@ int32_t flash_ctrl_erase_sector(const uint32_t _addr, const uint32_t _size)
 	FLASH_EraseInitTypeDef EraseInitStruct;
 	uint32_t SECTORError = 0;
 	
-	EraseInitStruct.TypeErase     = TYPEERASE_SECTORS;
-	EraseInitStruct.Sector        = get_sector(_addr);
-	EraseInitStruct.NbSectors     = get_sector(_addr + _size - 1) - EraseInitStruct.Sector + 1;
-	EraseInitStruct.VoltageRange  = FLASH_VOLTAGE_RANGE_3;
+	EraseInitStruct.TypeErase = TYPEERASE_SECTORS;
+	EraseInitStruct.Sector = get_sector(_addr);
+	EraseInitStruct.NbSectors = get_sector(_addr + _size - 1) - EraseInitStruct.Sector + 1;
+	EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
 	
 	HAL_FLASH_Unlock();
 	ret = HAL_FLASHEx_Erase(&EraseInitStruct, &SECTORError);
@@ -174,8 +174,8 @@ int32_t flash_ctrl_write_e2(const uint32_t _addr, const uint32_t _size, const ui
 /**
  * Get the sector of a given address.
  *
- * @param [in] _addr A sector start address
- * @return The sector of the given address.
+ * @param [in] _addr a sector start address
+ * @return the sector of the given address
  */
 static uint32_t get_sector(const uint32_t _addr)
 {

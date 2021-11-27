@@ -11,12 +11,12 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* Sending mutex */
+SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1] = {NULL, NULL}; /* sending mutex */
 #endif
 
-uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* Receiving queue */
-uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* Receiving queue head */
-uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* Receiving queue tail */
+uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* receiving queue */
+uint16_t g_uart_rx_queue_head[UART1_INDEX + 1] = {0, 0}; /* receiving queue head */
+uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1] = {0, 0}; /* receiving queue tail */
 
 typedef struct
 {
@@ -61,7 +61,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_InitTypeDef USART_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	/* Initialize the rx queue */
+	/* initialize the rx queue */
 	g_uart_rx_queue_head[_index] = 0;
 	g_uart_rx_queue_tail[_index] = 0;
 	
@@ -69,7 +69,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	g_uart_tx_mutex[_index] = xSemaphoreCreateRecursiveMutex();
 #endif
 	
-	/* Initialize the GPIOs */
+	/* initialize the GPIOs */
 	UART_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.GPIO_Pin = g_comm_config[_index].rx_pin_;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -79,7 +79,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
 	GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	/* Initialize the UART */
+	/* initialize the UART */
 	UART_CLK_ENABLE(_index);
 	USART_InitStructure.USART_BaudRate = _baudrate;
 	USART_InitStructure.USART_WordLength = _data_bits;
@@ -92,7 +92,7 @@ int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t
 	USART_ClearFlag(g_handle[_index], USART_FLAG_TC);
 	USART_Cmd(g_handle[_index], ENABLE);
 	
-	/* Initialize the NVIC */
+	/* initialize the NVIC */
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0 ;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -193,7 +193,7 @@ void UART1_IRQ_HANDLER(void)
 /**
  * UART IRQ handler.
  *
- * @param [in] _index The UART channel index
+ * @param [in] _index the UART channel index
  */
 void uart_irq_handler(const uint8_t _index)
 {
@@ -202,14 +202,14 @@ void uart_irq_handler(const uint8_t _index)
 	{		
 		USART_ClearITPendingBit(g_handle[_index], USART_IT_RXNE);
 
-		/* Check if the RX queue is full */
+		/* check if the RX queue is full */
 		if (g_uart_rx_queue_head[_index] == (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE)
 		{
-			/* Dequeue */
+			/* dequeue */
 			g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
 		}
 		
-		/* Enqueue */
+		/* enqueue */
 		g_uart_rx_queue[_index][g_uart_rx_queue_tail[_index]] = USART_ReceiveData(g_handle[_index]);
 		g_uart_rx_queue_tail[_index] = (g_uart_rx_queue_tail[_index] + 1) % UART_RX_BUFFER_SIZE;	
     }

@@ -40,13 +40,13 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 {
 	assert(TIMER0_INDEX >= _index);
 
-	/* Initialize the timer */
+	/* initialize the timer */
 	TIMER_CLK_ENABLE(_index);
 	g_handle[_index].Init.Prescaler = 2 * HAL_RCC_GetPCLK1Freq() / g_timer_config[_index].clk_ - 1;
 	g_handle[_index].Init.Period    = _period * g_timer_config[_index].clk_ / 1000 - 1;
 	HAL_TIM_Base_Init(&g_handle[_index]);
 	
-	/* Initialize the NVIC */
+	/* initialize the NVIC */
 	HAL_NVIC_SetPriority(g_timer_config[_index].irq_, 0, 0);
 	HAL_NVIC_EnableIRQ(g_timer_config[_index].irq_);
 
@@ -110,11 +110,11 @@ void TIMER0_IRQ_HANDLER(void)
 /**
  * Timer IRQ handler.
  *
- * @param [in] _index The timer index
+ * @param [in] _index the timer index
  */
 static void timer_irq_handler(const uint8_t _index)
 {
-	/* Timer update event */
+	/* timer update event */
 	if (RESET != __HAL_TIM_GET_FLAG(&g_handle[_index], TIM_FLAG_UPDATE) && RESET != __HAL_TIM_GET_IT_SOURCE(&g_handle[_index], TIM_IT_UPDATE))
 	{
 		__HAL_TIM_CLEAR_IT(&g_handle[_index], TIM_IT_UPDATE);

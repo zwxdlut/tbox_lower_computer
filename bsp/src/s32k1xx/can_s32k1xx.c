@@ -10,9 +10,9 @@
 /*******************************************************************************
  * Definitions
  ******************************************************************************/
-can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* Receiving queue */
-uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue head */
-uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* Receiving queue tail */
+can_msg_t g_can_rx_queue[CAN1_INDEX + 1][CAN_MSG_RX_QUEUE_MAX_LENGTH]; /* receiving queue */
+uint8_t g_can_rx_queue_head[CAN1_INDEX + 1] = {0, 0}; /* receiving queue head */
+uint8_t g_can_rx_queue_tail[CAN1_INDEX + 1] = {0, 0}; /* receiving queue tail */
 
 typedef struct
 {
@@ -123,9 +123,9 @@ static flexcan_state_t *g_state[CAN1_INDEX + 1] =
 #endif
 };
 
-static flexcan_msgbuff_t g_rx_buf[CAN1_INDEX + 1]; /* Receiving buffer */
-static int8_t g_tx_mailbox[CAN1_INDEX + 1] = {31, 15}; /* Sending mailboxes */
-static mutex_t g_tx_mutex[CAN1_INDEX + 1]; /* Sending mutex */
+static flexcan_msgbuff_t g_rx_buf[CAN1_INDEX + 1]; /* receiving buffer */
+static int8_t g_tx_mailbox[CAN1_INDEX + 1] = {31, 15}; /* sending mailboxes */
+static mutex_t g_tx_mutex[CAN1_INDEX + 1]; /* sending mutex */
 
 /*******************************************************************************
  * Local function prototypes
@@ -143,7 +143,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 {
 	assert(CAN1_INDEX >= _index);
 
-	/* Initialize the rx queue */
+	/* initialize the rx queue */
 	g_can_rx_queue_head[_index] = 0;
 	g_can_rx_queue_tail[_index] = 0;
 
@@ -155,7 +155,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	   - Bus clock as peripheral engine clock */
 	FLEXCAN_DRV_Init(g_handle[_index], g_state[_index], g_config[_index]);
 
-	/* Initialize the CAN filter */
+	/* initialize the CAN filter */
 	if (NULL == _filter_id_list || 0 == _filter_id_num)
 	{
 		/* set receiving all id messages */
@@ -181,7 +181,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 	   received and read into the specified buffer */
 	FLEXCAN_DRV_InstallEventCallback(g_handle[_index], can_irq_handler, (void *)((uint32_t)_index));
 
-	/* Initialize the GPIOs */
+	/* initialize the GPIOs */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].rx_pin_, g_comm_config[_index].gpio_af_);
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].port_, g_comm_config[_index].tx_pin_, g_comm_config[_index].gpio_af_);
 
@@ -195,7 +195,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 #endif
 
 #if defined MX_TB
-	/* Initialize the CAN transceiver */
+	/* initialize the CAN transceiver */
 	PINS_DRV_SetMuxModeSel(g_comm_config[_index].trans_stb_n_port_, g_comm_config[_index].trans_stb_n_pin_, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(g_comm_config[_index].trans_stb_n_gpio_, g_comm_config[_index].trans_stb_n_pin_, 1);
@@ -218,7 +218,7 @@ int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const ui
 #endif
 #endif
 
-	/* Trigger receiving */
+	/* trigger receiving */
 	FLEXCAN_DRV_RxFifo(g_handle[_index], &g_rx_buf[_index]);
 
 	return 0;
@@ -267,7 +267,7 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
 
 	OSIF_MutexLock(&g_tx_mutex[_index], OSIF_WAIT_FOREVER);
 
-	/* Configure the TX message buffer with index, message_id and g_tx_mailbox[_inst]. */
+	/* configure the TX message buffer with index, message_id and g_tx_mailbox[_inst]. */
 	FLEXCAN_DRV_ConfigTxMb(g_handle[_index], g_tx_mailbox[_index], &dataInfo, _id);
 
 	if (STATUS_SUCCESS == FLEXCAN_DRV_Send(g_handle[_index], g_tx_mailbox[_index], &dataInfo, _id, _buf))
@@ -306,10 +306,10 @@ int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode)
 /**
  * CAN IRQ handler.
  *
- * @param [in] _inst The CAN instance
- * @param [in] _event_type The CAN event type
- * @param [in] _buf_index The message buffer index
- * @param [in] _state The driver state
+ * @param [in] _inst the CAN instance
+ * @param [in] _event_type the CAN event type
+ * @param [in] _buf_index the message buffer index
+ * @param [in] _state the driver state
  */
 static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uint32_t _buf_index, flexcan_state_t *_state)
 {
@@ -320,14 +320,14 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 	switch (_event_type)
 	{
 		case FLEXCAN_EVENT_RXFIFO_COMPLETE:
-			/* Check if the rx queue is full */
+			/* check if the rx queue is full */
 			if (g_can_rx_queue_head[index] == (g_can_rx_queue_tail[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH)
 			{
-				/* Dequeue */
+				/* dequeue */
 				g_can_rx_queue_head[index] = (g_can_rx_queue_head[index] + 1) % CAN_MSG_RX_QUEUE_MAX_LENGTH;
 			}
 
-			/* Enqueue */
+			/* enqueue */
 			g_can_rx_queue[index][g_can_rx_queue_tail[index]].id_ = g_rx_buf[index].msgId;
 			g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_ = g_rx_buf[index].dataLen > 8 ? 8 : g_rx_buf[index].dataLen;
 			memcpy(g_can_rx_queue[index][g_can_rx_queue_tail[index]].data_, g_rx_buf[index].data, g_can_rx_queue[index][g_can_rx_queue_tail[index]].dlc_);
@@ -342,7 +342,7 @@ static void can_irq_handler(uint8_t _inst, flexcan_event_type_t _event_type, uin
 			break;
 	}
 
-	/* Trigger receiving */
+	/* trigger receiving */
 	FLEXCAN_DRV_RxFifo(_inst, &g_rx_buf[index]);
 }
 

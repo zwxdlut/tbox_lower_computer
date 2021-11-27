@@ -34,7 +34,7 @@ extern "C" {
 /**
  * Initialize the clocks, etc...
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 int32_t sys_init(void);
 
@@ -44,14 +44,14 @@ int32_t sys_init(void);
 void gpio_init(void);
 
 /**
- * De-Initialize the GPIOs.
+ * De-initialize the GPIOs.
  */
 void gpio_deinit(void);
 
 /**
  * Delay specified time in milliseconds.
  *
- * @param [in] _ms The time to delay in milliseconds
+ * @param [in] _ms the time to delay in milliseconds
  */
 void delay(const uint32_t _ms);
 
@@ -63,7 +63,7 @@ void reset(void);
 /**
  * Transfer the system power mode.
  *
- * @param [in] _mode The system power mode is transfered to:
+ * @param [in] _mode the system power mode is transfered to:
  * <ul>
  * <li>{@link PWR_MODE_SLEEP}</li>
  * <li>{@link PWR_MODE_DEEPSLEEP}</li>
@@ -74,21 +74,21 @@ void pwr_mode_trans(const uint8_t _mode);
 /**
  * Enable the watch dog.
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 int32_t wdog_enable(void);
 
 /**
  * Refresh the watch dog.
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 int32_t wdog_refresh(void);
 
 /**
  * Disable the watch dog.
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 int32_t wdog_disable(void);
 

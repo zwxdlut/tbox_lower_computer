@@ -8,12 +8,12 @@
 #include "uart.h"
 
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* Sending mutex */
+extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* sending mutex */
 #endif
 
-extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* Receiving queue */
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* Receiving queue head */
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* Receiving queue tail */
+extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* receiving queue */
+extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* receiving queue head */
+extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* receiving queue tail */
 
 /*******************************************************************************
  * Definitions
@@ -32,10 +32,10 @@ uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size
 
 	uint16_t i = 0;
 
-	/* Check if the RX queue is empty */
+	/* check if the RX queue is empty */
 	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
 	{
-		/* Dequeue */
+		/* dequeue */
 		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
 		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
 	}
@@ -50,7 +50,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
-	/* Receive 0xAA */
+	/* receive 0xAA */
 	size = 1;
 
 	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (UART_HEADER_FLAG >> 8)) != _buf[0])
@@ -58,7 +58,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 		return 0;
 	}
 
-	/* Receive 0x55 */
+	/* receive 0x55 */
 	size = 1;
 	out_size = 0;
 
@@ -75,7 +75,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 		return 0;
 	}
 
-	/* Receive data length */
+	/* receive data length */
 	size = UART_HEADER_SIZE - 2;
 	out_size = 0;
 
@@ -87,7 +87,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 		out_size += uart_receive(_index, _buf + out_size, size - out_size);
 	}
 
-	/* Receive data */
+	/* receive data */
 	memcpy(&size, _buf, UART_HEADER_SIZE - 2);
 	size = _size > size ? size : _size;
 	out_size = 0;

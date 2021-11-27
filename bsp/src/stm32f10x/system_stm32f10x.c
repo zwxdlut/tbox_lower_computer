@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
  #if !defined USING_OS_FREERTOS
-static uint32_t g_sys_tick_cnt = 0; /* The SysTick count */
+static uint32_t g_sys_tick_cnt = 0; /* the SysTick count */
 #endif
 
 /*******************************************************************************
@@ -23,7 +23,7 @@ static uint32_t g_sys_tick_cnt = 0; /* The SysTick count */
  ******************************************************************************/
 int32_t sys_init(void)
 {
-	/* Setup the SysTick */
+	/* setup the SysTick */
 	SystemCoreClockUpdate();
 	SysTick_Config(SystemCoreClock/1000);
 
@@ -36,7 +36,7 @@ void gpio_init(void)
 	EXTI_InitTypeDef EXTI_InitStructure;
 	NVIC_InitTypeDef NVIC_InitStructure;
 	
-	/* Initialize the LEDs */
+	/* initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.GPIO_Pin = LED0_PIN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
@@ -54,7 +54,7 @@ void gpio_init(void)
 	GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	GPIO_WriteBit(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	/* Initialize the buttons */
+	/* initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
 	GPIO_InitStructure.GPIO_Pin = BTN_PIN;
@@ -103,7 +103,7 @@ void gpio_deinit(void)
  *
  * This is the implementation of the C standard library function.
  *
- * @return The processor clock time.
+ * @return the processor clock time
  */
 clock_t clock(void)
 {
@@ -139,7 +139,7 @@ void pwr_mode_trans(const uint8_t _mode)
 {
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
 
-	/* Suspend the SysTick */
+	/* suspend the SysTick */
 	SysTick->CTRL &= ~(SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
 	switch(_mode)
@@ -158,7 +158,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 	SystemInit();
 
-	/* Resume the SysTick */
+	/* resume the SysTick */
 	SysTick->CTRL |= (SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk);
 
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, DISABLE);
@@ -166,7 +166,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 int32_t wdog_enable(void)
 {
-#if 0 /* The individual watch dog */
+#if 0 /* the individual watch dog */
 	IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
 	IWDG_SetPrescaler(IWDOG_PRV);
 	IWDG_SetReload(IWDOG_RLV);
@@ -194,7 +194,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 /* The individual watch dog */
+#if 0 /* the individual watch dog */
 	IWDG_ReloadCounter();	
 #endif
 

@@ -34,7 +34,7 @@ int32_t sys_init(void)
 
 void gpio_init(void)
 {
-	/* Initialize the LEDs */
+	/* initialize the LEDs */
 	PINS_DRV_SetMuxModeSel(LED0_PORT, LED0_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(LED0_GPIO, LED0_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED0_GPIO, LED0_PIN, LED_OFF);
@@ -47,7 +47,7 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(LED2_GPIO, LED2_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 
-	/* Initialize the buttons */
+	/* initialize the buttons */
 	PINS_DRV_SetMuxModeSel(BTN_PORT, BTN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(BTN_GPIO, BTN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(BTN_PORT, BTN_PIN, PORT_INT_RISING_EDGE);
@@ -61,7 +61,7 @@ void gpio_init(void)
 #endif
 
 #if defined MX_TB
-	/* Initialize the upper computer */
+	/* initialize the upper computer */
 	PINS_DRV_SetMuxModeSel(UC_POWER_PORT, UC_POWER_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(UC_POWER_GPIO, UC_POWER_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_POWER_GPIO, UC_POWER_PIN, 0);
@@ -74,7 +74,7 @@ void gpio_init(void)
 	PINS_DRV_SetPinDirection(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, GPIO_OUTPUT_DIRECTION);
 	PINS_DRV_WritePin(UC_WAKEUP_GPIO, UC_WAKEUP_PIN, 0);
 
-    /* Initialize the ignition */
+    /* initialize the ignition */
 	PINS_DRV_SetMuxModeSel(IGN_PORT, IGN_PIN, PORT_MUX_AS_GPIO);
 	PINS_DRV_SetPinDirection(IGN_GPIO, IGN_PIN, GPIO_INPUT_DIRECTION);
     PINS_DRV_SetPinIntSel(IGN_PORT, IGN_PIN, PORT_INT_FALLING_EDGE);
@@ -115,7 +115,7 @@ void gpio_deinit(void)
  *
  * This is the implementation of the C standard library function.
  *
- * @return The processor clock time.
+ * @return the processor clock time
  */
 clock_t clock(void)
 {
@@ -183,19 +183,19 @@ void pwr_mode_trans(const uint8_t _mode)
 int32_t wdog_enable(void)
 {
 #if defined EXTWDOG
-	/* Initialize the EWM */
+	/* initialize the EWM */
 	EWM_DRV_Init(EXTWDOG, &extWdog_Config0);
 #endif
 
 #if defined INST_WATCHDOG
-	/* Initialize the WDOG */
+	/* initialize the WDOG */
     WDOG_DRV_Init(INST_WATCHDOG, &watchdog_Config0);
 #endif
 
-	/* Install the IRQ handler */
+	/* install the IRQ handler */
 	INT_SYS_InstallHandler(WDOG_EWM_IRQn, wdog_irq_handler, (isr_t *)0);
 
-    /* Enable the IRQ */
+    /* enable the IRQ */
     INT_SYS_EnableIRQ(WDOG_EWM_IRQn);
 
     return 0;
@@ -216,7 +216,7 @@ int32_t wdog_refresh(void)
 
 int32_t wwdog_disable(void)
 {
-	/* Disable the IRQ */
+	/* disable the IRQ */
 	INT_SYS_DisableIRQ(WDOG_EWM_IRQn);
 	
 #if defined INST_WATCHDOG

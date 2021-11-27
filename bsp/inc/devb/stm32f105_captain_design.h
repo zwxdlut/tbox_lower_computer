@@ -128,7 +128,7 @@ extern "C" {
 #define CAN_RELEASE_RESET(INDEX)                do { if (0 == (INDEX)) { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN1, DISABLE); } else\
                                                                        { RCC_APB1PeriphResetCmd(RCC_APB1Periph_CAN2, DISABLE); }} while (0)
                                                                        
-#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< Slave CAN start filter bank number */
+#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< slave CAN start filter bank number */
 /** @} */ /* CAN configuration */
 
 /** 

@@ -193,7 +193,7 @@ extern "C" {
 #define CAN_TRANS_INH_GPIO_CLK_DISABLE(INDEX)   do { if (0 == (INDEX)) { __HAL_RCC_GPIOC_CLK_DISABLE(); } else\
                                                                        { __HAL_RCC_GPIOB_CLK_DISABLE(); }} while (0)
 
-#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< Slave CAN start filter bank number */
+#define CAN_SLAVE_START_FILTER_BANK_NUM         21 /**< slave CAN start filter bank number */
 /** @} */ /* CAN configuration */
 
 /** 

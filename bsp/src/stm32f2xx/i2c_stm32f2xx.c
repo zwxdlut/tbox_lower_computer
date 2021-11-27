@@ -11,7 +11,7 @@
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* Receiving/Sending mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* receiving/sending mutex */
 #endif
 
 typedef struct
@@ -66,7 +66,7 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	g_i2c_mutex[_index] = xSemaphoreCreateMutex();
 #endif
 	
-	/* Initialize the GPIOs */
+	/* initialize the GPIOs */
 	I2C_GPIO_CLK_ENABLE(_index);
 	GPIO_InitStructure.Pin       = g_comm_config[_index].scl_pin_ | g_comm_config[_index].sda_pin_;
 	GPIO_InitStructure.Mode      = GPIO_MODE_AF_OD;
@@ -75,13 +75,13 @@ int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bo
 	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
 	HAL_GPIO_Init(g_comm_config[_index].gpio_, &GPIO_InitStructure);
 	
-	/* Initialize the I2C */
+	/* initialize the I2C */
 	I2C_CLK_ENABLE(_index);
 	g_handle[_index].Init.ClockSpeed     = _baudrate;
 	g_handle[_index].Init.AddressingMode = _is_10bit_addr ? I2C_ADDRESSINGMODE_10BIT : I2C_ADDRESSINGMODE_7BIT;
 	HAL_I2C_Init(&g_handle[_index]);
 	
-	/* Initialize the NVIC */
+	/* initialize the NVIC */
 	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
 	{
 		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);

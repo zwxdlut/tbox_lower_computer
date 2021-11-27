@@ -32,7 +32,7 @@ void gpio_init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
 	
-	/* Initialize the LEDs */
+	/* initialize the LEDs */
 	LED0_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = LED0_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -50,7 +50,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(LED2_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(LED2_GPIO, LED2_PIN, LED_OFF);
 	
-	/* Initialize the buttons */
+	/* initialize the buttons */
 	BTN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = BTN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -59,7 +59,7 @@ void gpio_init(void)
 	HAL_NVIC_SetPriority(BTN_IRQ, 0, 0);
     HAL_NVIC_EnableIRQ(BTN_IRQ);
 	
-	/* Initialize the upper computer */
+	/* initialize the upper computer */
 	UC_POWER_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = UC_POWER_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_OUTPUT_PP;
@@ -77,7 +77,7 @@ void gpio_init(void)
 	HAL_GPIO_Init(UC_RESET_GPIO, &GPIO_InitStructure);
 	HAL_GPIO_WritePin(UC_RESET_GPIO, UC_RESET_PIN, GPIO_PIN_RESET);
 	
-    /* Initialize the ignition */
+    /* initialize the ignition */
 	IGN_GPIO_CLK_ENABLE();
 	GPIO_InitStructure.Pin = IGN_PIN;
 	GPIO_InitStructure.Mode = GPIO_MODE_IT_FALLING;
@@ -121,7 +121,7 @@ void gpio_deinit(void)
  *
  * This is the implementation of the C standard library function.
  *
- * @return The processor clock time.
+ * @return the processor clock time
  */
 clock_t clock(void)
 {
@@ -151,8 +151,8 @@ void pwr_mode_trans(const uint8_t _mode)
 {
 	__HAL_RCC_PWR_CLK_ENABLE();
 
-	/* Suspend Tick increment to prevent wakeup by Systick interrupt
-	   Otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
+	/* Suspend Tick increment to prevent wakeup by Systick interrupt,
+	   otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
 	HAL_SuspendTick();
 
 	switch(_mode)
@@ -171,7 +171,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 	sys_clk_config();
 
-	/* Resume the tick interrupt if it is disabled prior to sleep mode entry */
+	/* resume the tick interrupt if it is disabled prior to sleep mode entry */
 	HAL_ResumeTick();
 
 	__HAL_RCC_PWR_CLK_DISABLE();
@@ -179,7 +179,7 @@ void pwr_mode_trans(const uint8_t _mode)
 
 int32_t wdog_enable(void)
 {
-#if 0 /* The individual watch dog */
+#if 0 /* the individual watch dog */
 	g_wdog_handle.Instance       = IWDG;
 	g_wdog_handle.Init.Prescaler = IWDOG_PRV;
 	g_wdog_handle.Init.Reload    = IWDOG_RLV;
@@ -202,7 +202,7 @@ int32_t wdog_enable(void)
 
 int32_t wdog_refresh(void)
 {
-#if 0 /* The individual watch dog */
+#if 0 /* the individual watch dog */
 	HAL_IWDG_Refresh(&g_wdog_handle);
 #endif
 
@@ -288,14 +288,14 @@ void WWDG_IRQHandler(void)
  *          - VDD(V)                         = 3.3
  *          - Flash Latency(WS)              = 3
  *
- * @return 0(success) or other values(failure).
+ * @return 0(success) or other values(failure)
  */
 static int32_t sys_clk_config(void)
 {
 	RCC_ClkInitTypeDef RCC_ClkInitStruct;
 	RCC_OscInitTypeDef RCC_OscInitStruct;
 	
-	/* Enable the HSE oscillator and activate PLL with HSE as source */
+	/* enable the HSE oscillator and activate PLL with HSE as source */
 	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
 	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;

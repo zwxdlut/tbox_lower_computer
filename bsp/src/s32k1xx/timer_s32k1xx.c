@@ -48,10 +48,10 @@ int32_t timer_init(const uint8_t _index, const uint32_t _period)
 	   - counter disabled */
 	LPTMR_DRV_Init(g_handle[_index], g_config[_index], false);
 
-	/* Install the IRQ handler for LPTMR interrupt */
+	/* install the IRQ handler for LPTMR interrupt */
 	INT_SYS_InstallHandler(g_timer_irq[_index], timer_irq_handler, (isr_t *)0);
 
-	/* Enable the IRQ for LPTMR */
+	/* enable the IRQ for LPTMR */
 	INT_SYS_EnableIRQ(g_timer_irq[_index]);
 
     return 0;
@@ -72,7 +72,7 @@ int32_t timer_start(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 
-    /* Start the LPTMR counter */
+    /* start the LPTMR counter */
     LPTMR_DRV_StartCounter(g_handle[_index]);
 
     return 0;
@@ -82,7 +82,7 @@ int32_t timer_stop(const uint8_t _index)
 {
 	assert(TIMER0_INDEX >= _index);
 
-    /* Stop the LPTMR counter */
+    /* stop the LPTMR counter */
 	LPTMR_DRV_StopCounter(g_handle[_index]);
 
 	return 0;
@@ -103,10 +103,10 @@ static void timer_irq_handler(void)
 {
 	for (uint8_t i = TIMER0_INDEX; i < TIMER0_INDEX + 1; i++)
 	{
-		/* Check the compare flag */
+		/* check the compare flag */
 		while (LPTMR_DRV_GetCompareFlag(g_handle[i]))
 		{
-		    /* Clear the compare flag */
+		    /* clear the compare flag */
 			LPTMR_DRV_ClearCompareFlag(g_handle[i]);
 			
 			timer_irq_callback(i);
