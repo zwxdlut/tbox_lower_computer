@@ -1,10 +1,3 @@
-/*
- * flash_ctrl_stm32f10x.c
- *
- *  Created on: 2018年10月17日
- *      Author: Administrator
- */
-
 #include "flash_ctrl.h"
 
 /*******************************************************************************

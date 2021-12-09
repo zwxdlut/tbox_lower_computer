@@ -1,10 +1,3 @@
-/*
- * s32k144_frdm.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __S32K144_FRDM_H__
 #define __S32K144_FRDM_H__
 

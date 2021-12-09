@@ -1,10 +1,3 @@
-/*
- * stm32f205_mx_tb.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __STM32F205_MX_TB_H__
 #define __STM32F205_MX_TB_H__
 

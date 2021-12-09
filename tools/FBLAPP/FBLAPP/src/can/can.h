@@ -42,8 +42,8 @@ public:
 	/**
 	 * Constructor.
 	 *
-	 * @param [in] _dev_type device type
-	 * @param [in] _dev_idx device index
+	 * @param [in] _dev_type the device type
+	 * @param [in] _dev_idx the device index
 	 */
 	can(const uint8_t _dev_type, const uint8_t _dev_idx);
 
@@ -67,7 +67,7 @@ public:
 	int32_t close(void);
 
 	/**
-	 * Initialize the CAN.
+	 * Initialize a CAN channel.
 	 *
 	 * @param [in] _chl the CAN channel number
 	 * @return 0(success) or other values(failure)

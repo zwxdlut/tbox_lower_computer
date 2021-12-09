@@ -1,10 +1,3 @@
-/*
- * uart.h
- *
- *  Created on: 2018月10月16日
- *      Author: Administrator
- */
-
 #ifndef __UART_H__
 #define __UART_H__
 
@@ -18,14 +11,16 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name UART channel indexes
+ * @name UART channel numbers
  * @{
  */
-#define UART0_INDEX       		                0
-#define UART1_INDEX       		                1
-/** @} */ /* UART channel indexes */
+#define UART_CH0       		                    0
+#define UART_CH1       		                    1
+#define UART_CH2       		                    2
+/** @} */ /* UART channel numbers */
 
 #define UART_RX_BUFFER_SIZE                     1000 /**< UART receiving buffer size. */
+#define UART_TX_BUFFER_SIZE                     1500 /**< UART sending buffer size. */
 
 /**
  * @name UART data format definition
@@ -47,9 +42,9 @@ extern "C" {
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize the UART.
+ * Initialize an UART channel.
  *
- * @param [in] _index the UART channel index
+ * @param [in] _chl the UART channel number
  * @param [in] _baudrate the baud rate of the UART
  * @param [in] _data_bits the data bits:
  * <ul>
@@ -72,55 +67,55 @@ extern "C" {
  * </ul>
  * @return 0(success) or other values(failure)
  */
-int32_t uart_init(const uint8_t _index, const uint32_t _baudrate, const uint32_t _data_bits, const uint32_t _stop_bits, const uint32_t _parity);
+int32_t uart_init(const uint8_t _chl, const uint32_t _baudrate, const uint32_t _data_bits, const uint32_t _stop_bits, const uint32_t _parity);
 
 /**
- * De-initialize the UART.
+ * De-initialize an UART channel.
  *
- * @param [in] _index the UART channel index
+ * @param [in] _chl the UART channel number
  * @return 0(success) or other values(failure)
  */
-int32_t uart_deinit(const uint8_t _index);
+int32_t uart_deinit(const uint8_t _chl);
 
 /**
  * Receive data from the UART.
  *
- * @param [in]  _index the UART channel index
+ * @param [in]  _chl the UART channel number
  * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return the received data size
  */
-uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size);
+uint16_t uart_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Send data to the UART.
  *
- * @param [in] _index the UART channel index
+ * @param [in] _chl the UART channel number
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return the sent data size
  */
-uint16_t uart_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
+uint16_t uart_send(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size);
 
 /**
  * Receive data with format from the UART in polling mode.
  *
- * @param [in]  _index the UART channel index
+ * @param [in]  _chl the UART channel number
  * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return the received data size without header
  */
-uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[], const uint16_t _size);
+uint16_t uart_receive_with_format_polling( const uint8_t _chl, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Send data with format to the UART.
  *
- * @param [in] _index the UART channel index
+ * @param [in] _chl the UART channel number
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return the sent data size
  */
-uint16_t uart_send_with_format(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
+uint16_t uart_send_with_format(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size);
 
 /**
  * Print debug information.

@@ -119,9 +119,9 @@ void rtos_start( void )
 			
 	/* Start the four tasks as described in the comments at the top of this file */
 	xTaskCreate( daemon_task, "daemon", MINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL );
-	xTaskCreate( can_receive_task, "can0_receive", MINIMAL_STACK_SIZE, ( void * ) CAN0_INDEX, tskIDLE_PRIORITY + 2, NULL );
-	xTaskCreate( can_receive_task, "can1_receive", MINIMAL_STACK_SIZE, ( void * ) CAN1_INDEX, tskIDLE_PRIORITY + 2, NULL );
-	xTaskCreate( downstream_receive_task, "downstream_receive", MINIMAL_STACK_SIZE, ( void * ) UART0_INDEX, tskIDLE_PRIORITY + 2, NULL );
+	xTaskCreate( can_receive_task, "can0_receive", MINIMAL_STACK_SIZE, ( void * ) CAN_CH0, tskIDLE_PRIORITY + 2, NULL );
+	xTaskCreate( can_receive_task, "can1_receive", MINIMAL_STACK_SIZE, ( void * ) CAN_CH1, tskIDLE_PRIORITY + 2, NULL );
+	xTaskCreate( downstream_receive_task, "downstream_receive", MINIMAL_STACK_SIZE, ( void * ) UART_CH0, tskIDLE_PRIORITY + 2, NULL );
 	xTaskCreate( diag_server_task, "diag_server", MINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL );
 	xTaskCreate( normal_task, "normal", MINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY, NULL );
 	
@@ -274,11 +274,11 @@ static void daemon_task( void *pvParameters )
 			}
 #endif
 			accr_sys_mode_trans(ACCR_SYSMOD_STANDBY);
-			can_pwr_mode_trans(CAN0_INDEX, CAN_PWR_MODE_SLEEP);
-			can_pwr_mode_trans(CAN1_INDEX, CAN_PWR_MODE_SLEEP);
+			can_pwr_mode_trans(CAN_CH0, CAN_PWR_MODE_SLEEP);
+			can_pwr_mode_trans(CAN_CH1, CAN_PWR_MODE_SLEEP);
 			pwr_mode_trans(PWR_MODE_DEEPSLEEP);
-			can_pwr_mode_trans(CAN0_INDEX, CAN_PWR_MODE_RUN);
-			can_pwr_mode_trans(CAN1_INDEX, CAN_PWR_MODE_RUN);
+			can_pwr_mode_trans(CAN_CH0, CAN_PWR_MODE_RUN);
+			can_pwr_mode_trans(CAN_CH1, CAN_PWR_MODE_RUN);
 			accr_sys_mode_trans(ACCR_SYSMOD_ACTIVE);
 #if defined MX_TB
 			/* Wake up upper computer */
@@ -330,7 +330,7 @@ static void can_receive_task( void *pvParameters )
 		print_buf("CAN RX", id, buf, size);
 
 		/* Toggle LED */
-		if(CAN0_INDEX == (uint32_t)pvParameters)
+		if(CAN_CH0 == (uint32_t)pvParameters)
 		{
 			static uint32_t count = 0;
 			if(count >= 100)
@@ -712,7 +712,7 @@ static void timer_callback( TimerHandle_t xTimer )
     		if(0 == GPIO_READ_PIN(IGN_GPIO, IGN_PIN))
     			set_bitfield(0x01, CAR_STATUS_START_BIT, CAR_STATUS_BIT_LEN, buf + ID_LENGTH, GB32960_DATA_LEN);
 #endif
-    		uart_send_with_format(UART0_INDEX ,buf, ID_LENGTH + len);
+    		uart_send_with_format(UART_CH0 ,buf, ID_LENGTH + len);
     		debug("UART TX GB32960 %d bytes\r\n", len);
     		upstream_count = 0;
     	}
@@ -780,7 +780,7 @@ static int32_t transmit_callback(const uint32_t _id, const uint8_t *const _buf, 
 	
 	if(SERVER_TX_ID != _id && !diag_server_comm_ctrl_tx_enabled(COMM_MSG_TYPE_MASK_NCM))
 		return -1;
-	if(0 == can_send(CAN0_INDEX, _id, _buf, _size))
+	if(0 == can_send(CAN_CH0, _id, _buf, _size))
 		return -1;
 	print_buf("CAN TX", _id, _buf, _size);
 
@@ -795,10 +795,10 @@ static void init( void )
 	/* Initialize system, GPIO, UART... */
 	sys_init();
     gpio_init();
-    uart_init(UART0_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
-    can_init(CAN0_INDEX, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
-    can_init(CAN1_INDEX, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
-    i2c_master_init(I2C0_INDEX, 400000, false);
+    uart_init(UART_CH0, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
+    can_init(CAN_CH0, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
+    can_init(CAN_CH1, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
+    i2c_master_init(I2C_CH0, 400000, false);
 
 	/* Initialize resolve related */
 	resolve_init(transmit_callback, delay);

@@ -1,10 +1,3 @@
-/*
- * spi.h
- *
- *  Created on: 2018年10月16日
- *      Author: Administrator
- */
-
 #ifndef __SPI_H__
 #define __SPI_H__
 
@@ -18,11 +11,11 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name SPI channel indexes
+ * @name SPI channel numbers
  * @{
  */
-#define SPI0_INDEX       		                0
-/** @} */ /* SPI channel indexes */
+#define SPI_CH0       		                    0
+/** @} */ /* SPI channel numbers */
 
 /**
  * @name SPI clock polarity
@@ -52,9 +45,9 @@ extern "C" {
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize the SPI master mode.
+ * Initialize a SPI channel master mode.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @param [in] _baudrate the baud rate of the SPI bus
  * @param [in] _cpol the clock polarity:
  * <ul>
@@ -74,40 +67,40 @@ extern "C" {
  * @param [in] _lsb_first if LSB or MSB first
  * @return 0(success) or other values(failure)
  */
-int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
+int32_t spi_master_init(const uint8_t _chl, const uint32_t _baudrate, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
 
 /**
- * De-initialize the SPI master mode.
+ * De-initialize a SPI channel master mode.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @return 0(success) or other values(failure)
  */
-int32_t spi_master_deinit(const uint8_t _index);
+int32_t spi_master_deinit(const uint8_t _chl);
 
 /**
  * Receive data from the slave device.
  *
- * @param [in]  _index the SPI channel index
+ * @param [in]  _chl the SPI channel number
  * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return 0(success) or other values(failure)
  */
-int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size);
+int32_t spi_master_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Send data to the slave device.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return 0(success) or other values(failure)
  */
-int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
+int32_t spi_master_send(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size);
 
 /**
- * Initialize the SPI slave mode.
+ * Initialize a SPI channel slave mode.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @param [in] _cpol  the clock polarity:
  * <ul>
  * <li>{@link SPI_CPOL_LOW} clock is idle low.</li>
@@ -126,35 +119,35 @@ int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16
  * @param [in] _lsb_first if LSB or MSB first
  * @return 0(success) or other values(failure)
  */
-int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
+int32_t spi_slave_init(const uint8_t _chl, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
 
 /**
- * De-initialize the SPI slave mode.
+ * De-initialize a SPI channel slave mode.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @return 0(success) or other values(failure)
  */
-int32_t spi_slave_deinit(const uint8_t _index);
+int32_t spi_slave_deinit(const uint8_t _chl);
 
 /**
  * Receive data from the master device.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @param [out] _buf the buffer to receive
  * @param [in] _size the size to be recieved
  * @return 0(success) or other values(failure)
  */
-int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size);
+int32_t spi_slave_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size);
 
 /**
  * Send data to the master device.
  *
- * @param [in] _index the SPI channel index
+ * @param [in] _chl the SPI channel number
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return 0(success) or other values(failure)
  */
-int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size);
+int32_t spi_slave_send(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size);
 
 #ifdef __cplusplus
 }

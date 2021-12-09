@@ -1,17 +1,10 @@
-/*
- * i2c_stm32f10x.c
- *
- *  Created on: 2019年1月9日
- *      Author: Administrator
- */
-
 #include "i2c.h"
 
 /******************************************************************************
  * Definitions
  ******************************************************************************/
 #if defined USING_OS_FREERTOS
-SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* receiving/sending mutex */
+SemaphoreHandle_t g_i2c_mutex[I2C_CH0 + 1] = {NULL}; /* receiving/sending mutex */
 #endif
 
 /******************************************************************************
@@ -21,30 +14,30 @@ SemaphoreHandle_t g_i2c_mutex[I2C0_INDEX + 1] = {NULL}; /* receiving/sending mut
 /******************************************************************************
  * Functions
  ******************************************************************************/
-int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bool _is_10bit_addr)
+int32_t i2c_master_init(const uint8_t _chl, const uint32_t _baudrate, const bool _is_10bit_addr)
 {
-	assert(I2C0_INDEX >= _index);
+	assert(I2C_CH0 >= _chl);
 
 	return 0;
 }
 
-int32_t i2c_master_deinit(const uint8_t _index)
+int32_t i2c_master_deinit(const uint8_t _chl)
 {
-	assert(I2C0_INDEX >= _index);
+	assert(I2C_CH0 >= _chl);
 
 	return 0;
 }
 
-int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop)
+int32_t i2c_master_receive(const uint8_t _chl, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
-	assert(I2C0_INDEX >= _index && NULL != _buf);
+	assert(I2C_CH0 >= _chl && NULL != _buf);
 
 	return 0;
 }
 
-int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop)
+int32_t i2c_master_send(const uint8_t _chl, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop)
 {
-	assert(I2C0_INDEX >= _index && NULL != _buf);
+	assert(I2C_CH0 >= _chl && NULL != _buf);
 
 	return 0;
 }

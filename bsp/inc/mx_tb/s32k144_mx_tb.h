@@ -1,10 +1,3 @@
-/*
- * s32k144_mx_tb.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __S32K144_MX_TB_H__
 #define __S32K144_MX_TB_H__
 

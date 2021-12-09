@@ -1,10 +1,3 @@
-/*
- * s32k144_evb.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __S32K144_EVB_H__
 #define __S32K144_EVB_H__
 

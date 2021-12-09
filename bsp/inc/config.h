@@ -1,10 +1,3 @@
-/*
- * config.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __CONFIG__H__
 #define __CONFIG__H__
 
@@ -137,6 +130,8 @@ extern "C" {
 	#define WWDOG_WV                                0x7F
 	#define WWDOG_RLV                               0x7F
 	/** @} */ /* Window watch dog configuration */
+
+	#define UART_DMA_IMPL                           /**< UART DMA is implemented. */
 
 	/**
 	 * @name UART data bits

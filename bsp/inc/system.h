@@ -1,10 +1,3 @@
-/*
- * board.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __SYSTEM_H__
 #define __SYSTEM_H__
 

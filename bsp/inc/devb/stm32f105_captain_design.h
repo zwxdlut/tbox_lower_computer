@@ -1,10 +1,3 @@
-/*
- * stm32f10x_captain_design.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __STM32F10x_CAPTAIN_DESIGN_H__
 #define __STM32F10x_CAPTAIN_DESIGN_H__
 
@@ -63,6 +56,14 @@ extern "C" {
 #define UART0_INST                              USART1
 #define UART0_IRQ                               USART1_IRQn
 #define UART0_IRQ_HANDLER                       USART1_IRQHandler
+#define UART0_RX_DMA_CHANNEL                    DMA1_Channel5
+#define UART0_TX_DMA_CHANNEL                    DMA1_Channel4
+#define UART0_RX_DMA_IRQ                        DMA1_Channel5_IRQn
+#define UART0_TX_DMA_IRQ                        DMA1_Channel4_IRQn
+#define UART0_TX_DMA_IRQ_HANDLER                DMA1_Channel4_IRQHandler
+#define UART0_DMA_IT_TC                         DMA1_IT_TC4
+#define UART0_USE_DMA_RX                        0
+#define UART0_USE_DMA_TX                        0
 
 #define UART1_GPIO                              GPIOA
 #define UART1_RX_PIN                            GPIO_Pin_3
@@ -70,24 +71,53 @@ extern "C" {
 #define UART1_INST                              USART2
 #define UART1_IRQ                               USART2_IRQn
 #define UART1_IRQ_HANDLER                       USART2_IRQHandler
+#define UART1_RX_DMA_CHANNEL                    DMA1_Channel6
+#define UART1_TX_DMA_CHANNEL                    DMA1_Channel7
+#define UART1_RX_DMA_IRQ                        DMA1_Channel6_IRQn
+#define UART1_TX_DMA_IRQ                        DMA1_Channel7_IRQn
+#define UART1_TX_DMA_IRQ_HANDLER                DMA1_Channel7_IRQHandler
+#define UART1_DMA_IT_TC                         DMA1_IT_TC7
+#define UART1_USE_DMA_RX                        0
+#define UART1_USE_DMA_TX                        0
 
-#define UART_GPIO_CLK_ENABLE(INDEX)             do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); } else\
-                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); }} while (0)
+#define UART2_GPIO                              GPIOB
+#define UART2_RX_PIN                            GPIO_Pin_11
+#define UART2_TX_PIN                            GPIO_Pin_10
+#define UART2_INST                              USART3
+#define UART2_IRQ                               USART3_IRQn
+#define UART2_IRQ_HANDLER                       USART3_IRQHandler
+#define UART2_RX_DMA_CHANNEL                    DMA1_Channel3
+#define UART2_TX_DMA_CHANNEL                    DMA1_Channel2
+#define UART2_RX_DMA_IRQ                        DMA1_Channel3_IRQn
+#define UART2_TX_DMA_IRQ                        DMA1_Channel2_IRQn
+#define UART2_TX_DMA_IRQ_HANDLER                DMA1_Channel2_IRQHandler
+#define UART2_DMA_IT_TC                         DMA1_IT_TC2
+#define UART2_USE_DMA_RX                        0
+#define UART2_USE_DMA_TX                        0
 
-#define UART_GPIO_CLK_DISABLE(INDEX)            do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE); } else\
-                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE); }} while (0)
+#define UART_GPIO_CLK_ENABLE(INDEX)             do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE); }} while (0)
 
-#define UART_CLK_ENABLE(INDEX)                  do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE); } else\
-                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE); }} while (0)
+#define UART_GPIO_CLK_DISABLE(INDEX)            do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, DISABLE); } else\
+                                                                       { RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, DISABLE); }} while (0)
 
-#define UART_CLK_DISABLE(INDEX)                 do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, DISABLE); } else\
-                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, DISABLE); }} while (0)
+#define UART_CLK_ENABLE(INDEX)                  do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, ENABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, ENABLE); }} while (0)
 
-#define UART_FORCE_RESET(INDEX)                 do { if (0 == (INDEX)) { RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, ENABLE); } else\
-                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, ENABLE); }} while (0)
+#define UART_CLK_DISABLE(INDEX)                 do { if (0 == (INDEX)) { RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1, DISABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, DISABLE); } else\
+                                                                       { RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART3, DISABLE); }} while (0)
 
-#define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, DISABLE); } else\
-                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE); }} while (0)
+#define UART_FORCE_RESET(INDEX)                 do { if (0 == (INDEX)) { RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, ENABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, ENABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, ENABLE); }} while (0)
+
+#define UART_RELEASE_RESET(INDEX)               do { if (0 == (INDEX)) { RCC_APB2PeriphResetCmd(RCC_APB2Periph_USART1, DISABLE); } else if (1 == (INDEX))\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART2, DISABLE); } else\
+                                                                       { RCC_APB1PeriphResetCmd(RCC_APB1Periph_USART3, DISABLE); }} while (0)
 /** @} */ /* UART configuration */
 
 /** 

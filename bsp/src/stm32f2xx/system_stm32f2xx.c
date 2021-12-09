@@ -1,10 +1,3 @@
-/*
- * board_stm32f2xx.c
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #include "system.h"
 
 /*******************************************************************************
@@ -152,7 +145,7 @@ void pwr_mode_trans(const uint8_t _mode)
 	__HAL_RCC_PWR_CLK_ENABLE();
 
 	/* Suspend Tick increment to prevent wakeup by Systick interrupt,
-	   otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
+	   otherwise the Systick interrupt will wake up the device within 1ms (HAL time base). */
 	HAL_SuspendTick();
 
 	switch(_mode)

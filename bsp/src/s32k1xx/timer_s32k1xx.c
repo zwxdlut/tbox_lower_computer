@@ -10,9 +10,9 @@
 /******************************************************************************
  * Definitions
  ******************************************************************************/
-static IRQn_Type g_timer_irq[TIMER0_INDEX + 1] = {TIMER0_IRQ};
+static IRQn_Type g_timer_irq[TIMER0 + 1] = {TIMER0_IRQ};
 
-static uint8_t g_handle[TIMER0_INDEX + 1] =
+static uint8_t g_handle[TIMER0 + 1] =
 {
 #if defined INST_LPTMR0
 	INST_LPTMR0,
@@ -21,7 +21,7 @@ static uint8_t g_handle[TIMER0_INDEX + 1] =
 #endif
 };
 
-static lptmr_config_t *g_config[TIMER0_INDEX + 1] =
+static lptmr_config_t *g_config[TIMER0 + 1] =
 {
 #if defined INST_LPTMR0
 	&lpTmr0_config0,
@@ -38,59 +38,59 @@ static void timer_irq_handler(void);
 /******************************************************************************
  * Functions
  ******************************************************************************/
-int32_t timer_init(const uint8_t _index, const uint32_t _period)
+int32_t timer_init(const uint8_t _num, const uint32_t _period)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
 	/* Initialize LPTMR as timer:
 	   - interrupt after _period milliseconds
 	   - SIRC as clock source
 	   - counter disabled */
-	LPTMR_DRV_Init(g_handle[_index], g_config[_index], false);
+	LPTMR_DRV_Init(g_handle[_num], g_config[_num], false);
 
 	/* install the IRQ handler for LPTMR interrupt */
-	INT_SYS_InstallHandler(g_timer_irq[_index], timer_irq_handler, (isr_t *)0);
+	INT_SYS_InstallHandler(g_timer_irq[_num], timer_irq_handler, (isr_t *)0);
 
 	/* enable the IRQ for LPTMR */
-	INT_SYS_EnableIRQ(g_timer_irq[_index]);
+	INT_SYS_EnableIRQ(g_timer_irq[_num]);
 
     return 0;
 }
 
-int32_t timer_deinit(const uint8_t _index)
+int32_t timer_deinit(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
-	INT_SYS_DisableIRQ(g_timer_irq[_index]);
-    LPTMR_DRV_ClearCompareFlag(g_handle[_index]);
-	LPTMR_DRV_Deinit(g_handle[_index]);
+	INT_SYS_DisableIRQ(g_timer_irq[_num]);
+    LPTMR_DRV_ClearCompareFlag(g_handle[_num]);
+	LPTMR_DRV_Deinit(g_handle[_num]);
 
 	return 0;
 }
 
-int32_t timer_start(const uint8_t _index)
+int32_t timer_start(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
     /* start the LPTMR counter */
-    LPTMR_DRV_StartCounter(g_handle[_index]);
+    LPTMR_DRV_StartCounter(g_handle[_num]);
 
     return 0;
 }
 
-int32_t timer_stop(const uint8_t _index)
+int32_t timer_stop(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
     /* stop the LPTMR counter */
-	LPTMR_DRV_StopCounter(g_handle[_index]);
+	LPTMR_DRV_StopCounter(g_handle[_num]);
 
 	return 0;
 }
 
-__attribute__((weak)) void timer_irq_callback(const uint8_t _index)
+__attribute__((weak)) void timer_irq_callback(const uint8_t _num)
 {
-	(void)_index;
+	(void)_num;
 }
 
 /******************************************************************************
@@ -101,7 +101,7 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
  */
 static void timer_irq_handler(void)
 {
-	for (uint8_t i = TIMER0_INDEX; i < TIMER0_INDEX + 1; i++)
+	for (uint8_t i = TIMER0; i < TIMER0 + 1; i++)
 	{
 		/* check the compare flag */
 		while (LPTMR_DRV_GetCompareFlag(g_handle[i]))

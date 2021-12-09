@@ -1,10 +1,3 @@
-/*
- * flash_ctrl.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __FLASH_CTRL_H__
 #define __FLASH_CTRL_H__
 

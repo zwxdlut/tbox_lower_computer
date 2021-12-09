@@ -152,8 +152,8 @@ void fbl(void)
 	/* Initialize system, GPIO, UART... */
 	sys_init();
 	gpio_init();
-	i2c_master_init(I2C0_INDEX, 400000, false);
-	timer_init(TIMER0_INDEX, 10);
+	i2c_master_init(I2C_CH0, 400000, false);
+	timer_init(TIMER0, 10);
 	flash_ctrl_init();
 
 	GPIO_WRITE_PIN(LED0_GPIO, LED0_PIN, LED_ON);
@@ -336,17 +336,17 @@ void SVC_Handler(void)
 /**
  * @brief Overwrite timer IRQ callback.
  *
- * @param _index Timer index.
+ * @param _num the timer number.
  */
-void timer_irq_callback(const uint8_t _index)
+void timer_irq_callback(const uint8_t _num)
 {
-	if(TIMER0_INDEX == _index)
+	if(TIMER0 == _num)
 	{
 		static uint32_t count = 0;
 		count++;
 		if(count >= 500)
 		{
-			timer_stop(TIMER0_INDEX);
+			timer_stop(TIMER0);
 			count = 0u;
 			g_finished = true;
 		}
@@ -358,7 +358,7 @@ void timer_irq_callback(const uint8_t _index)
  * @{
  */
 /**
- * @brief Overwrite reset system callback¡£
+ * @brief Overwrite reset system callback.
  */
 void diag_server_sys_reset_callback(void)
 {
@@ -433,7 +433,7 @@ static uint8_t server_receive_callback(uint32_t *const _id, uint8_t *const _buf,
 
 	uint8_t size = 0;
 
-	if(0 < (size = can_receive(CAN0_INDEX, _id, _buf, _size)))
+	if(0 < (size = can_receive(CAN_CH0, _id, _buf, _size)))
 		print_buf("CAN RX", *_id, _buf, size);
 
 	return size;
@@ -453,7 +453,7 @@ static int32_t transmit_callback(const uint32_t _id, const uint8_t *const _buf, 
 
 	if(SERVER_TX_ID != _id && !diag_server_comm_ctrl_tx_enabled(COMM_MSG_TYPE_MASK_NCM))
 		return -1;
-	if(0 == can_send(CAN0_INDEX, _id, _buf, _size))
+	if(0 == can_send(CAN_CH0, _id, _buf, _size))
 		return -1;
 	print_buf("CAN TX", _id, _buf, _size);
 
@@ -468,19 +468,19 @@ static void update_by_uart(void)
 	uint32_t address = 0;
 	
 	/* Initialize UART */
-	uart_init(UART0_INDEX, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
+	uart_init(UART_CH0, 115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 
 	/* Request update */
 	*((uint16_t*)g_code_buf) = UPDATE_NOTIFY_ID;
 	*((uint16_t*)(g_code_buf + ID_LENGTH)) = TRANSFER_BLOCK_SIZE;
-	uart_send_with_format(UART0_INDEX, g_code_buf, ID_LENGTH + 2);
+	uart_send_with_format(UART_CH0, g_code_buf, ID_LENGTH + 2);
 	print_buf("FBL UART TX", 0, g_code_buf, ID_LENGTH + 2);
 
 	/* Start waiting for transfer data */
 	address = FLASH_APP_BASE_ADDR;
 	memset(g_code_buf, 0xFF, sizeof(g_code_buf));
 	debug("FBL start waiting for transfer data...\r\n");
-	timer_start(TIMER0_INDEX);
+	timer_start(TIMER0);
 	
 	while(!g_finished)
 	{
@@ -489,7 +489,7 @@ static void update_by_uart(void)
 		uint16_t        size = 0;
 
 		/* Receive data from UART */
-		if(0 == (size = uart_receive_with_format_polling(UART0_INDEX, buf, sizeof(buf))))
+		if(0 == (size = uart_receive_with_format_polling(UART_CH0, buf, sizeof(buf))))
 			continue;
 		debug("FBL UART RX %d bytes\r\n", size);
 
@@ -497,7 +497,7 @@ static void update_by_uart(void)
 		if(TRANSFER_DATA_ID != *((uint16_t*)buf))
 			continue;
 
-		timer_stop(TIMER0_INDEX);
+		timer_stop(TIMER0);
 		g_finished = false;
 		memcpy(g_code_buf + addr,  buf + ID_LENGTH, size - ID_LENGTH);
 		addr += size - ID_LENGTH;
@@ -547,14 +547,14 @@ static void update_by_uart(void)
 		uint16_t        size = 0;
 
 		/* Receive data from uart */
-		if(0 == (size = uart_receive_with_header_poll(UART0_INDEX, temp_buf, sizeof(temp_buf))))
+		if(0 == (size = uart_receive_with_header_poll(UART_CH0, temp_buf, sizeof(temp_buf))))
 			continue;
 
 		/* Check if the received data is phrase */
 		if(TRANSFER_DATA_ID != *((uint16_t*)(temp_buf)) || 'S' != temp_buf[ID_LENGTH + S_INDEX])
 			continue;
 
-		timer_stop(TIMER0_INDEX);
+		timer_stop(TIMER0);
 		g_finished = false;
 
 		/* Extract phrase */
@@ -576,7 +576,7 @@ static void update_by_uart(void)
 			/* Request re-send*/
 			*((uint16_t*)buf) = TRANSFER_DATA_ID;
 			temp_buf[ID_LENGTH] = TRANSFER_RE_SEND;
-			uart_transmit_with_header(UART0_INDEX, temp_buf, ID_LENGTH + 1);
+			uart_transmit_with_header(UART_CH0, temp_buf, ID_LENGTH + 1);
 			print_buf("FBL UART TX", 0, temp_buf, ID_LENGTH + 1);
 			continue;
 		}
@@ -661,11 +661,11 @@ CONTINUE:
 		/* ACK */
 		*((uint16_t*)buf) = TRANSFER_DATA_ID;
 		buf[ID_LENGTH] = TRANSFER_ACK;
-		uart_send_with_format(UART0_INDEX, buf, ID_LENGTH + 1);
+		uart_send_with_format(UART_CH0, buf, ID_LENGTH + 1);
 		print_buf("FBL UART TX", 0, buf, ID_LENGTH + 1);
 	}
 	
-	uart_deinit(UART0_INDEX);
+	uart_deinit(UART_CH0);
 }
 
 /**
@@ -678,7 +678,7 @@ static void update_by_can(void)
 	uint8_t  size = 0;
 	
 	/* Initialize CAN */
-    can_init(CAN0_INDEX, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
+    can_init(CAN_CH0, g_filter_id_list, sizeof(g_filter_id_list) / sizeof(uint32_t));
 
 	/* Initialize diagnostic server */
 	diag_server_init(&g_server_link_phy, SERVER_TX_ID, SERVER_RX_ID,
@@ -691,24 +691,24 @@ static void update_by_can(void)
 			         transmit_callback, server_receive_callback, clock, debug);
  	diag_server_data_init();
 
-	timer_start(TIMER0_INDEX);
+	timer_start(TIMER0);
 
 	while(!g_finished)
 	{
-		if(0 == (size = can_receive(CAN0_INDEX, &id, buf, sizeof(buf))))
+		if(0 == (size = can_receive(CAN_CH0, &id, buf, sizeof(buf))))
 			continue;
 		print_buf("CAN RX", id, buf, size);
 		
 		if(SERVER_RX_ID == id)
 		{
-			timer_stop(TIMER0_INDEX);
+			timer_stop(TIMER0);
 			g_finished = false;
 			/* Diagnostic message physical addressing */
 			diag_server_indication(&g_server_link_phy, buf, size);
 		}
 		else if(FUNCTION_ID == id)
 		{
-			timer_stop(TIMER0_INDEX);
+			timer_stop(TIMER0);
 			g_finished = false;
 			/* Diagnostic message functional addressing */
 			diag_server_indication(&g_server_link_func, buf, size);
@@ -728,7 +728,7 @@ static void update_by_can(void)
 
 	diag_server_deinit(&g_server_link_phy);
 	diag_server_deinit(&g_server_link_func);
-	can_deinit(CAN0_INDEX);
+	can_deinit(CAN_CH0);
 }
 
 /**
@@ -755,8 +755,8 @@ static void jump_to_app(uint32_t *_addr)
 	/* Disable all enabled peripherals which might generate interrupt requests,
 	 * and clear all pending interrupt flags in those peripherals. */
 	flash_ctrl_deinit();
-	timer_deinit(TIMER0_INDEX);
-	i2c_master_deinit(I2C0_INDEX);
+	timer_deinit(TIMER0);
+	i2c_master_deinit(I2C_CH0);
 	gpio_deinit();
 
 	/* Clear all pending interrupt requests in NVIC. */

@@ -1,16 +1,9 @@
-/*
- * timer_stm32f2xx.c
- *
- *  Created on: 2018年10月23日
- *      Author: Administrator
- */
-
 #include "timer.h"
 
 /******************************************************************************
  * Definitions
  ******************************************************************************/
-static timer_confg_t g_timer_config[TIMER0_INDEX + 1] =
+static timer_confg_t g_timer_config[TIMER0 + 1] =
 {
 	{
 		.clk_ = TIMER0_CLK,
@@ -18,7 +11,7 @@ static timer_confg_t g_timer_config[TIMER0_INDEX + 1] =
 	}
 };
 
-static TIM_HandleTypeDef g_handle[TIMER0_INDEX + 1] = 
+static TIM_HandleTypeDef g_handle[TIMER0 + 1] = 
 {
 	{
 		.Instance               = TIMER0_INST,
@@ -31,62 +24,62 @@ static TIM_HandleTypeDef g_handle[TIMER0_INDEX + 1] =
 /******************************************************************************
  * Local function prototypes
  ******************************************************************************/
-static void timer_irq_handler(const uint8_t _index);
+static void timer_irq_handler(const uint8_t _chl);
 
 /******************************************************************************
  * Functions
  ******************************************************************************/
-int32_t timer_init(const uint8_t _index, const uint32_t _period)
+int32_t timer_init(const uint8_t _num, const uint32_t _period)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
 	/* initialize the timer */
-	TIMER_CLK_ENABLE(_index);
-	g_handle[_index].Init.Prescaler = 2 * HAL_RCC_GetPCLK1Freq() / g_timer_config[_index].clk_ - 1;
-	g_handle[_index].Init.Period    = _period * g_timer_config[_index].clk_ / 1000 - 1;
-	HAL_TIM_Base_Init(&g_handle[_index]);
+	TIMER_CLK_ENABLE(_num);
+	g_handle[_num].Init.Prescaler = 2 * HAL_RCC_GetPCLK1Freq() / g_timer_config[_num].clk_ - 1;
+	g_handle[_num].Init.Period    = _period * g_timer_config[_num].clk_ / 1000 - 1;
+	HAL_TIM_Base_Init(&g_handle[_num]);
 	
 	/* initialize the NVIC */
-	HAL_NVIC_SetPriority(g_timer_config[_index].irq_, 0, 0);
-	HAL_NVIC_EnableIRQ(g_timer_config[_index].irq_);
+	HAL_NVIC_SetPriority(g_timer_config[_num].irq_, 0, 0);
+	HAL_NVIC_EnableIRQ(g_timer_config[_num].irq_);
 
     return 0;
 }
 
-int32_t timer_deinit(const uint8_t _index)
+int32_t timer_deinit(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
-	HAL_NVIC_DisableIRQ(g_timer_config[_index].irq_);
-	HAL_TIM_Base_Stop_IT(&g_handle[_index]);
-	__HAL_TIM_CLEAR_IT(&g_handle[TIMER0_INDEX], TIM_IT_UPDATE);
-	HAL_TIM_Base_DeInit(&g_handle[_index]);
-	TIMER_CLK_DISABLE(_index);
+	HAL_NVIC_DisableIRQ(g_timer_config[_num].irq_);
+	HAL_TIM_Base_Stop_IT(&g_handle[_num]);
+	__HAL_TIM_CLEAR_IT(&g_handle[TIMER0], TIM_IT_UPDATE);
+	HAL_TIM_Base_DeInit(&g_handle[_num]);
+	TIMER_CLK_DISABLE(_num);
 
 	return 0;
 }
 
-int32_t timer_start(const uint8_t _index)
+int32_t timer_start(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 
-	HAL_TIM_Base_Start_IT(&g_handle[_index]);
+	HAL_TIM_Base_Start_IT(&g_handle[_num]);
 
     return 0;
 }
 
-int32_t timer_stop(const uint8_t _index)
+int32_t timer_stop(const uint8_t _num)
 {
-	assert(TIMER0_INDEX >= _index);
+	assert(TIMER0 >= _num);
 	
-	HAL_TIM_Base_Stop_IT(&g_handle[_index]);
+	HAL_TIM_Base_Stop_IT(&g_handle[_num]);
 
 	return 0;
 }
 
-__attribute__((weak)) void timer_irq_callback(const uint8_t _index)
+__attribute__((weak)) void timer_irq_callback(const uint8_t _num)
 {
-	(void)_index;
+	(void)_num;
 }
 
 /**
@@ -99,7 +92,7 @@ __attribute__((weak)) void timer_irq_callback(const uint8_t _index)
  */
 void TIMER0_IRQ_HANDLER(void)   
 {
-	timer_irq_handler(TIMER0_INDEX);
+	timer_irq_handler(TIMER0);
 }
 
 /** @} */ /* IRQ handlers */
@@ -110,14 +103,14 @@ void TIMER0_IRQ_HANDLER(void)
 /**
  * Timer IRQ handler.
  *
- * @param [in] _index the timer index
+ * @param [in] _num the timer number
  */
-static void timer_irq_handler(const uint8_t _index)
+static void timer_irq_handler(const uint8_t _num)
 {
 	/* timer update event */
-	if (RESET != __HAL_TIM_GET_FLAG(&g_handle[_index], TIM_FLAG_UPDATE) && RESET != __HAL_TIM_GET_IT_SOURCE(&g_handle[_index], TIM_IT_UPDATE))
+	if (RESET != __HAL_TIM_GET_FLAG(&g_handle[_num], TIM_FLAG_UPDATE) && RESET != __HAL_TIM_GET_IT_SOURCE(&g_handle[_num], TIM_IT_UPDATE))
 	{
-		__HAL_TIM_CLEAR_IT(&g_handle[_index], TIM_IT_UPDATE);
-		timer_irq_callback(_index);	
+		__HAL_TIM_CLEAR_IT(&g_handle[_num], TIM_IT_UPDATE);
+		timer_irq_callback(_num);	
 	}
 }

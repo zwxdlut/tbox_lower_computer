@@ -1,10 +1,3 @@
-/*
- * spi_stm32f2xx.c
- *
- *  Created on: 2018年10月16日
- *      Author: Administrator
- */
-
 #include "spi.h"
 
 /*******************************************************************************
@@ -24,7 +17,7 @@ typedef struct
 	IRQn_Type irqs_[3];
 } comm_config_t;
 
-static comm_config_t g_comm_config[SPI0_INDEX + 1] =
+static comm_config_t g_comm_config[SPI_CH0 + 1] =
 {
 	{
 		.sck_gpio_  = SPI0_SCK_GPIO,
@@ -40,7 +33,7 @@ static comm_config_t g_comm_config[SPI0_INDEX + 1] =
 	}
 };
 
-static SPI_HandleTypeDef g_handle[SPI0_INDEX + 1] = 
+static SPI_HandleTypeDef g_handle[SPI_CH0 + 1] = 
 {
 	{
 		.Instance               = SPI0_INST,
@@ -58,7 +51,7 @@ static SPI_HandleTypeDef g_handle[SPI0_INDEX + 1] =
 	}
 };
 
-static DMA_HandleTypeDef g_rx_dma[SPI0_INDEX + 1] =
+static DMA_HandleTypeDef g_rx_dma[SPI_CH0 + 1] =
 {
 	{
 		.Instance                 = SPI0_RX_DMA_STREAM,
@@ -77,7 +70,7 @@ static DMA_HandleTypeDef g_rx_dma[SPI0_INDEX + 1] =
 	}
 };
 
-static DMA_HandleTypeDef g_tx_dma[SPI0_INDEX + 1] =
+static DMA_HandleTypeDef g_tx_dma[SPI_CH0 + 1] =
 {
 	{
 		.Instance                 = SPI0_TX_DMA_STREAM,
@@ -99,17 +92,17 @@ static DMA_HandleTypeDef g_tx_dma[SPI0_INDEX + 1] =
 /*******************************************************************************
  * Local function prototypes
  ******************************************************************************/
-static int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
+static int32_t spi_init(const uint8_t _chl, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first);
 
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
+int32_t spi_master_init(const uint8_t _chl, const uint32_t _baudrate, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
 {
 	uint32_t psr = 0;
 	
 	/* calculate the prescaler */
-	if (SPI1 == g_handle[_index].Instance)
+	if (SPI1 == g_handle[_chl].Instance)
 	{
 		psr = HAL_RCC_GetPCLK2Freq() / _baudrate;
 	}
@@ -120,115 +113,115 @@ int32_t spi_master_init(const uint8_t _index, const uint32_t _baudrate, const ui
 
 	if (3 >= psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
 	}
 	else if (6 >= psr && 3 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_4;
 	}
 	else if (12 >= psr && 6 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_8;
 	}
 	else if (24 >= psr && 12 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
 	}
 	else if (48 >= psr && 24 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
 	}
 	else if (96 >= psr && 48 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
 	}
 	else if (192 >= psr && 96 < psr)
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_128;
 	}
 	else
 	{
-		g_handle[_index].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
+		g_handle[_chl].Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_256;
 	}
 	
-	g_handle[_index].Init.Mode = SPI_MODE_MASTER;
+	g_handle[_chl].Init.Mode = SPI_MODE_MASTER;
 	
-	return spi_init(_index, _cpol, _cpha, _data_bits, _lsb_first);
+	return spi_init(_chl, _cpol, _cpha, _data_bits, _lsb_first);
 }
 
-int32_t spi_master_deinit(const uint8_t _index)
+int32_t spi_master_deinit(const uint8_t _chl)
 {
-	assert(SPI0_INDEX >= _index);
+	assert(SPI_CH0 >= _chl);
 
-	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_chl].irqs_); i++)
 	{
-		HAL_NVIC_DisableIRQ(g_comm_config[_index].irqs_[i]);
+		HAL_NVIC_DisableIRQ(g_comm_config[_chl].irqs_[i]);
 	}
 
-	HAL_DMA_DeInit(&g_rx_dma[_index]);
-    HAL_DMA_DeInit(&g_tx_dma[_index]);
-	SPI_DMA_CLK_DISABLE(_index);
+	HAL_DMA_DeInit(&g_rx_dma[_chl]);
+    HAL_DMA_DeInit(&g_tx_dma[_chl]);
+	SPI_DMA_CLK_DISABLE(_chl);
 
-	HAL_SPI_DeInit(&g_handle[_index]);
-	SPI_CLK_DISABLE(_index);
-	SPI_FORCE_RESET(_index);
-	SPI_RELEASE_RESET(_index);
+	HAL_SPI_DeInit(&g_handle[_chl]);
+	SPI_CLK_DISABLE(_chl);
+	SPI_FORCE_RESET(_chl);
+	SPI_RELEASE_RESET(_chl);
 
-	HAL_GPIO_DeInit(g_comm_config[_index].sck_gpio_, g_comm_config[_index].sck_pin_);
-	HAL_GPIO_DeInit(g_comm_config[_index].miso_gpio_, g_comm_config[_index].miso_pin_);
-	HAL_GPIO_DeInit(g_comm_config[_index].mosi_gpio_, g_comm_config[_index].mosi_pin_);
-	HAL_GPIO_DeInit(g_comm_config[_index].cs_gpio_, g_comm_config[_index].cs_pin_);
+	HAL_GPIO_DeInit(g_comm_config[_chl].sck_gpio_, g_comm_config[_chl].sck_pin_);
+	HAL_GPIO_DeInit(g_comm_config[_chl].miso_gpio_, g_comm_config[_chl].miso_pin_);
+	HAL_GPIO_DeInit(g_comm_config[_chl].mosi_gpio_, g_comm_config[_chl].mosi_pin_);
+	HAL_GPIO_DeInit(g_comm_config[_chl].cs_gpio_, g_comm_config[_chl].cs_pin_);
 
 	return 0;
 }
 
-int32_t spi_master_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
+int32_t spi_master_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size)
 {
-	assert(SPI0_INDEX >= _index && NULL != _buf);
+	assert(SPI_CH0 >= _chl && NULL != _buf);
 	
-	if (HAL_OK != HAL_SPI_Receive_DMA(&g_handle[_index], _buf, _size))
-	{
-		return -1;
-	}
-
-	while (HAL_SPI_STATE_READY != HAL_SPI_GetState(&g_handle[_index])) {}
-		
-	return 0;
-}
-
-int32_t spi_master_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
-{
-	assert(SPI0_INDEX >= _index && NULL != _buf);
-	
-	if (HAL_OK != HAL_SPI_Transmit_DMA(&g_handle[_index], (uint8_t *)_buf, _size))
+	if (HAL_OK != HAL_SPI_Receive_DMA(&g_handle[_chl], _buf, _size))
 	{
 		return -1;
 	}
 
-	while (HAL_SPI_STATE_READY != HAL_SPI_GetState(&g_handle[_index])) {}
+	while (HAL_SPI_STATE_READY != HAL_SPI_GetState(&g_handle[_chl])) {}
 		
 	return 0;
 }
 
-int32_t spi_slave_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
+int32_t spi_master_send(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size)
 {
-	g_handle[_index].Init.Mode = SPI_MODE_SLAVE;
-	return spi_init(_index, _cpol, _cpha, _data_bits, _lsb_first);
+	assert(SPI_CH0 >= _chl && NULL != _buf);
+	
+	if (HAL_OK != HAL_SPI_Transmit_DMA(&g_handle[_chl], (uint8_t *)_buf, _size))
+	{
+		return -1;
+	}
+
+	while (HAL_SPI_STATE_READY != HAL_SPI_GetState(&g_handle[_chl])) {}
+		
+	return 0;
 }
 
-int32_t spi_slave_deinit(const uint8_t _index)
+int32_t spi_slave_init(const uint8_t _chl, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
 {
-	return spi_master_deinit(_index);
+	g_handle[_chl].Init.Mode = SPI_MODE_SLAVE;
+	return spi_init(_chl, _cpol, _cpha, _data_bits, _lsb_first);
 }
 
-int32_t spi_slave_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
+int32_t spi_slave_deinit(const uint8_t _chl)
 {
-	return spi_master_receive(_index, _buf, _size);
+	return spi_master_deinit(_chl);
 }
 
-int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
+int32_t spi_slave_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size)
 {
-	return spi_master_send(_index, _buf, _size);
+	return spi_master_receive(_chl, _buf, _size);
+}
+
+int32_t spi_slave_send(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size)
+{
+	return spi_master_send(_chl, _buf, _size);
 }
 
 /**
@@ -241,7 +234,7 @@ int32_t spi_slave_send(const uint8_t _index, const uint8_t _buf[], const uint16_
  */
 void SPI0_IRQ_HANDLER(void)
 {	
-	HAL_SPI_IRQHandler(&g_handle[SPI0_INDEX]);
+	HAL_SPI_IRQHandler(&g_handle[SPI_CH0]);
 }
 
 /**
@@ -249,7 +242,7 @@ void SPI0_IRQ_HANDLER(void)
  */
 void SPI0_RX_DMA_IRQ_HANDLER(void)
 {
-	HAL_DMA_IRQHandler(g_handle[SPI0_INDEX].hdmarx);
+	HAL_DMA_IRQHandler(g_handle[SPI_CH0].hdmarx);
 }
 
 /**
@@ -257,7 +250,7 @@ void SPI0_RX_DMA_IRQ_HANDLER(void)
  */
 void SPI0_TX_DMA_IRQ_HANDLER(void)
 {
-	HAL_DMA_IRQHandler(g_handle[SPI0_INDEX].hdmatx);
+	HAL_DMA_IRQHandler(g_handle[SPI_CH0].hdmatx);
 }
 
 /** @} */ /* IRQ handlers */
@@ -265,53 +258,53 @@ void SPI0_TX_DMA_IRQ_HANDLER(void)
 /*******************************************************************************
  * Local functions
  ******************************************************************************/
-int32_t spi_init(const uint8_t _index, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
+int32_t spi_init(const uint8_t _chl, const uint8_t _cpol, const uint8_t _cpha, const uint8_t _data_bits, const bool _lsb_first)
 {
-	assert(SPI0_INDEX >= _index);
+	assert(SPI_CH0 >= _chl);
 	
 	GPIO_InitTypeDef  GPIO_InitStructure;
 	
 	/* initialize the GPIOs */
-	SPI_SCK_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin = g_comm_config[_index].sck_pin_;
+	SPI_SCK_GPIO_CLK_ENABLE(_chl);
+	GPIO_InitStructure.Pin = g_comm_config[_chl].sck_pin_;
 	GPIO_InitStructure.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStructure.Pull = GPIO_NOPULL;
 	GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-	GPIO_InitStructure.Alternate = g_comm_config[_index].gpio_af_;
-	HAL_GPIO_Init(g_comm_config[_index].sck_gpio_, &GPIO_InitStructure);
+	GPIO_InitStructure.Alternate = g_comm_config[_chl].gpio_af_;
+	HAL_GPIO_Init(g_comm_config[_chl].sck_gpio_, &GPIO_InitStructure);
 
-	SPI_MISO_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin = g_comm_config[_index].miso_pin_;
-	HAL_GPIO_Init(g_comm_config[_index].miso_gpio_, &GPIO_InitStructure);
+	SPI_MISO_GPIO_CLK_ENABLE(_chl);
+	GPIO_InitStructure.Pin = g_comm_config[_chl].miso_pin_;
+	HAL_GPIO_Init(g_comm_config[_chl].miso_gpio_, &GPIO_InitStructure);
 
-	SPI_MOSI_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin = g_comm_config[_index].mosi_pin_;
-	HAL_GPIO_Init(g_comm_config[_index].mosi_gpio_, &GPIO_InitStructure);
+	SPI_MOSI_GPIO_CLK_ENABLE(_chl);
+	GPIO_InitStructure.Pin = g_comm_config[_chl].mosi_pin_;
+	HAL_GPIO_Init(g_comm_config[_chl].mosi_gpio_, &GPIO_InitStructure);
 
-	SPI_CS_GPIO_CLK_ENABLE(_index);
-	GPIO_InitStructure.Pin = g_comm_config[_index].cs_pin_;
-	HAL_GPIO_Init(g_comm_config[_index].cs_gpio_, &GPIO_InitStructure);
+	SPI_CS_GPIO_CLK_ENABLE(_chl);
+	GPIO_InitStructure.Pin = g_comm_config[_chl].cs_pin_;
+	HAL_GPIO_Init(g_comm_config[_chl].cs_gpio_, &GPIO_InitStructure);
 
 	/* initialize the SPI */
-	SPI_CLK_ENABLE(_index);
-	g_handle[_index].Init.CLKPolarity = (SPI_CPOL_LOW == _cpol ? SPI_POLARITY_LOW : SPI_POLARITY_HIGH);
-	g_handle[_index].Init.CLKPhase    = (SPI_CPHA_1EDGE == _cpha ? SPI_PHASE_1EDGE : SPI_PHASE_2EDGE);
-	g_handle[_index].Init.DataSize    = (SPI_DATA_BITS_8 == _data_bits ? SPI_DATASIZE_8BIT : SPI_DATASIZE_16BIT);
-	g_handle[_index].Init.FirstBit    = _lsb_first ? SPI_FIRSTBIT_LSB : SPI_FIRSTBIT_MSB;
-	HAL_SPI_Init(&g_handle[_index]);
+	SPI_CLK_ENABLE(_chl);
+	g_handle[_chl].Init.CLKPolarity = (SPI_CPOL_LOW == _cpol ? SPI_POLARITY_LOW : SPI_POLARITY_HIGH);
+	g_handle[_chl].Init.CLKPhase    = (SPI_CPHA_1EDGE == _cpha ? SPI_PHASE_1EDGE : SPI_PHASE_2EDGE);
+	g_handle[_chl].Init.DataSize    = (SPI_DATA_BITS_8 == _data_bits ? SPI_DATASIZE_8BIT : SPI_DATASIZE_16BIT);
+	g_handle[_chl].Init.FirstBit    = _lsb_first ? SPI_FIRSTBIT_LSB : SPI_FIRSTBIT_MSB;
+	HAL_SPI_Init(&g_handle[_chl]);
 	
     /* initialize the DMA */
-	SPI_DMA_CLK_ENABLE(_index);
-	HAL_DMA_Init(&g_rx_dma[_index]);
-    __HAL_LINKDMA(&g_handle[_index], hdmarx, g_rx_dma[_index]);
-    HAL_DMA_Init(&g_tx_dma[_index]);
-    __HAL_LINKDMA(&g_handle[_index], hdmatx, g_tx_dma[_index]);
+	SPI_DMA_CLK_ENABLE(_chl);
+	HAL_DMA_Init(&g_rx_dma[_chl]);
+    __HAL_LINKDMA(&g_handle[_chl], hdmarx, g_rx_dma[_chl]);
+    HAL_DMA_Init(&g_tx_dma[_chl]);
+    __HAL_LINKDMA(&g_handle[_chl], hdmatx, g_tx_dma[_chl]);
 	
 	/* initialize the NVIC */
-	for (uint8_t i = 0; i < sizeof(g_comm_config[_index].irqs_); i++)
+	for (uint8_t i = 0; i < sizeof(g_comm_config[_chl].irqs_); i++)
 	{
-		HAL_NVIC_SetPriority(g_comm_config[_index].irqs_[i], 0, 0);
-		HAL_NVIC_EnableIRQ(g_comm_config[_index].irqs_[i]);
+		HAL_NVIC_SetPriority(g_comm_config[_chl].irqs_[i], 0, 0);
+		HAL_NVIC_EnableIRQ(g_comm_config[_chl].irqs_[i]);
 	}
 
 	return 0;

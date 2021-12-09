@@ -1,19 +1,16 @@
-/*
- * uart.c
- *
- *  Created on: 2018年10月16日
- *      Author: Administrator
- */
+#include <stdlib.h>
 
 #include "uart.h"
 
 #if defined USING_OS_FREERTOS
-extern SemaphoreHandle_t g_uart_tx_mutex[UART1_INDEX + 1]; /* sending mutex */
+extern SemaphoreHandle_t g_uart_tx_mutex[UART_CH2 + 1]; /* sending mutex */
 #endif
 
-extern uint8_t g_uart_rx_queue[UART1_INDEX + 1][UART_RX_BUFFER_SIZE]; /* receiving queue */
-extern uint16_t g_uart_rx_queue_head[UART1_INDEX + 1]; /* receiving queue head */
-extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* receiving queue tail */
+#ifndef UART_DMA_IMPL
+extern uint8_t g_uart_rx_queue[UART_CH2 + 1][UART_RX_BUFFER_SIZE]; /* receiving queue */
+extern uint16_t g_uart_rx_queue_head[UART_CH2 + 1]; /* receiving queue head */
+extern uint16_t g_uart_rx_queue_tail[UART_CH2 + 1]; /* receiving queue tail */
+#endif
 
 /*******************************************************************************
  * Definitions
@@ -26,34 +23,34 @@ extern uint16_t g_uart_rx_queue_tail[UART1_INDEX + 1]; /* receiving queue tail *
 /*******************************************************************************
  * Functions
  ******************************************************************************/
-uint16_t uart_receive(const uint8_t _index, uint8_t _buf[], const uint16_t _size)
+#ifndef UART_DMA_IMPL
+uint16_t uart_receive(const uint8_t _chl, uint8_t _buf[], const uint16_t _size)
 {
-	assert(UART1_INDEX >= _index && NULL != _buf);
+	assert(UART_CH2 >= _chl && NULL != _buf);
 
 	uint16_t i = 0;
 
-	/* check if the RX queue is empty */
-	while (g_uart_rx_queue_head[_index] != g_uart_rx_queue_tail[_index] && i < _size)
+	/* check if the rx queue is empty */
+	while (g_uart_rx_queue_head[_chl] != g_uart_rx_queue_tail[_chl] && i < _size)
 	{
 		/* dequeue */
-		_buf[i++] = g_uart_rx_queue[_index][g_uart_rx_queue_head[_index]];
-		g_uart_rx_queue_head[_index] = (g_uart_rx_queue_head[_index] + 1) % UART_RX_BUFFER_SIZE;
+		_buf[i++] = g_uart_rx_queue[_chl][g_uart_rx_queue_head[_chl]];
+		g_uart_rx_queue_head[_chl] = (g_uart_rx_queue_head[_chl] + 1) % UART_RX_BUFFER_SIZE;
 	}
 
 	return i;
 }
+#endif
 
-uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[], const uint16_t _size)
+uint16_t uart_receive_with_format_polling(const uint8_t _chl, uint8_t _buf[], const uint16_t _size)
 {
-	assert(NULL != _buf);
-
 	uint16_t size = 0;
 	uint16_t out_size = 0;
 
 	/* receive 0xAA */
 	size = 1;
 
-	if (size != uart_receive(_index, _buf, size) ||  (0xFF & (UART_HEADER_FLAG >> 8)) != _buf[0])
+	if (size != uart_receive(_chl, _buf, size) ||  (0xFF & (UART_HEADER_FLAG >> 8)) != _buf[0])
 	{
 		return 0;
 	}
@@ -67,7 +64,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
 #endif
-		out_size += uart_receive(_index, _buf + out_size, size - out_size);
+		out_size += uart_receive(_chl, _buf + out_size, size - out_size);
 	}
 
 	if ((UART_HEADER_FLAG & 0xFF) != _buf[0])
@@ -84,7 +81,7 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
 #endif
-		out_size += uart_receive(_index, _buf + out_size, size - out_size);
+		out_size += uart_receive(_chl, _buf + out_size, size - out_size);
 	}
 
 	/* receive data */
@@ -97,20 +94,18 @@ uint16_t uart_receive_with_format_polling( const uint8_t _index, uint8_t _buf[],
 #if defined USING_OS_FREERTOS
 		vTaskDelay(pdMS_TO_TICKS(1));
 #endif
-		out_size += uart_receive(_index, _buf + out_size, size - out_size);
+		out_size += uart_receive(_chl, _buf + out_size, size - out_size);
 	}
 
 	return size;
 }
 
-uint16_t uart_send_with_format(const uint8_t _index, const uint8_t _buf[], const uint16_t _size)
+uint16_t uart_send_with_format(const uint8_t _chl, const uint8_t _buf[], const uint16_t _size)
 {
-	assert(UART1_INDEX >= _index && NULL != _buf);
-
 	uint16_t size = 0;
 
 #if defined USING_OS_FREERTOS
-	xSemaphoreTakeRecursive( g_uart_tx_mutex[_index], portMAX_DELAY);
+	xSemaphoreTakeRecursive( g_uart_tx_mutex[_chl], portMAX_DELAY);
 #endif
 
 #if defined (UART_HEADER_FLAG) && defined (UART_HEADER_SIZE)
@@ -119,13 +114,13 @@ uint16_t uart_send_with_format(const uint8_t _index, const uint8_t _buf[], const
 	header[1] = UART_HEADER_FLAG & 0xFF;
 	header[2] = _size;
 	header[3] = _size >> 8;
-	size = uart_send(_index, header, UART_HEADER_SIZE);
+	size = uart_send(_chl, header, UART_HEADER_SIZE);
 #endif
 
-	size += uart_send(_index, _buf, _size);
+	size += uart_send(_chl, _buf, _size);
 
 #if defined USING_OS_FREERTOS
-	xSemaphoreGiveRecursive( g_uart_tx_mutex[_index] );
+	xSemaphoreGiveRecursive( g_uart_tx_mutex[_chl] );
 #endif
 
 	return size;
@@ -144,31 +139,21 @@ void debug(const char* _info, ...)
 void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], const uint16_t _size)
 {
 #if defined _UDEBUG
-#if defined USING_OS_FREERTOS
-	static SemaphoreHandle_t g_debug_mutex;
-	static bool init = false;
+	char *info = malloc(100);
+	char s[10] = "";
 
-	if (!init)
-	{
-		g_debug_mutex = xSemaphoreCreateMutex();
-		init = true;
-	}
-
-	xSemaphoreTake( g_debug_mutex, portMAX_DELAY);
-#endif
-
-	printf("%s(0x%X,%d): ", _prefix, (unsigned int)_id, _size);
+	memset(info, 0, 100);
+	sprintf(info, "%s(0x%X,%d): ", _prefix, (unsigned int)_id, _size);
 
 	for (uint16_t i = 0; i < _size; i++)
 	{
-		printf("%02X ", _buf[i]);
+		sprintf(s, "%02X ", _buf[i]);
+		strcat(info, s);
 	}
 
-	printf("\r\n");
-
-#if defined USING_OS_FREERTOS
-	xSemaphoreGive( g_debug_mutex );
-#endif
+	strcat(info, "\r\n");
+	printf("%s", info);
+	free(info);
 #endif
 }
 
@@ -182,7 +167,7 @@ void print_buf(const char *_prefix, const uint32_t _id, const uint8_t _buf[], co
 UARTError InitializeUART(UARTBaudRate baudRate)
 {
 #if defined _UDEBUG
-	uart_init(UART0_INDEX, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
+	uart_init(UART_CH0, kBaud115200, UART_DATA_BITS_8, UART_STOP_BITS_1, UART_PARITY_MODE_NONE);
 #endif
 
 	return kUARTNoError;
@@ -195,7 +180,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 
 	while (size < limit)
 	{
-		size += uart_receive(UART0_INDEX, bytes + size, limit - size);
+		size += uart_receive(UART_CH0, bytes + size, limit - size);
 	}
 #endif
 
@@ -205,7 +190,7 @@ UARTError ReadUARTN(void* bytes, unsigned long limit)
 UARTError WriteUARTN(const void * bytes, unsigned long length)
 {
 #if defined _UDEBUG
-	uart_send(UART0_INDEX, bytes, length);
+	uart_send(UART_CH0, bytes, length);
 #endif
 
 	return kUARTNoError;
@@ -215,7 +200,7 @@ UARTError WriteUARTN(const void * bytes, unsigned long length)
 int _write(int iFileHandle, char *pcBuffer, int iLength)
 {
 #if defined _UDEBUG
-	return uart_send(UART0_INDEX, (uint8_t*)pcBuffer, iLength);
+	return uart_send(UART_CH0, (uint8_t*)pcBuffer, iLength);
 #else
 	return 0;
 #endif
@@ -244,7 +229,7 @@ FILE __stdout;
 int fputc(int ch, FILE *f)
 {
 #if defined _UDEBUG
-	uart_send(UART0_INDEX, (uint8_t*)(&ch), 1);
+	uart_send(UART_CH0, (uint8_t*)(&ch), 1);
 #endif
 
 	return (ch);

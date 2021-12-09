@@ -69,7 +69,7 @@ public:
 	~serial_port(void);
 
 	/**
-	 * Open the serial port.
+	 * Open a serial port.
 	 *
 	 * @param [in] _chl the serial port channel number
 	 * @param [in] _baudrate the baud rate of the serial port
@@ -100,7 +100,7 @@ public:
 	int32_t open(const std::string &_chl, const uint32_t _baud_rate, const uint32_t _data_bits, const uint32_t _stop_bits, const uint32_t _parity);
 
 	/**
-	 * Close the serial port.
+	 * Close a serial port.
 	 *
 	 * @return 0(success) or other values(failure)
 	 */

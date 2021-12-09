@@ -1,10 +1,3 @@
-/*
- * i2c.h
- *
- *  Created on: 2019年1月9日
- *      Author: Administrator
- */
-
 #ifndef __I2C_H__
 #define __I2C_H__
 
@@ -18,11 +11,11 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name I2C channel indexes
+ * @name I2C channel numbers
  * @{
  */
-#define I2C0_INDEX       		                0
-/** @} */ /* I2C channel indexes */
+#define I2C_CH0       		                    0
+/** @} */ /* I2C channel numbers */
 
 /** 
  * @name EEPROM configuration
@@ -31,35 +24,35 @@ extern "C" {
  * 
  * @{
  */
-#define EEPROM_ADDR              			     0x50 /**< The device address, 7bit without R/W bit. */
-#define EEPROM_PAGE_SIZE                         8 /**< the page size of the device in bytes */
-#define EEPROM_TOTAL_SIZE                        256 /**< the total size of the device in bytes */
-#define EEPROM_ADDR_RESET_TYPE                   0x00
-#define EEPROM_SIZE_RESET_TYPE                   1
-#define EEPROM_ADDR_SSECUHWVN                    (EEPROM_ADDR_RESET_TYPE + EEPROM_SIZE_RESET_TYPE)
-#define EEPROM_SIZE_SSECUHWVN                    16
-#define EEPROM_ADDR_VIN                          (EEPROM_ADDR_SSECUHWVN + EEPROM_SIZE_SSECUHWVN)
-#define EEPROM_SIZE_VIN                          17
-#define EEPROM_ADDR_ECUMD                        (EEPROM_ADDR_VIN + EEPROM_SIZE_VIN)
-#define EEPROM_SIZE_ECUMD                        4
-#define EEPROM_ADDR_TBTN                         (EEPROM_ADDR_ECUMD + EEPROM_SIZE_ECUMD)
-#define EEPROM_SIZE_TBTN                         15
-#define EEPROM_ADDR_IMEI                         (EEPROM_ADDR_TBTN + EEPROM_SIZE_TBTN)
-#define EEPROM_SIZE_IMEI                         15
-#define EEPROM_ADDR_ICCID                        (EEPROM_ADDR_IMEI + EEPROM_SIZE_IMEI)
-#define EEPROM_SIZE_ICCID                        20
-#define EEPROM_ADDR_PK                           (EEPROM_ADDR_ICCID + EEPROM_SIZE_ICCID)
-#define EEPROM_SIZE_PK                           16
-#define EEPROM_ADDR_FP1                          (EEPROM_ADDR_PK + EEPROM_SIZE_PK)
-#define EEPROM_SIZE_FP1                          9
-#define EEPROM_ADDR_FP2                          (EEPROM_ADDR_FP1 + EEPROM_SIZE_FP1)
-#define EEPROM_SIZE_FP2                          20
-#define EEPROM_ADDR_EOL                          (EEPROM_ADDR_FP2 + EEPROM_SIZE_FP2)
-#define EEPROM_SIZE_EOL                          56
-#define EEPROM_ADDR_DTC                          (EEPROM_ADDR_EOL + EEPROM_SIZE_EOL)
-#define EEPROM_SIZE_DTC                          21
-#define EEPROM_ADDR_INIT                         EEPROM_TOTAL_SIZE - 1
-#define EEPROM_SIZE_INIT                         1
+#define EEPROM_ADDR              			    0x50 /**< Device address, 7bit without R/W bit. */
+#define EEPROM_PAGE_SIZE                        8 /**< page size of the device in bytes */
+#define EEPROM_TOTAL_SIZE                       256 /**< total size of the device in bytes */
+#define EEPROM_ADDR_RESET_TYPE                  0x00
+#define EEPROM_SIZE_RESET_TYPE                  1
+#define EEPROM_ADDR_SSECUHWVN                   (EEPROM_ADDR_RESET_TYPE + EEPROM_SIZE_RESET_TYPE)
+#define EEPROM_SIZE_SSECUHWVN                   16
+#define EEPROM_ADDR_VIN                         (EEPROM_ADDR_SSECUHWVN + EEPROM_SIZE_SSECUHWVN)
+#define EEPROM_SIZE_VIN                         17
+#define EEPROM_ADDR_ECUMD                       (EEPROM_ADDR_VIN + EEPROM_SIZE_VIN)
+#define EEPROM_SIZE_ECUMD                       4
+#define EEPROM_ADDR_TBTN                        (EEPROM_ADDR_ECUMD + EEPROM_SIZE_ECUMD)
+#define EEPROM_SIZE_TBTN                        15
+#define EEPROM_ADDR_IMEI                        (EEPROM_ADDR_TBTN + EEPROM_SIZE_TBTN)
+#define EEPROM_SIZE_IMEI                        15
+#define EEPROM_ADDR_ICCID                       (EEPROM_ADDR_IMEI + EEPROM_SIZE_IMEI)
+#define EEPROM_SIZE_ICCID                       20
+#define EEPROM_ADDR_PK                          (EEPROM_ADDR_ICCID + EEPROM_SIZE_ICCID)
+#define EEPROM_SIZE_PK                          16
+#define EEPROM_ADDR_FP1                         (EEPROM_ADDR_PK + EEPROM_SIZE_PK)
+#define EEPROM_SIZE_FP1                         9
+#define EEPROM_ADDR_FP2                         (EEPROM_ADDR_FP1 + EEPROM_SIZE_FP1)
+#define EEPROM_SIZE_FP2                         20
+#define EEPROM_ADDR_EOL                         (EEPROM_ADDR_FP2 + EEPROM_SIZE_FP2)
+#define EEPROM_SIZE_EOL                         56
+#define EEPROM_ADDR_DTC                         (EEPROM_ADDR_EOL + EEPROM_SIZE_EOL)
+#define EEPROM_SIZE_DTC                         21
+#define EEPROM_ADDR_INIT                        EEPROM_TOTAL_SIZE - 1
+#define EEPROM_SIZE_INIT                        1
 /** @} */ /* EEPROM configuration */
 
 /** 
@@ -69,7 +62,7 @@ extern "C" {
  * 
  * @{
  */
-#define ACCR_ADDR                       		0x1C /**< The device address, 7bit without R/W bit. */
+#define ACCR_ADDR                       		0x1C /**< Device address, 7bit without R/W bit. */
 #define ACCR_STATUS_REG	                        0x00
 #define ACCR_OUT_X_MSB_REG	                    0x01
 #define ACCR_OUT_X_LSB_REG	                    0x02
@@ -143,46 +136,46 @@ extern "C" {
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize the I2C master mode.
+ * Initialize an I2C channel master mode.
  *
- * @param [in] _index the I2C channel index
+ * @param [in] _chl the I2C channel number
  * @param [in] _baudrate the baud rate of the I2C bus
  * @param [in] _is_10bit_addr if 7-bit or 10-bit slave address
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_init(const uint8_t _index, const uint32_t _baudrate, const bool _is_10bit_addr);
+int32_t i2c_master_init(const uint8_t _chl, const uint32_t _baudrate, const bool _is_10bit_addr);
 
 /**
- * De-initialize the I2C master mode.
+ * De-initialize an I2C channel master mode.
  *
- * @param [in] _index the I2C channel index
+ * @param [in] _chl the I2C channel number
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_deinit(const uint8_t _index);
+int32_t i2c_master_deinit(const uint8_t _chl);
 
 /**
  * Receive data from a specified slave device.
  *
- * @param [in] _index the I2C channel index
+ * @param [in] _chl the I2C channel number
  * @param [in] _addr the slave device address(7 bit without R/W bit)
  * @param [out] _buf the buffer to receive
  * @param [in] _size the size to receive
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_receive(const uint8_t _index, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop);
+int32_t i2c_master_receive(const uint8_t _chl, const uint16_t _addr, uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
  * Send data to a specified slave device.
  *
- * @param [in] _index the I2C channel index
+ * @param [in] _chl the I2C channel number
  * @param [in] _addr the slave device address(7 bit without R/W bit)
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @param [in] _stop if generate stop condition after sending
  * @return 0(success) or other values(failure)
  */
-int32_t i2c_master_send(const uint8_t _index, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop);
+int32_t i2c_master_send(const uint8_t _chl, const uint16_t _addr, const uint8_t _buf[], const uint16_t _size, const bool _stop);
 
 /**
  * Read data from the EEPROM.

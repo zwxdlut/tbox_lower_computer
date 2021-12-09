@@ -59,7 +59,7 @@ MEMORY
 
   /* SRAM_U */
   /*m_data_2              (RW)  : ORIGIN = 0x20000000, LENGTH = 0x00007000*/
-  m_data_2              (RW)  : ORIGIN = 0x1FFFD000, LENGTH = 0x0000A000
+  m_data_2              (RW)  : ORIGIN = 0x1FFFD000, LENGTH = 0x0000B000
 }
 
 /* Define output sections */

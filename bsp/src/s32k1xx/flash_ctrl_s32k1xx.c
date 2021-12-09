@@ -1,10 +1,3 @@
-/*
- * flash_ctrl_s32k1xx.c
- *
- *  Created on: 2018年10月17日
- *      Author: Administrator
- */
-
 #include "flash_ctrl.h"
 
 /*******************************************************************************

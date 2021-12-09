@@ -1,10 +1,3 @@
-/*
- * can.h
- *
- *  Created on: 2018年8月21日
- *      Author: Administrator
- */
-
 #ifndef __CAN_H__
 #define __CAN_H__
 
@@ -18,12 +11,12 @@ extern "C" {
  * Definitions
  ******************************************************************************/
 /**
- * @name CAN channel indexes
+ * @name CAN channel numbers
  * @{
  */
-#define CAN0_INDEX                              0
-#define CAN1_INDEX                              1
-/** @} */ /* CAN channel indexes */
+#define CAN_CH0                                 0
+#define CAN_CH1                                 1
+/** @} */ /* CAN channel numbers */
 
 /**
  * @name CAN power modes
@@ -49,49 +42,49 @@ typedef struct
  * Function prototypes
  ******************************************************************************/
 /**
- * Initialize the CAN.
+ * Initialize a CAN channel.
  *
- * @param [in] _index the CAN channel index
+ * @param [in] _chl the CAN channel number
  * @param [in] _filter_id_list the CAN filter id list
  * @param [in] _filter_id_num the number of the ids in the list
  * @return 0(success) or other values(failure)
  */
-int32_t can_init(const uint8_t _index, const uint32_t *_filter_id_list, const uint8_t _filter_id_num);
+int32_t can_init(const uint8_t _chl, const uint32_t *_filter_id_list, const uint8_t _filter_id_num);
 
 /**
- * De-initialize the CAN.
+ * De-initialize a CAN channel.
  * 
- * @param [in] _index the CAN channel index
+ * @param [in] _chl the CAN channel number
  * @return 0(success) or other values(failure)
  */
-int32_t can_deinit(const uint8_t _index);
+int32_t can_deinit(const uint8_t _chl);
 
 /**
  * Receive a CAN message.
  *
- * @param [in] _index the CAN channel index
+ * @param [in] _chl the CAN channel number
  * @param [out] _id the received CAN id
  * @param [out] _buf the buffer to receive
  * @param [in]  _size the size to receive
  * @return the receivied CAN data size
  */
-uint8_t can_receive(const uint8_t _index, uint32_t *const _id, uint8_t _buf[],  const uint8_t _size);
+uint8_t can_receive(const uint8_t _chl, uint32_t *const _id, uint8_t _buf[],  const uint8_t _size);
 
 /**
  * Send a CAN message.
  *
- * @param [in] _index the CAN channel index
+ * @param [in] _chl the CAN channel number
  * @param [in] _id the sent CAN id
  * @param [in] _buf the buffer to send
  * @param [in] _size the size to send
  * @return the sent CAN data size
  */
-uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[], const uint8_t _size);
+uint8_t can_send(const uint8_t _chl, const uint32_t _id, const uint8_t _buf[], const uint8_t _size);
 
 /**
  * Transfer the CAN power mode.
  *
- * @param [in] _index the CAN channel index
+ * @param [in] _chl the CAN channel number
  * @param [in] _mode the CAN power mode is transfered to:
  * <ul>
  * <li>{@link CAN_PWR_MODE_SLEEP}</li>
@@ -99,7 +92,7 @@ uint8_t can_send(const uint8_t _index, const uint32_t _id, const uint8_t _buf[],
  * </ul>
  * @return 0(success) or other values(failure)
  */
-int32_t can_pwr_mode_trans(const uint8_t _index, const uint8_t _mode);
+int32_t can_pwr_mode_trans(const uint8_t _chl, const uint8_t _mode);
 
 #ifdef __cplusplus
 }
