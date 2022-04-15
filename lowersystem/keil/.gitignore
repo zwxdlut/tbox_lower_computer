@@ -1,4 +1,3 @@
 Objects/
+Listings/
 JLinkLog.txt
-Listings/lowersystem.map
-Listings/startup_stm32f205xx.lst
