@@ -1,5 +1,5 @@
-# Lower System
-**This is lower system supporting different MCUs and boards.**
+# T-box Lower System
+**This is a T-box lower system supporting different MCUs and boards.**
 
 Current supported MCUs are:
 * S32K144_64，S32K144_100
