@@ -36,9 +36,9 @@
 			<locationURI>PARENT-2-PROJECT_LOC/bsp/src</locationURI>
 		</link>
 		<link>
-			<name>src/libs</name>
+			<name>src/lib</name>
 			<type>2</type>
-			<locationURI>PARENT-2-PROJECT_LOC/libs</locationURI>
+			<locationURI>PARENT-2-PROJECT_LOC/lib</locationURI>
 		</link>
 		<link>
 			<name>src/main.c</name>
@@ -89,8 +89,8 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1650003163831</id>
-			<name>src/libs</name>
+			<id>1653271302555</id>
+			<name>src/lib</name>
 			<type>21</type>
 			<matcher>
 				<id>org.eclipse.ui.ide.multiFilter</id>

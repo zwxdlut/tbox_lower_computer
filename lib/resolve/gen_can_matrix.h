@@ -1,7 +1,7 @@
 /**
  * @file   gen_can_matrix.h
  * @author Auto generated
- * @note   Created on 2022/04/22
+ * @note   Created on 2022/05/19 
  */
 
 #ifndef __GEN_CAN_MATRIX_H__
